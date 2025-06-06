@@ -1,0 +1,67 @@
+@keyframes glitch {
+    0% {
+        text-shadow: 4px 4px 0px var(--blue);
+    }
+
+    50% {
+        text-shadow: -4px -4px 0px #ff007f;
+    }
+
+    100% {
+        text-shadow: 4px 4px 0px var(--blue);
+    }
+}
+
+@keyframes shimmerDiagonal {
+    0% {
+        background-position: 200% 0;
+    }
+
+    to {
+        background-position: -200% 0;
+    }
+}
+
+@keyframes company__carouselScroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes shimmerToRight {
+    0% {
+        background-position: 200% 0
+    }
+
+    to {
+        background-position: -200% 0
+    }
+}
+
+@keyframes shimmerTopToRIghtDiagonal {
+    0% {
+        background-position: 200% 0
+    }
+
+    to {
+        background-position: -200% 0
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1)
+    }
+
+    50% {
+        transform: scale(1.13)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+

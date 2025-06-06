@@ -1,0 +1,89 @@
+{% set active = "gasfee" %} {% extends "admin/partials/_layout.html" %} {% block
+title %} {{ title }} {% endblock %} {% block content %}
+<div class="content">
+  <!-- Start Content-->
+  <div class="container-fluid">
+    <div>
+      <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item inactive">
+          <a href="{{ url_for('admin.admin_dashboard') }}">ADMIN DASHBOARD</a>
+        </li>
+        <li class="breadcrumb-item">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="breadcrumb-item active">GASFEE DEPOSITS</li>
+      </ol>
+    </div>
+
+    <div class="page-title-box">
+      <h3>GASFEE DEPOSITS</h3>
+    </div>
+    <hr />
+
+    {% if gasfee_deposits %}
+    <div class="table-responsive">
+      <table class="table table-striped table-condensed mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>ETH Amount</th>
+            <th>Receipt</th>
+            <th>Status</th>
+            <th>Timestamp</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for deposit in gasfee_deposits %}
+          <tr>
+            <td>{{ deposit.id }}</td>
+            <td>{{ deposit.user_id }}</td>
+            <td>{{ deposit.eth_amount }} ETH</td>
+            <td>
+              <a
+                href="/static/uploads/{{ deposit.receipt_img }}"
+                target="_blank"
+              >
+                <img
+                  src="/static/uploads/{{ deposit.receipt_img }}"
+                  alt="Receipt Image"
+                  width="50"
+                />
+              </a>
+            </td>
+            <td>
+              <span
+                class="badge {% if deposit.status == 'Pending' %}badge-warning{% elif deposit.status == 'Approved' %}badge-success{% else %}badge-danger{% endif %}"
+              >
+                {{ deposit.status }}
+              </span>
+            </td>
+            <td>{{ deposit.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</td>
+            <td>
+              {% if deposit.status == "Pending" %}
+              <a
+                href="{{ url_for('admin.approve_gasfee_deposit', deposit_id=deposit.id) }}"
+                class="btn btn-success"
+                >Approve</a
+              >
+              <a
+                href="{{ url_for('admin.reject_gasfee_deposit', deposit_id=deposit.id) }}"
+                class="btn btn-danger"
+                >Reject</a
+              >
+              {% else %}
+              <span class="text-muted">Completed</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p>No wallet deposits available yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+        <meta name="description" content="NFT Site - MintVerse" />
+        <meta name="keywords" content="Mint, MintVerse, Mint Verse, mintverse">
+        <title>{% block title %} MintVerse {% endblock %}</title>
+        
+        <!-- For Sharing -->
+        <meta property="og:title" content="MintVerse - NFT Website">
+        <meta property="og:url" content="https://mintverse.art">
+        <!-- <meta property="og:image" content="%PUBLIC_URL%/shareImg.png"> -->
+        
+        <!-- App icon -->
+        <link rel="icon" sizes="16x16" type="image/avif" href="/static/assets/images/app_logo.avif"/>
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <!-- Googleapis Font -->
+        <link href="https://fonts.googleapis.com/css?family=Sour Gummy|Briem Hand|Poetsen One|Poppins|Raleway|Josefin Sans" rel="stylesheet">
+        <!--Box Fonts-->
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <!-- Swiper CSS -->
+        <link
+        rel="stylesheet"
+        href="https://unpkg.com/swiper/swiper-bundle.min.css"
+        />
+        <!-- Main Stylesheet -->
+        <link rel="stylesheet" href="/static/assets/css/styles.css">
+        <!-- Plugins -->
+        <link rel="stylesheet" href="/static/assets/css/plugins.css">
+    </head>
+    {% include "auth/partials/_alert.html" %}
+    <body id="top-header">
+        <header class="header" id="header2">
+            <nav class="nav container">
+                <a href="{{ url_for('mintverse.home_page') }}" class="glitch__art nav__logo" style="font-family: 'Poetsen One', sans-serif;">
+                    MINTVERSE
+                </a>
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        {% if not current_user.is_authenticated %}
+                        <li class="nav__item">
+                            <a href="{{url_for('auth.login_page')}}" class="nav__link">
+                                Login <i class="fa fa-sign-in" style="margin-left: 5px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{{url_for('mintverse.explore_page')}}" class="nav__link">
+                                Marketplace <i class="fa fa-angle-down" style="margin-left: 5px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{{url_for('user.wallet_page')}}" class="nav__link">
+                                Deposit
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{{url_for('user.withdrawal_page')}}" class="nav__link">
+                                Withdraw
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{{url_for('user.profile_page')}}" class="nav__link">
+                                Profile
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{{url_for('auth.logout')}}" class="nav__link">
+                                Log out
+                            </a>
+                        </li>
+                        {% elif current_user.role == 'admin' %}
+                        <li class="nav__item {% if active == 'dashboard' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('admin.admin_dashboard')}}" class="nav__link">
+                                Dashboard 
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'marketplace' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('mintverse.explore_page')}}" class="nav__link">
+                                Marketplace <i class="fa fa-angle-down" style="margin-left: 5px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'wallet' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('user.wallet_page')}}" class="nav__link">
+                                Deposit
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'withdrawal' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('user.withdrawal_page')}}" class="nav__link">
+                                Withdraw
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'profile' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('admin.admin_profile')}}" class="nav__link">
+                                {{current_user.name}}
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{{url_for('auth.logout')}}" class="nav__link">
+                                Log out
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="nav__item {% if active == 'dashboard' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('user.dashboard_page')}}" class="nav__link">
+                                Dashboard 
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'marketplace' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('mintverse.explore_page')}}" class="nav__link">
+                                Marketplace <i class="fa fa-angle-down" style="margin-left: 5px;"></i>
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'wallet' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('user.wallet_page')}}" class="nav__link">
+                                Deposit
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'withdrawal' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('user.withdrawal_page')}}" class="nav__link">
+                                Withdraw
+                            </a>
+                        </li>
+                        <li class="nav__item {% if active == 'profile' %} nav__item-active {% endif %}">
+                            <a href="{{url_for('user.profile_page')}}" class="nav__link">
+                                {{current_user.name}}
+                            </a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="{{url_for('auth.logout')}}" class="nav__link">
+                                Log out
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                <a href="{{url_for('user.create_nft_page')}}" class="create__nft-container">
+                    <button class='btn create__nft-btn'>
+                        Create NFT <i class="fa fa-plus"></i>
+                    </button>
+                </a>
+                <!-- Toggle Button -->
+                <div class="nav__toggle" id="nav-toggle">
+                    <i class="fa fa-bars-progress"></i>
+                </div>
+            </nav>
+        </header>
+
+        <div class="content-page">
+            {% block content %}  {% endblock %}
+        </div>
+                
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="footer__container">
+                <a href="{{url_for('mintverse.home_page')}}" style="text-decoration: none;">
+                    <h1 class="footer__title">MintVerse</h1>
+                </a>
+            
+                <div class="flexColCenter">
+                    <ul class="footer__list">
+                        <li class="footer__link {% if active == 'marketplace' %} footer__item-active {% endif %}">
+                            <a href="{{url_for('mintverse.explore_page')}}" class="">Marketplace</a>
+                        </li>
+                        <li class="footer__link {% if active == 'create' %} footer__item-active {% endif %}">
+                            <a href="{{url_for('user.create_nft_page')}}" class="">Create</a>
+                        </li>
+                        <li class="footer__link {% if active == 'termsandconditions' %} footer__item-active {% endif %}">
+                            <a href="{{url_for('mintverse.termsandcond_page')}}" class="">T &amp; C</a>
+                        </li>
+                        <li class="footer__link {% if active == 'faqs' %} footer__item-active {% endif %}">
+                            <a href="{{url_for('mintverse.faq_page')}}" class="">FAQs</a>
+                        </li>
+                        </li>
+                        <li class="footer__link {% if active == 'about' %} footer__item-active {% endif %}">
+                            <a href="{{url_for('mintverse.about_page')}}" class="">About Us</a>
+                        </li>
+                        </li>
+                        <li class="footer__link {% if active == 'contact' %} footer__item-active {% endif %}">
+                            <a href="{{url_for('mintverse.contact_page')}}" class="">Contact Us</a>
+                        </li>
+                    </ul>
+        
+                    <div class="footer__social">
+                        <a href="" target='_blank' class="footer__social-link" rel="noreferrer">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="" target='_blank' class="footer__social-link" rel="noreferrer">
+                            <i class="fa-brands fa-telegram"></i>
+                        </a>
+                        <a href="" target='_blank' class="footer__social-link" rel="noreferrer">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+    
+                <span class="footer__copy secondaryText">
+                    <script>document.write(new Date().getFullYear())</script> © MintVerse. All rights reserved.
+                </span>
+            </div>
+        </footer>
+        <!-- end Footer -->
+
+        <a href='{{ url_for(request.endpoint, **request.view_args) }}#top-header' class='scrollup'>
+            <i class="fa fa-arrow-up scrollup__icon"></i>
+        </a>
+
+        <!-- Web3 JS cdn -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.1/web3.min.js"></script>
+        <!-- WalletConnect cdn -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/@walletconnect/web3-provider/1.8.0/web3-provider.min.js"></script> -->
+        <!-- WalletConnect JS -->
+        <script src="/static/assets/js/wallet.js"></script>
+        <!-- Swiper JS -->
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <!-- Include Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- App JS -->
+        <script src="/static/assets/js/app.js"></script>
+    </body>
+</html>
