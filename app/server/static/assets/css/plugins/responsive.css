@@ -1,0 +1,3906 @@
+/* media queries */
+@media (min-width: 1536px) {
+	.innerWidth {
+		max-width: 1280px;
+		margin: auto;
+	}
+}
+
+@media screen and (max-width: 1025px) and (max-width: 1080px) {
+	.nav {
+		align-items: center;
+		justify-content: space-between;
+		gap: 3rem;
+		padding: 1rem;
+	}
+
+	.nav__menu {
+		padding: .5rem 0;
+	}
+
+	.nav__logo {
+		font-size: 20px;
+		padding: .3rem 0;
+	}
+
+	.nav__list {
+		column-gap: .4rem;
+		font-size: .8rem;
+	}
+
+	.nav__item {
+		padding: .15rem;
+	}
+
+	.search__bar {
+		padding: 0.4rem;
+		width: 25%;
+	}
+
+	.search__btn {
+		padding: 5px 8px;
+		font-size: 16px;
+	}
+
+	.footer__list {
+		display: grid;
+		grid-template-columns: repeat(2, 130px);
+		gap: 8px;
+	}
+
+	.footer__copy {
+		margin-top: 1rem;
+	}
+
+	.hero__wrapper,
+	.mycollection__wrapper {
+		padding: 2rem;
+	}
+
+	.hero__container {
+		grid-template-columns: repeat(2, 400px);
+		column-gap: 2rem;
+	}
+
+	.mycollection__container {
+		column-gap: 2rem;
+	}
+
+	.mycollection__content {
+		gap: 1rem;
+	}
+
+	.hero__title>h1 {
+		font-size: 3rem;
+	}
+
+	.hero__swiper-card {
+		width: 25rem;
+	}
+
+	.hero__container>small {
+		right: 25%;
+	}
+
+	.hero__img-content {
+		padding: 0;
+		justify-content: center;
+		gap: 5rem;
+	}
+
+	.creator {
+		font-size: 14px;
+	}
+
+	.creator p {
+		font-size: 15px;
+		letter-spacing: 0;
+	}
+
+	.hero__img-content>a .btn {
+		padding: 8px;
+		font-size: 12px;
+	}
+
+	.bsl__container {
+		grid-template-columns: 280px repeat(1, 1fr);
+		padding: 15px;
+	}
+
+	.bsl__title>h1 {
+		font-size: 3rem;
+	}
+
+	.bsl__swiper-container {
+		max-width: 600px;
+	}
+
+	.bsl__img {
+		width: 100%;
+		height: 15rem;
+	}
+
+	.swiper-button-prev,
+	.swiper-rtl .swiper-button-next {
+		padding: 1.5rem;
+	}
+
+	.swiper-button-next,
+	.swiper-rtl .swiper-button-prev {
+		padding: 1.5rem;
+	}
+
+	.swiper-button-next:after,
+	.swiper-button-prev:after {
+		font-size: 20px;
+	}
+
+	.ttp__container,
+	.nl__container {
+		padding: 20px;
+	}
+
+	.ttp__des {
+		justify-content: center;
+		gap: 28rem;
+	}
+
+	.ttp__content,
+	.nl__content {
+		gap: 0;
+		justify-content: space-evenly;
+	}
+
+	.ttp__item,
+	.nl__item {
+		width: 14rem;
+		height: auto;
+	}
+
+	.discover__container {
+		grid-template-columns: repeat(1, 900px);
+		padding: 20px;
+	}
+
+	.exp__swiper-container {
+		max-width: 900px;
+	}
+
+	.category__container {
+		grid-template-columns: repeat(1, 900px);
+	}
+
+	.category__content {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.category__item {
+		width: 13rem;
+		height: 17rem;
+	}
+
+	.art__container {
+		grid-template-columns: repeat(1, 900px);
+	}
+
+	.art__item {
+		width: 13rem;
+	}
+
+	.art__item:hover {
+		transform: scale(1.1);
+	}
+
+	.art__category-des {
+		font-size: 1rem;
+		color: #666;
+	}
+
+	.art__item .btn {
+		width: 50%;
+		padding: 8px;
+		font-size: 12px;
+	}
+
+	.explore__container {
+		grid-template-columns: repeat(1, 900px);
+		padding: 20px;
+	}
+
+	.explore__item {
+		width: 13rem;
+	}
+
+	.dashboard__btn {
+		right: 3.5rem;
+		top: 16rem;
+	}
+
+	.profile__container {
+		grid-template-columns: repeat(1, 900px);
+		padding: 20px 20px 60px 20px;
+		row-gap: 5rem;
+	}
+
+	.profile__banner {
+		width: 900px;
+		height: 20rem;
+	}
+
+	.profile__profile {
+		width: 8rem;
+		height: 8rem;
+	}
+
+	.withdrawal__container {
+		grid-template-columns: repeat(1, 900px);
+		row-gap: 2rem;
+		padding: 30px 30px 60px 30px;
+	}
+
+	.withdrawal__banner {
+		width: 900px;
+		height: 18rem;
+	}
+
+	.walletDeposit__container,
+	.conatct__container {
+		grid-template-columns: repeat(1, 900px);
+	}
+
+	.walletDeposit__banner,
+	.contact__banner,
+	.about__banner,
+	.about__content {
+		width: 900px;
+	}
+
+	.gasfeeDeposit__container {
+		grid-template-columns: repeat(1, 900px);
+	}
+
+	.gasfeeDeposit__banner {
+		width: 900px;
+		height: 18rem;
+	}
+
+	.buy__container {
+		grid-template-columns: 400px 520px;
+		padding: 20px;
+	}
+
+	.buy__img-container {
+		width: 23rem;
+	}
+
+	.accordion {
+		max-width: 380px;
+	}
+
+	.owner__name {
+		font-size: 12px;
+	}
+
+	.buy__right-content {
+		grid-template-columns: repeat(2, 1fr);
+		justify-items: center;
+	}
+
+	.buy__right-con-item>.walletDeposit__form {
+		width: 100%;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container {
+		grid-template-columns: repeat(1, 450px);
+		row-gap: 2rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2) small {
+		margin-top: 10px;
+		font-size: 14px;
+		color: rgb(150, 149, 149);
+	}
+
+	.table-responsive {
+		width: 900px;
+	}
+
+}
+
+@media screen and (max-width: 992px) {
+	.section {
+		padding: 2rem 0 0 0;
+	}
+
+	.primaryText {
+		font-size: 2.4rem;
+	}
+
+	.table-responsive {
+		width: 700px;
+	}
+
+	.nav {
+		gap: 7rem;
+		justify-content: space-evenly;
+		padding: 1rem 1.5rem;
+	}
+
+	.nav__menu {
+		backdrop-filter: blur(5px);
+		animation: shimmerDiagonal 10s linear infinite;
+		background: linear-gradient(240deg, var(--black) 25%, rgba(0, 255, 255, 0.4) 50%, var(--black) 73%, var(--black) 100%);
+		background-size: 200% auto;
+		box-shadow: 1px 1px 1px .2px rgba(0, 255, 255, 0.3);
+		border-radius: .6rem 4rem .6rem 4rem;
+		font-weight: 500;
+		padding: 2rem;
+		position: absolute;
+		top: 5rem;
+		right: -100%;
+		transition: all 350ms ease-in-out;
+	}
+
+	.nav__menu.show {
+		display: block;
+		right: 2rem;
+	}
+
+	.nav__toggle {
+		cursor: pointer;
+		font-size: 2rem;
+		padding: 1rem 0;
+		display: block;
+	}
+
+	.nav__list {
+		align-items: center;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.nav__item {
+		font-size: 1.2rem;
+	}
+
+	.nav__logo {
+		font-size: 2.8rem;
+	}
+
+	.search__bar {
+		margin-right: -5rem;
+		margin-left: 2rem;
+		padding: 0.2rem;
+		width: 38%;
+	}
+
+	.search__btn {
+		padding: 5px 8px;
+		font-size: 16px;
+	}
+
+	.hero__container {
+		grid-template-columns: repeat(2, 300px);
+		column-gap: 2rem;
+	}
+
+	.mycollection__container {
+		grid-template-columns: repeat(1, 1fr);
+		column-gap: 5rem;
+	}
+
+	.hero__title>h1 {
+		line-height: 3rem;
+	}
+
+	.hero__swiper-card {
+		width: 20rem;
+	}
+
+	.hero__img-content {
+		gap: 2rem;
+	}
+
+	.creator {
+		font-size: 10px;
+	}
+
+	.creator p {
+		font-size: 13px;
+	}
+
+	.hero__img-content>a .btn {
+		padding: 4px;
+		font-size: 10px;
+	}
+
+	.hero__container>small {
+		bottom: 6.5rem;
+		right: 20%;
+	}
+
+	.company__carousel-slide {
+		min-width: 100px;
+	}
+
+	.bsl__container {
+		grid-template-columns: repeat(1, 1fr);
+		padding: 5px;
+	}
+
+	.bsl__left {
+		text-align: center;
+		flex-direction: row;
+		gap: 3rem;
+	}
+
+	.bsl__title>h1 {
+		font-size: 3rem;
+		line-height: 3rem;
+	}
+
+	.bsl__swiper-container {
+		max-width: 650px;
+	}
+
+	.swiper-button-prev,
+	.swiper-rtl .swiper-button-next {
+		padding: 1.3rem;
+	}
+
+	.swiper-button-next,
+	.swiper-rtl .swiper-button-prev {
+		right: 0;
+		padding: 1.3rem;
+	}
+
+	.ttp__des {
+		gap: 10rem;
+	}
+
+	.nl__des {
+		justify-content: space-evenly;
+		gap: 10rem;
+	}
+
+	.ttp__content,
+	.nl__content {
+		justify-content: center;
+		display: grid;
+		grid-template-columns: repeat(2, 280px);
+		gap: 3rem;
+	}
+
+	.ttp__item,
+	.nl__item {
+		width: 18rem;
+	}
+
+	.discover__container {
+		grid-template-columns: repeat(1, 800px);
+		justify-items: center;
+	}
+
+	.discover__filter {
+		width: 40rem;
+	}
+
+	.discover__filter ul li {
+		font-size: 12px;
+		letter-spacing: 1px;
+		padding: 8px 22px;
+	}
+
+	.discover__content {
+		grid-template-columns: repeat(3, 200px);
+	}
+
+	.exp__swiper-container {
+		max-width: 700px;
+		padding: 1rem;
+	}
+
+	.exp__swiper-card {
+		width: 35rem;
+		height: 17rem;
+	}
+
+	.exp__img-content {
+		margin-left: .7rem;
+	}
+
+	.exp__category-des {
+		font-size: 1rem;
+	}
+
+	.category__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.category__content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.category__item {
+		width: 13rem;
+		height: 15rem;
+	}
+
+	.art__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.art__content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.explore__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.explore__content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.profile__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.profile__banner {
+		width: 680px;
+		height: 19rem;
+	}
+
+	.withdrawal__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.withdrawal__banner {
+		width: 700px;
+		height: 17rem;
+	}
+
+	.withdrawal__content-btns {
+		justify-content: center;
+		gap: 4rem;
+	}
+
+	.withdrawal__content-btns .withdrawal__contract-standard,
+	.withdrawal__content-btns .withdrawal__wallet-balance {
+		max-width: 250px;
+		padding: 0 .8rem;
+		border-radius: .8rem;
+	}
+
+	.walletDeposit__container,
+	.conatct__container {
+		grid-template-columns: repeat(1, 700px);
+		row-gap: 1rem;
+	}
+
+	.walletDeposit__banner,
+	.contact__banner,
+	.about__banner {
+		width: 700px;
+		height: 15rem;
+	}
+
+	.about__content {
+		width: 700px;
+	}
+
+	.walletDeposit__histrory-container {
+		margin-top: 2rem;
+	}
+
+	.walletDeposit__content-btns .walletDeposit__wallet-balance {
+		max-width: 250px;
+		padding: 0 .8rem;
+		border-radius: .8rem;
+	}
+
+	.gasfeeDeposit__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.gasfeeDeposit__banner {
+		width: 650px;
+		height: 15rem;
+	}
+
+	.gasfeeDeposit__container>.gasfeeDeposit__content>.wallet__content {
+		width: 600px;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span {
+		right: 15%;
+	}
+
+	.buy__container {
+		grid-template-columns: repeat(1, 1fr);
+		justify-items: start;
+	}
+
+	.buy__left {
+		width: 100%;
+		align-items: center;
+		justify-content: start;
+	}
+
+	.buy__img-container {
+		width: 100%;
+		height: auto;
+	}
+
+	.accordion {
+		max-width: 100%;
+	}
+
+	.artist__detail {
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	.artist__section {
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.owner__name {
+		font-size: 16px;
+	}
+
+	.buy__right-content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2) small {
+		font-size: 12px;
+	}
+
+	.dashboard__walletConnect-con {
+		left: 7rem;
+		max-width: 250px;
+		padding: 10px;
+	}
+
+	.explore__container>.eth__bal {
+		margin-right: -18rem;
+	}
+
+	.modal {
+		left: 17%;
+		padding: 3rem;
+	}
+
+	.adminlogin__content,
+	.createadmin__content,
+	.login__content,
+	.register__content {
+		padding: 20px;
+	}
+
+	.adminlogin__content p,
+	.createadmin__content p,
+	.login__content p,
+	.register__content p {
+		font-size: .9rem;
+	}
+
+	.app__logo {
+		font-size: .95rem;
+		padding: 3px;
+	}
+
+	.createadmin__form-input,
+	.register__form-input {
+		padding: 1.28rem;
+	}
+
+	.createadmin__input-container,
+	.register__input-container {
+		grid-template-columns: repeat(2, 230px);
+		gap: .6rem;
+		margin-bottom: 1rem;
+	}
+
+	.createadmin__pass-container input,
+	.register__pass-container input {
+		padding: .78rem 1rem .78rem 1.5rem;
+	}
+
+	.createadmin__pass-container #password_show_hide,
+	.register__pass-container #password_show_hide {
+		top: .7rem;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.section {
+		padding: 2rem 0 0 0;
+	}
+
+	.primaryText {
+		font-size: 2.4rem;
+	}
+
+	.table-responsive {
+		width: 700px;
+	}
+
+	.nav {
+		gap: 7rem;
+		justify-content: space-evenly;
+		padding: 1rem 1.5rem;
+	}
+
+	.nav__menu {
+		backdrop-filter: blur(5px);
+		animation: shimmerDiagonal 10s linear infinite;
+		background: linear-gradient(240deg, rgba(0, 0, 0, 0.5) 25%, rgba(0, 255, 255, 0.4) 50%, rgba(0, 0, 0, 0.5) 73%, rgba(0, 0, 0, 0.5) 100%);
+		background-size: 200% auto;
+		box-shadow: 1px 1px 1px .2px rgba(0, 255, 255, 0.3);
+		border-radius: .6rem 2rem .6rem 2rem;
+		font-weight: 500;
+		padding: 2rem;
+		position: absolute;
+		top: 5rem;
+		right: -100%;
+		transition: all 350ms ease-in-out;
+	}
+
+	.nav__menu.show {
+		display: block;
+		right: 2rem;
+	}
+
+	.nav__toggle {
+		cursor: pointer;
+		font-size: 2rem;
+		padding: 1rem 0;
+		display: block;
+	}
+
+	.nav__list {
+		align-items: center;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.nav__item {
+		font-size: 1.2rem;
+	}
+
+	.nav__logo {
+		font-size: 2.8rem;
+	}
+
+	.search__bar {
+		margin-right: -5rem;
+		margin-left: 2rem;
+		padding: 0.2rem;
+		width: 38%;
+	}
+
+	.search__btn {
+		padding: 5px 8px;
+		font-size: 16px;
+	}
+
+	.hero__container {
+		grid-template-columns: repeat(2, 300px);
+		column-gap: 2rem;
+	}
+
+	.mycollection__container {
+		grid-template-columns: repeat(1, 1fr);
+		column-gap: 5rem;
+	}
+
+	.hero__title>h1 {
+		line-height: 3rem;
+	}
+
+	.hero__swiper-card {
+		width: 20rem;
+	}
+
+	.hero__img-content {
+		gap: 2rem;
+	}
+
+	.creator {
+		font-size: 10px;
+	}
+
+	.creator p {
+		font-size: 13px;
+	}
+
+	.hero__img-content>a .btn {
+		padding: 4px;
+		font-size: 10px;
+	}
+
+	.hero__container>small {
+		bottom: 6.5rem;
+		right: 20%;
+	}
+
+	.company__carousel-slide {
+		min-width: 100px;
+	}
+
+	.bsl__container {
+		grid-template-columns: repeat(1, 1fr);
+		padding: 5px;
+	}
+
+	.bsl__left {
+		text-align: center;
+		flex-direction: row;
+		gap: 3rem;
+	}
+
+	.bsl__title>h1 {
+		font-size: 3rem;
+		line-height: 3rem;
+	}
+
+	.bsl__swiper-container {
+		max-width: 650px;
+	}
+
+	.swiper-button-prev,
+	.swiper-rtl .swiper-button-next {
+		padding: 1.3rem;
+	}
+
+	.swiper-button-next,
+	.swiper-rtl .swiper-button-prev {
+		right: 0;
+		padding: 1.3rem;
+	}
+
+	.ttp__des {
+		gap: 10rem;
+	}
+
+	.nl__des {
+		justify-content: space-evenly;
+		gap: 10rem;
+	}
+
+	.ttp__content,
+	.nl__content {
+		justify-content: center;
+		display: grid;
+		grid-template-columns: repeat(2, 280px);
+		gap: 3rem;
+	}
+
+	.ttp__item,
+	.nl__item {
+		width: 18rem;
+	}
+
+	.discover__container {
+		grid-template-columns: repeat(1, 800px);
+		justify-items: center;
+	}
+
+	.discover__filter {
+		width: 40rem;
+	}
+
+	.discover__filter ul li {
+		font-size: 12px;
+		letter-spacing: 1px;
+		padding: 8px 22px;
+	}
+
+	.discover__content {
+		grid-template-columns: repeat(3, 200px);
+	}
+
+	.exp__swiper-container {
+		max-width: 700px;
+		padding: 1rem;
+	}
+
+	.exp__swiper-card {
+		width: 35rem;
+		height: 17rem;
+	}
+
+	.exp__img-content {
+		margin-left: .7rem;
+	}
+
+	.exp__category-des {
+		font-size: 1rem;
+	}
+
+	.category__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.category__content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.category__item {
+		width: 13rem;
+		height: 15rem;
+	}
+
+	.art__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.art__content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.explore__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.explore__content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.profile__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.profile__banner {
+		width: 680px;
+		height: 19rem;
+	}
+
+	.withdrawal__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.withdrawal__banner {
+		width: 700px;
+		height: 17rem;
+	}
+
+	.withdrawal__content-btns {
+		justify-content: center;
+		gap: 4rem;
+	}
+
+	.withdrawal__content-btns .withdrawal__contract-standard,
+	.withdrawal__content-btns .withdrawal__wallet-balance {
+		max-width: 250px;
+		padding: 0 .8rem;
+		border-radius: .8rem;
+	}
+
+	.walletDeposit__container,
+	.conatct__container {
+		grid-template-columns: repeat(1, 700px);
+		row-gap: 1rem;
+	}
+
+	.walletDeposit__banner,
+	.contact__banner,
+	.about__banner {
+		width: 700px;
+		height: 15rem;
+	}
+
+	.about__content {
+		width: 700px;
+	}
+
+	.walletDeposit__histrory-container {
+		margin-top: 2rem;
+	}
+
+	.walletDeposit__content-btns .walletDeposit__wallet-balance {
+		max-width: 250px;
+		padding: 0 .8rem;
+		border-radius: .8rem;
+	}
+
+	.gasfeeDeposit__container {
+		grid-template-columns: repeat(1, 700px);
+	}
+
+	.gasfeeDeposit__banner {
+		width: 650px;
+		height: 15rem;
+	}
+
+	.gasfeeDeposit__container>.gasfeeDeposit__content>.wallet__content {
+		width: 600px;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span {
+		right: 15%;
+	}
+
+	.buy__container {
+		grid-template-columns: repeat(1, 1fr);
+		justify-items: start;
+	}
+
+	.buy__left {
+		width: 100%;
+		align-items: center;
+		justify-content: start;
+	}
+
+	.buy__img-container {
+		width: 100%;
+		height: auto;
+	}
+
+	.accordion {
+		max-width: 100%;
+	}
+
+	.artist__detail {
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	.artist__section {
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.buy__right {
+		margin-top: 3rem;
+	}
+
+	.owner__name {
+		font-size: 16px;
+	}
+
+	.buy__right-content {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.dashboard__walletConnect-con {
+		left: 7rem;
+		max-width: 250px;
+		padding: 10px;
+	}
+
+	.explore__container>.eth__bal {
+		margin-right: -18rem;
+	}
+
+	.modal {
+		left: 17%;
+		padding: 3rem;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+	}
+
+	.adminlogin__content,
+	.createadmin__content,
+	.login__content,
+	.register__content {
+		padding: 20px;
+	}
+
+	.adminlogin__content p,
+	.createadmin__content p,
+	.login__content p,
+	.register__content p {
+		font-size: .9rem;
+	}
+
+	.app__logo {
+		font-size: .95rem;
+		padding: 3px;
+	}
+
+	.google__btn,
+	.github__btn {
+		margin-bottom: 1.5rem;
+	}
+
+	.createadmin__form-input,
+	.register__form-input {
+		padding: 1.28rem;
+	}
+
+	.createadmin_input-container,
+	.register__input-container {
+		grid-template-columns: repeat(2, 230px);
+		gap: .6rem;
+		margin-bottom: 1rem;
+	}
+
+	.createadmin__pass-container input,
+	.register__pass-container input {
+		padding: .78rem 1rem .78rem 1.5rem;
+	}
+
+	.createadmin__pass-container #password_show_hide,
+	.register__pass-container #password_show_hide {
+		top: .7rem;
+	}
+}
+
+@media screen and (max-width: 750px) {
+	.primaryText {
+		font-size: 1.5rem;
+	}
+
+	.whiteText {
+		font-size: 1.2rem;
+	}
+
+	.table> :not(caption)>*>* {
+		padding: 0.3rem 0.5rem;
+	}
+
+	.table-responsive {
+		font-size: 13px;
+	}
+
+	.nav {
+		gap: 3rem;
+	}
+
+	.nav__list {
+		gap: 1.5rem;
+	}
+
+	.nav__item {
+		font-size: 1.1rem;
+	}
+
+	.nav__logo {
+		font-size: 2rem;
+	}
+
+	.search__bar {
+		margin-right: 0rem;
+		margin-left: 0rem;
+		padding: 0.2rem;
+		width: 42%;
+	}
+
+	.search__btn {
+		padding: 5px 8px;
+		font-size: 16px;
+	}
+
+	.hero__container {
+		grid-template-columns: repeat(2, 250px);
+		column-gap: 1.5rem;
+	}
+
+	.hero__title>h1 {
+		font-size: 2rem;
+		line-height: 2rem;
+	}
+
+	.hero__swiper-card {
+		width: 15rem;
+		height: 15rem;
+	}
+
+	.hero__img-content {
+		gap: 1rem;
+	}
+
+	.creator {
+		font-size: 9px;
+	}
+
+	.creator p {
+		font-size: 11px;
+	}
+
+	.hero__img-content>a .btn {
+		padding: 4px;
+		font-size: 8.5px;
+	}
+
+	.bsl__swiper-container {
+		max-width: 600px;
+	}
+
+	.bsl__img-card {
+		width: 300px;
+	}
+
+	.bsl__img {
+		width: 15rem;
+		height: 15rem;
+		margin-bottom: .5rem;
+	}
+
+	.hero__container>small {
+		bottom: 6.5rem;
+		right: 10%;
+	}
+
+	.nl__des {
+		justify-content: space-evenly;
+		gap: 5rem;
+	}
+
+	.ttp__content,
+	.nl__content {
+		justify-content: center;
+		display: grid;
+		grid-template-columns: repeat(2, 250px);
+		gap: 3rem;
+	}
+
+	.ttp__item,
+	.nl__item {
+		width: 15rem;
+	}
+
+	.discover__container {
+		grid-template-columns: repeat(1, 750px);
+		justify-items: center;
+	}
+
+	.discover__filter {
+		width: 35rem;
+	}
+
+	.discover__filter ul li {
+		font-size: 11px;
+		letter-spacing: .5px;
+		padding: 7px 21px;
+	}
+
+	.discover__content {
+		grid-template-columns: repeat(2, 250px);
+	}
+
+	.exp__swiper-container {
+		max-width: 500px;
+	}
+
+	.exp__swiper-card {
+		width: 17rem;
+		height: 20rem;
+	}
+
+	.category__container {
+		grid-template-columns: repeat(1, 600px);
+	}
+
+	.category__content {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.category__item {
+		width: 13rem;
+		height: 15rem;
+	}
+
+	.art__container {
+		grid-template-columns: repeat(1, 500px);
+		gap: 4rem;
+	}
+
+	.art__profile {
+		width: 8rem;
+		height: 8rem;
+		left: 2rem;
+	}
+
+	.art__content {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.explore__container {
+		grid-template-columns: repeat(1, 500px);
+	}
+
+	.explore__content {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.dashboard__btn {
+		top: 17rem;
+		right: 2rem;
+		padding: 10px;
+	}
+
+	.dashboard__walletConnect-con {
+		top: 4rem;
+		left: 5rem;
+		max-width: 250px;
+		padding: 10px;
+	}
+
+	.explore__container>.eth__bal {
+		margin-right: -20rem;
+	}
+
+	.profile__container {
+		grid-template-columns: repeat(1, 500px);
+	}
+
+	.profile__banner {
+		width: 550px;
+		height: 15rem;
+	}
+
+	.profile__input-container {
+		grid-template-columns: repeat(2, 250px);
+		margin-bottom: 2rem;
+	}
+
+	.profile__btns-container>button {
+		font-size: 13px;
+		padding: 12px;
+	}
+
+	.profile__btn {
+		padding: 12px;
+	}
+
+	.wallet__container {
+		grid-template-columns: repeat(1, 900px);
+		row-gap: 3rem;
+		padding: 20px;
+	}
+
+	.wallet__container .primaryText {
+		font-size: 1.8rem;
+	}
+
+	.wallet__des-container {
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
+	}
+
+	.wallet__name {
+		font-size: 1.2rem;
+	}
+
+	.wallet__btns-container>.btn {
+		padding: 2rem;
+		font-size: 1.1rem;
+	}
+
+	.wallet__content {
+		width: 500px;
+	}
+
+	.wallet__content p {
+		margin-left: 1.2rem;
+		margin-top: 8px;
+	}
+
+	.withdrawal__banner,
+	.walletDeposit__banner,
+	.contact__banner,
+	.about__banner {
+		width: 550px;
+		height: 13rem;
+	}
+
+	.about__content {
+		width: 550px;
+	}
+
+	.walletDeposit__wallet-balance h2,
+	.withdrawal__contract-standard h2,
+	.withdrawal__wallet-balance h2 {
+		font-size: 1rem;
+	}
+
+	.walletDeposit__wallet-balance h1,
+	.withdrawal__contract-standard h1,
+	.withdrawal__wallet-balance h1 {
+		font-size: 1.2rem;
+	}
+
+	.withdrawal__content-btns div>svg,
+	.walletDeposit__content-btns div>svg {
+		margin-top: 10px;
+	}
+
+	.withdrawal__input-container,
+	.walletDeposit__input-container {
+		grid-template-columns: repeat(2, 250px);
+		margin-bottom: 2rem;
+	}
+
+	.walletDeposit__form>hr {
+		width: 80%;
+		margin-inline: 10rem;
+	}
+
+	.walletDeposit__qrcode-con {
+		width: 80%;
+	}
+
+	.withdrawal__btn {
+		margin-left: 4rem;
+	}
+
+	.table-responsive {
+		width: 600px;
+	}
+
+	.gasfeeDeposit__container {
+		grid-template-columns: repeat(1, 600px);
+	}
+
+	.gasfeeDeposit__banner {
+		width: 500px;
+		height: 14rem;
+	}
+
+	#gasfee-eth-address {
+		font-size: 14px;
+	}
+
+	.gasfeeDeposit__container>.gasfeeDeposit__content>.wallet__content {
+		width: 500px;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span {
+		right: 5%;
+	}
+
+	.gasfeeDeposit__btn {
+		font-size: 13px;
+		width: 30%;
+		box-shadow: 5px 5px 1px .2px rgba(217, 93, 5, 0.5);
+	}
+
+	.createnft__container {
+		grid-template-columns: repeat(1, 600px);
+		row-gap: 2.2rem;
+	}
+
+	.createnft__content-btns {
+		gap: 2rem;
+	}
+
+	.createnft__content-btns>small {
+		right: 2rem;
+	}
+
+	.createnft__input-container {
+		grid-template-columns: repeat(2, 250px);
+	}
+
+	.createnft__history-container>p {
+		font-size: 14px;
+	}
+
+	.buy__container {
+		grid-template-columns: repeat(1, 600px);
+		padding: 30px;
+	}
+
+	.artist__section {
+		gap: 2rem;
+	}
+
+	.artist__profile {
+		width: 15rem;
+		height: 15rem;
+	}
+
+	.artist__name {
+		text-align: left;
+	}
+
+	.owner__name {
+		font-size: 12px;
+	}
+
+	.buy__right-content {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.modal {
+		left: 18%;
+	}
+
+	.modal-content {
+		font-size: 12px;
+	}
+
+	.modal-buttons>form>button,
+	.modal-buttons>button {
+		font-size: 12px;
+		padding: 8px;
+	}
+
+	.createadmin__input-container {
+		grid-template-columns: repeat(1, 230px);
+		gap: .2rem;
+		margin-bottom: 0.5rem;
+	}
+}
+
+@media screen and (max-width: 542px) {
+	.primaryText {
+		font-size: 1.4rem;
+	}
+
+	.secondaryText {
+		font-size: 12px;
+	}
+
+	.header {
+		margin-top: 0rem;
+	}
+
+	.nav {
+		gap: 1rem;
+		padding: .8rem;
+		justify-content: space-evenly;
+	}
+
+	.nav__menu {
+		padding: 1rem;
+	}
+
+	.nav__menu.show {
+		display: block;
+		right: 2rem;
+	}
+
+	.nav__list {
+		gap: 1rem;
+	}
+
+	.nav__item {
+		font-size: 1rem;
+	}
+
+	.nav__logo,
+	.nav__toggle {
+		font-size: 1.2rem;
+	}
+
+	.search__bar {
+		margin-right: 0rem;
+		margin-left: 0rem;
+		gap: 5px;
+		padding: 0px 5px;
+		width: 50%;
+	}
+
+	.search__bar>input {
+		padding: 7px 15px 7px 7px;
+		width: 80%;
+	}
+
+	.search__btn {
+		padding: 3px 5px;
+		font-size: 10px;
+		box-shadow: 1px 1px 1px .2px rgba(0, 255, 255, 0.3);
+	}
+
+	.search__title-box h3 {
+		font-size: 18px;
+	}
+
+	.card-title {
+		font-size: 16px;
+	}
+
+	.card-text {
+		font-size: 14px;
+	}
+
+	.hero__container {
+		grid-template-columns: max-content;
+		column-gap: .5rem;
+	}
+
+	.mycollection__content {
+		grid-template-columns: repeat(1, 1fr);
+		gap: 1rem;
+	}
+
+	.mycollection__content .explore__item {
+		width: 14rem;
+	}
+
+	.hero__left {
+		margin-top: -3rem;
+		gap: 1rem;
+	}
+
+	.hero__title>h1 {
+		font-size: 2rem;
+		line-height: 2.3rem;
+	}
+
+	.orange__circle {
+		top: -5%;
+		left: 58%;
+		width: 25%;
+		height: 45%;
+	}
+
+	.hero__des {
+		gap: 0.5rem;
+	}
+
+	.hero__des>span {
+		font-size: .7rem;
+	}
+
+	.hero__btn {
+		box-shadow: 5px 3px 1px .2px rgba(0, 255, 255, 0.4);
+		font-size: 12px;
+		padding: 7px 9px;
+	}
+
+	.hero__right {
+		margin-top: -9.6rem;
+	}
+
+	.hero__swiper-card {
+		width: 100%;
+		height: 12rem;
+	}
+
+	.hero__img-content {
+		gap: 2rem;
+	}
+
+	.creator {
+		font-size: 8px;
+	}
+
+	.creator p {
+		font-size: 10px;
+	}
+
+	.hero__img-content>a .btn {
+		font-size: 8px;
+	}
+
+	.hero__container>small {
+		bottom: 4rem;
+		right: 0%;
+		font-size: 12px;
+		word-wrap: break-word;
+	}
+
+	.company__carousel {
+		bottom: 0;
+		right: 0;
+	}
+
+	.company__carousel-slide {
+		min-width: 80px;
+	}
+
+	.bsl__container {
+		padding: 10px;
+	}
+
+	.bsl__left {
+		gap: 1rem;
+	}
+
+	.bsl__title {
+		width: 200px;
+	}
+
+	.bsl__title>h1 {
+		font-size: 2rem;
+		line-height: 2rem;
+	}
+
+	.bsl__swiper-container,
+	.hero__swiper-container {
+		max-width: 300px;
+	}
+
+	.bsl__img-card {
+		border-bottom: 1px solid var(--burnt-cyan);
+		padding: .8rem;
+		width: 250px;
+	}
+
+	.bsl__img {
+		width: 15rem;
+		height: 15rem;
+		margin-bottom: .5rem;
+	}
+
+	.bsl__name {
+		font-size: 1rem;
+	}
+
+	.bsl__category-des {
+		font-size: .8rem;
+	}
+
+	.ttp__des>h1 {
+		font-size: 1.6rem;
+	}
+
+	.ttp__des,
+	.nl__des {
+		justify-content: center;
+		gap: 5rem;
+	}
+
+	.ttp__des a .ttp__btn {
+		padding: 6px;
+		font-size: 11px;
+	}
+
+	.nl__des .nl__btn {
+		padding: 6px;
+		font-size: 11px;
+	}
+
+	.ttp__content,
+	.nl__content {
+		display: grid;
+		grid-template-columns: repeat(1, 280px);
+		gap: 2rem;
+		justify-items: center;
+	}
+
+	.discover__container {
+		grid-template-columns: repeat(1, 500px);
+	}
+
+	.discover__filter {
+		width: 20rem;
+		padding: 10px;
+	}
+
+	.discover__filter ul li {
+		font-size: 10px;
+		letter-spacing: .5px;
+		padding: 8px 15px;
+	}
+
+	.discover__content {
+		grid-template-columns: repeat(1, 300px);
+	}
+
+	.discover__item>.discover__img {
+		height: 12rem;
+	}
+
+	.discover__item .btn {
+		margin-left: 4rem;
+	}
+
+	.exp__swiper-container {
+		max-width: 350px;
+		padding: .8rem;
+	}
+
+	.exp__swiper-card {
+		width: 30rem;
+	}
+
+	.exp__category-des {
+		font-size: 1.5rem;
+	}
+
+	.best__carousel-slide {
+		min-width: 80px;
+		font-size: .6rem;
+	}
+
+	.jn__content {
+		padding: 3rem;
+	}
+
+	.jn__content>.secondaryText {
+		font-size: small;
+	}
+
+	.category__container {
+		grid-template-columns: repeat(1, 500px);
+	}
+
+	.category__des>h1 {
+		font-size: 1.5rem;
+	}
+
+	.category__des>p {
+		font-size: 10px;
+	}
+
+	.category__content {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	.category__item {
+		width: 17rem;
+		height: 17rem;
+	}
+
+	.art__container {
+		grid-template-columns: repeat(1, 500px);
+	}
+
+	.art__banner {
+		width: 70%;
+		height: 10rem;
+	}
+
+	.art__profile {
+		width: 5rem;
+		height: 5rem;
+		bottom: -2rem;
+		left: 1rem;
+	}
+
+	.art__des {
+		width: 70%;
+	}
+
+	.art__des>h1 {
+		font-size: 1.8rem;
+	}
+
+	.art__content {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	.art__item {
+		width: 17rem;
+	}
+
+	.explore__container {
+		grid-template-columns: repeat(1, 500px);
+		row-gap: 2rem;
+	}
+
+	.explore__filter>h1 {
+		font-size: 1.2rem;
+	}
+
+	.explore__content {
+		grid-template-columns: repeat(1, 1fr);
+	}
+
+	.explore__item {
+		width: 17rem;
+	}
+
+	.dashboard__name {
+		font-size: 1.1rem;
+	}
+
+	.eth__bal>h1 {
+		font-size: 1rem;
+	}
+
+	.dashboard__btn {
+		right: 4rem;
+		top: 10.65rem;
+		font-size: 12px;
+		padding: 5px 8px;
+	}
+
+	.dashboard__walletConnect-con {
+		top: 4.3rem;
+		left: 2.5rem;
+		max-width: 150px;
+		padding: 10px;
+		gap: .5rem;
+		font-size: 12px;
+	}
+
+	.dashboard__walletConnect-btn {
+		padding: 3px 8px;
+		font-size: 12px;
+	}
+
+	.dashboard__walletConnect-dropdown {
+		font-size: 12px;
+		height: 2rem;
+		padding-left: .5rem;
+	}
+
+	.explore__container>.eth__bal {
+		margin-right: -10rem;
+		max-width: 150px;
+		height: 5rem;
+		padding: 1rem .5rem;
+		box-shadow: 4px 4px 1px .2px rgba(0, 255, 255, 0.3);
+	}
+
+	.profile__container {
+		grid-template-columns: repeat(1, 500px);
+		row-gap: 5rem;
+	}
+
+	.profile__banner {
+		width: 350px;
+		height: 12rem;
+	}
+
+	.profile__profile {
+		width: 7rem;
+		height: 7rem;
+		bottom: -2.5rem;
+		left: 32%;
+	}
+
+	.profile__input-container {
+		grid-template-columns: repeat(1, 1fr);
+		margin-bottom: 8rem;
+	}
+
+	.profile__btns-container {
+		position: absolute;
+		bottom: -9rem;
+		left: 0;
+		gap: 3rem;
+	}
+
+	.profile__btns-container>button {
+		font-size: 13px;
+		padding: 12px;
+	}
+
+	.profile__btn {
+		padding: 12px;
+	}
+
+	.wallet__container {
+		grid-template-columns: repeat(1, 700px);
+		row-gap: 3rem;
+		padding: 10px;
+	}
+
+	.wallet__container .primaryText {
+		font-size: 1.3rem;
+	}
+
+	.wallet__des-container {
+		display: flex;
+		flex-direction: column;
+		row-gap: 1rem;
+	}
+
+	.wallet__name {
+		font-size: .8rem;
+	}
+
+	.wallet__btns-container {
+		flex-direction: column;
+	}
+
+	.wallet__btns-container>.btn {
+		padding: 1.8rem;
+		font-size: 1.1rem;
+	}
+
+	.wallet__content {
+		width: 350px;
+		text-align: center;
+	}
+
+	.withdrawal__container,
+	.walletDeposit__container,
+	.conatct__container {
+		grid-template-columns: repeat(1, 600px);
+		padding: 20px;
+	}
+
+	.withdrawal__banner,
+	.walletDeposit__banner,
+	.contact__banner,
+	.about__banner {
+		width: 350px;
+		height: 10rem;
+	}
+
+	.about__content {
+		width: 350px;
+	}
+
+	.createnft__content-btns .createnft__contract-standard,
+	.createnft__content-btns .createnft__wallet-balance,
+	.walletDeposit__content-btns .walletDeposit__wallet-balance,
+	.withdrawal__content-btns .withdrawal__contract-standard,
+	.withdrawal__content-btns .withdrawal__wallet-balance {
+		max-width: 200px;
+		height: 5rem;
+		gap: .3rem;
+		padding: 0 .5rem;
+		box-shadow: 5px 5px 1px .2px rgba(0, 255, 255, 0.3);
+	}
+
+	.createnft__contract-standard h2,
+	.createnft__wallet-balance h2,
+	.walletDeposit__wallet-balance h2,
+	.gasfeeDeposit__wallet-balance h2,
+	.withdrawal__contract-standard h2,
+	.withdrawal__wallet-balance h2 {
+		font-size: .9rem;
+	}
+
+	.createnft__contract-standard h1,
+	.createnft__wallet-balance h1,
+	.walletDeposit__wallet-balance h1,
+	.gasfeeDeposit__wallet-balance h1,
+	.withdrawal__contract-standard h1,
+	.withdrawal__wallet-balance h1 {
+		font-size: 1.1rem;
+	}
+
+	.createnft__content-btns div>svg,
+	.walletDeposit__content-btns div>svg,
+	.gasfeeDeposit__content-btns div>svg,
+	.withdrawal__content-btns div>svg {
+		margin-top: 8px;
+	}
+
+	.walletDeposit__form {
+		gap: 1rem;
+	}
+
+	.withdrawal__input-container,
+	.createnft__input-container,
+	.walletDeposit__input-container {
+		grid-template-columns: repeat(1, 300px);
+		margin-bottom: 0;
+	}
+
+	.walletDeposit__form-div {
+		margin-bottom: 2rem;
+	}
+
+	.walletDeposit__form-div:nth-child(1) small {
+		font-size: 12px;
+	}
+
+	.walletDeposit__form-div:nth-child(2) {
+		margin-block: 2rem;
+	}
+
+	.walletDeposit__form>hr,
+	.walletDeposit__qrcode-con {
+		width: 50%;
+	}
+
+	.walletDeposit__qrcode-content {
+		width: 120px;
+		height: 120px;
+	}
+
+	.walletDeposit__qrcode-con>small {
+		font-size: 10px;
+	}
+
+	.walletDeposit__btn {
+		width: 20%;
+		box-shadow: 4px 4px 1px .2px rgba(217, 93, 5, 0.5);
+	}
+
+	.table-responsive {
+		font-size: 12px;
+		width: 360px;
+	}
+
+	.contact__input-container {
+		grid-template-columns: repeat(1, 250px);
+	}
+
+	.contact__btn {
+		margin-top: 6rem;
+		margin-left: 3.5rem;
+		width: 50%;
+	}
+
+	.contact__form-input {
+		font-size: 12px;
+	}
+
+	.gasfeeDeposit__container {
+		grid-template-columns: repeat(1, 400px);
+	}
+
+	.gasfeeDeposit__banner {
+		width: 330px;
+		height: 10rem;
+	}
+
+	.gasfeeDeposit__container>.gasfeeDeposit__content>.wallet__content {
+		width: 330px;
+	}
+
+	.gasfeeDeposit__input-container {
+		grid-template-columns: repeat(1, 250px);
+	}
+
+	.gasfeeDeposit__form-input {
+		font-size: 12px;
+	}
+
+	#gasfee-eth-address {
+		font-size: 12px;
+		word-wrap: break-word;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span {
+		right: 23%;
+		top: 3.4rem;
+		padding: .3rem .5rem;
+		border-radius: .4rem;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span>i {
+		font-size: 12px;
+	}
+
+	.gasfeeDeposit__btn {
+		font-size: 12px;
+		width: 40%;
+	}
+
+	.offers__container>.offers__name {
+		font-size: 1rem;
+	}
+
+	.offers__container>.eth__bal {
+		margin-left: 0;
+	}
+
+	.createnft__history-container>.primaryText,
+	.withdrawal__history-container>.primaryText,
+	.walletDeposit__history-container>.primaryText,
+	.offers__history-container>.primaryText {
+		font-size: 1.7rem;
+	}
+
+	.createnft__history-container>p,
+	.withdrawal__history-container>p,
+	.walletDeposit__history-container>p,
+	.offers__history-container>p {
+		font-size: 12px;
+	}
+
+	.createnft__container {
+		grid-template-columns: repeat(1, 1000px);
+		padding: 20px;
+	}
+
+	.createnft__content-btns {
+		justify-content: center;
+		gap: 2rem;
+	}
+
+	.createnft__content-btns>small {
+		font-size: 10px;
+		right: 0;
+		bottom: -1.5rem;
+	}
+
+	.createnft__form {
+		width: 300px;
+	}
+
+	.createnft__form-div:nth-child(5) {
+		margin-bottom: 2.3rem;
+	}
+
+	.createnft__form-div:nth-child(6)>p {
+		font-size: 14px;
+	}
+
+	.createnft__form-div:nth-child(7) {
+		margin-top: 1rem;
+	}
+
+	.createnft___form-img-upload-box {
+		padding: 65px 7px;
+	}
+
+	.createnft__form-img-upload-file-input {
+		padding: 1rem;
+		font-size: 12px;
+	}
+
+	.createnft__input-container {
+		grid-template-columns: repeat(1, 300px);
+		margin-bottom: 3rem;
+	}
+
+	.createnft__btn {
+		box-shadow: 4px 4px 1px .2px rgba(217, 93, 5, 0.5);
+		font-size: 12px;
+		height: 3rem;
+		width: 40%;
+		margin: 4rem 0 0 5.5rem;
+	}
+
+	.uploadreceipt___form-img-upload-box {
+		padding: 65px 7px;
+		margin-bottom: 0;
+	}
+
+	.uploadreceipt__form-input {
+		padding: 1rem;
+		font-size: 12px;
+	}
+
+	.buy__container {
+		grid-template-columns: repeat(1, 336px);
+		justify-items: center;
+	}
+
+	.buy__left {
+		gap: 2rem;
+		align-items: center;
+	}
+
+	.accordion__title {
+		font-size: 1.3rem;
+	}
+
+	.artist__section {
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.artist__profile {
+		width: 8rem;
+		height: 8rem;
+	}
+
+	.artist__name {
+		text-align: center;
+		font-size: 16px;
+	}
+
+	.buy__right {
+		align-items: start;
+	}
+
+	.buy__right-con {
+		align-items: start;
+	}
+
+	.owner {
+		gap: 0.3rem;
+	}
+
+	.buy__owner-label {
+		font-size: 10px;
+	}
+
+	.owner__name {
+		font-size: 10px;
+		text-align: start;
+	}
+
+	.buy__royalties-con-item {
+		font-size: 12px;
+	}
+
+	.buy__right-content-item .btn {
+		width: 50%;
+		padding: 8px;
+		font-size: 10px;
+	}
+
+	.buy__right-con-item-btn {
+		box-shadow: 4px 4px 1px .2px var(--burnt-cyan);
+		font-size: 12px;
+	}
+
+	.buy__right-con-item small {
+		font-size: 0.6rem;
+	}
+
+	.snft_table__header {
+		padding: 8px 20px;
+		gap: 30px;
+	}
+
+	.snft_table__header p.meta_font {
+		font-size: 10px;
+	}
+
+	.purchase-section_activity_offer .activity_offer .tab_head ul li {
+		gap: 3px;
+		font-size: 11px;
+		padding: 5px;
+		line-height: 5px;
+	}
+
+	.buy__right-con2 {
+		justify-content: start;
+		align-items: center;
+	}
+
+	.buy__right-content {
+		grid-template-columns: repeat(1, 1fr);
+		gap: 2rem;
+	}
+
+	.buy__right-content-item {
+		width: 17rem;
+	}
+
+	.buy__right-content-item>.item__img {
+		height: 15rem;
+	}
+
+	.buy__right-content-item>.ttp__name {
+		font-size: 1rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form {
+		margin-top: 1rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container {
+		grid-template-columns: repeat(1, 300px);
+		row-gap: 0;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2) {
+		margin: 1rem 0 3rem 0;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2) small {
+		font-size: 12px;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container {
+		margin-bottom: 3rem;
+	}
+
+
+	.buy__right-con-item>.walletDeposit__form>hr,
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__qrcode-con {
+		width: 100%;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__qrcode-con>.walletDeposit__qrcode-content {
+		width: 150px;
+		height: 150px;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__btn {
+		margin-top: 1rem;
+		width: 50%;
+		box-shadow: 4px 4px 1px .2px rgba(217, 93, 5, 0.5);
+	}
+
+	.modal {
+		left: 10%;
+		padding: 2rem;
+	}
+
+	.modal-content {
+		font-size: 10px;
+	}
+
+	.modal-buttons>form>button,
+	.modal-buttons>button {
+		font-size: 10px;
+		padding: 8px;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con>.buy__right-con-item>.gasfeeDeposit__form>.gasfeeDeposit__input-container>.gasfeeDeposit__form-div>small {
+		font-size: 10px;
+	}
+
+
+	.footer__container {
+		justify-content: space-between;
+		gap: 3rem;
+	}
+
+	.footer__title {
+		margin-top: 1rem;
+		font-size: 14px;
+	}
+
+	.footer__list {
+		grid-template-columns: repeat(2, 80px);
+		gap: 5px;
+	}
+
+	.footer__link a {
+		font-size: 10px;
+	}
+
+	.footer__social-link {
+		font-size: .8rem;
+		padding: .2rem;
+		box-shadow: 3px 2px 1px .2px rgba(0, 255, 255, 0.3);
+	}
+
+	.footer__copy {
+		font-size: .6rem;
+	}
+
+	.adminlogin__content,
+	.login__content {
+		gap: 1rem;
+	}
+
+	.app__logo {
+		left: .7rem;
+		top: .7rem;
+		padding: 2px;
+	}
+
+	.adminlogin__content p,
+	.createadmin__content p,
+	.login__content p,
+	.register__content p {
+		margin-bottom: .5rem;
+	}
+
+	.adminlogin__form,
+	.createadmin__form,
+	.login__form,
+	.register__form {
+		width: 250px;
+	}
+
+	.adminlogin__form-div,
+	.login__form-div {
+		height: 2.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.adminlogin__form-input,
+	.createadmin__form-input,
+	.login__form-input,
+	.register__form-input {
+		padding: 1rem;
+		font-size: 12px;
+	}
+
+	.adminlogin__pass-container #password_show_hide,
+	.login__pass-container #password_show_hide {
+		top: .8rem;
+	}
+
+	.adminlogin__btn,
+	.login__btn {
+		margin-bottom: 1.5rem;
+		font-size: 12px;
+	}
+
+	.createadmin__content,
+	.register__content {
+		padding: 10px;
+		gap: 1rem;
+	}
+
+	.createadmin__content>div>.primaryText,
+	.register__content>div>.primaryText {
+		font-size: 1.2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.createadmin__content>div>small,
+	.register__content>div>small {
+		font-size: 11px;
+	}
+
+	.createadmin__form-div,
+	.register__form-div {
+		margin-bottom: .9rem;
+	}
+
+	.createadmin__input-container,
+	.register__input-container {
+		grid-template-columns: repeat(1, 230px);
+		gap: .2rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.createadmin__pass-container input,
+	.register__pass-container input {
+		padding: .5rem 1rem .5rem 1.5rem;
+	}
+
+	.createadmin__pass-container #password_show_hide,
+	.register__pass-container #password_show_hide {
+		top: .36rem;
+	}
+
+	.createadmin__btn,
+	.register__btn {
+		margin-bottom: .5rem;
+		box-shadow: 4px 4px 1px .2px rgba(217, 93, 5, 0.5);
+		font-size: 12px
+	}
+
+	.adminlogin__content p,
+	.createadmin__content p,
+	.error__content p,
+	.login__content p,
+	.register__content p {
+		font-size: 12px;
+	}
+}
+
+@media screen and (max-width: 390px) {
+	.container {
+		margin-left: 1rem;
+		margin-right: 1rem;
+	}
+
+	.hero__swiper-card {
+		width: 20rem;
+		height: 12rem;
+	}
+
+	.bsl__title {
+		width: 250px;
+	}
+
+	.bsl__title>h1 {
+		font-size: 1.8rem;
+	}
+
+	.bsl__des {
+		gap: 1rem;
+	}
+
+	.bsl__btn {
+		font-size: 12px;
+		padding: 12px;
+		box-shadow: 4px 3px 1px .2px rgba(0, 255, 255, 0.4);
+	}
+
+	.bsl__swiper-container,
+	.hero__swiper-container {
+		max-width: 250px;
+	}
+
+	.bsl__img {
+		width: 13rem;
+		height: 11rem;
+	}
+
+	.swiper-button-prev,
+	.swiper-rtl .swiper-button-next,
+	.swiper-button-next,
+	.swiper-rtl .swiper-button-prev {
+		padding: 1rem;
+		width: 30px;
+		height: 30px;
+	}
+
+	.ttp__des,
+	.nl__des {
+		justify-content: center;
+		gap: 3rem;
+	}
+
+	.swiper-button-next:after,
+	.swiper-button-prev:after {
+		font-size: 12px;
+	}
+
+	.discover__container {
+		grid-template-columns: repeat(1, 400px);
+	}
+
+	.discover__filter {
+		width: 18rem;
+	}
+
+	.exp__swiper-container {
+		max-width: 300px;
+		padding: .8rem;
+	}
+
+	.exp__swiper-card {
+		width: 25rem;
+	}
+
+	.exp__category-des {
+		font-size: 1.3rem;
+	}
+
+	.art__container {
+		grid-template-columns: repeat(1, 400px);
+	}
+
+	.art__banner {
+		width: 70%;
+		height: 8rem;
+	}
+
+	.art__profile {
+		width: 4rem;
+		height: 4rem;
+		bottom: -1.5rem;
+		left: 1rem;
+	}
+
+	.art__des>h1,
+	.category__des>h1 {
+		font-size: 1.3rem;
+	}
+
+	.art__des>p {
+		font-size: 12px;
+	}
+
+	.dashboard__name {
+		font-size: .9rem;
+	}
+
+	.dashboard__btn {
+		right: 4rem;
+		top: 10.65rem;
+		font-size: 12px;
+		padding: 5px 8px;
+	}
+
+	.dashboard__walletConnect-con {
+		top: 4rem;
+		left: 1.3rem;
+		max-width: 130px;
+		padding: 8px;
+	}
+
+	.dashboard__walletConnect-btn {
+		padding: 3px 8px;
+		font-size: 12px;
+	}
+
+	.explore__container>.eth__bal {
+		margin-right: -10rem;
+		max-width: 130px;
+		height: 5rem;
+		padding: .5rem;
+	}
+
+	.eth__bal>h1 {
+		font-size: .9rem;
+	}
+
+	.profile__container {
+		grid-template-columns: repeat(1, 400px);
+	}
+
+	.profile__banner {
+		width: 300px;
+		height: 10rem;
+	}
+
+	.profile__profile {
+		width: 6rem;
+		height: 6rem;
+	}
+
+	.profile__btns-container {
+		gap: 2rem;
+	}
+
+	.profile__btns-container>button {
+		font-size: 12px;
+	}
+
+	.wallet__content {
+		width: 300px;
+	}
+
+	.contact__banner,
+	.about__banner {
+		width: 280px;
+		height: 8rem;
+		border-block: 1.5px solid var(--burnt-cyan);
+	}
+
+	.about__content {
+		width: 280px;
+	}
+
+	.walletDeposit__banner,
+	.withdrawal__banner {
+		width: 280px;
+		height: 8rem;
+		border-block: 1.5px solid var(--burnt-orange);
+	}
+
+	.walletDeposit__content {
+		margin-bottom: 1rem;
+	}
+
+	.withdrawal__content-btns {
+		gap: 2rem;
+	}
+
+	.createnft__content-btns .createnft__contract-standard,
+	.createnft__content-btns .createnft__wallet-balance,
+	.withdrawal__content-btns .withdrawal__contract-standard,
+	.walletDeposit__content-btns .walletDeposit__wallet-balance,
+	.withdrawal__content-btns .withdrawal__wallet-balance {
+		max-width: 150px;
+		height: 4rem;
+	}
+
+	.createnft__contract-standard h2,
+	.createnft__wallet-balance h2,
+	.withdrawal__contract-standard h2,
+	.gasfeeDeposit__wallet-balance h2,
+	.walletDeposit__wallet-balance h2,
+	.withdrawal__wallet-balance h2 {
+		font-size: .8rem;
+	}
+
+	.createnft__contract-standard h1,
+	.createnft__wallet-balance h1,
+	.withdrawal__contract-standard h1,
+	.gasfeeDeposit__wallet-balance h1,
+	.walletDeposit__wallet-balance h1,
+	.withdrawal__wallet-balance h1 {
+		font-size: 1rem;
+	}
+
+	.createnft__content-btns div>svg,
+	.walletDeposit__content-btns div>svg,
+	.gasfeeDeposit__content-btns div>svg,
+	.withdrawal__content-btns div>svg {
+		margin-top: 6px;
+	}
+
+	.creatnft__input-container,
+	.walletDeposit__input-container,
+	.withdrawal__input-container {
+		grid-template-columns: repeat(1, 250px);
+	}
+
+	.walletDeposit__form-input,
+	.walletDeposit__form-div:nth-child(1) small,
+	.withdrawal__form-input {
+		font-size: 12px;
+	}
+
+	.walletDeposit__qrcode-content {
+		width: 100px;
+		height: 100px;
+	}
+
+	.walletDeposit__form>hr,
+	.walletDeposit__qrcode-con {
+		width: 40%;
+	}
+
+	.walletDeposit__btn {
+		font-size: 12px;
+	}
+
+	.gasfeeDeposit__container {
+		grid-template-columns: repeat(1, 400px);
+	}
+
+	.gasfeeDeposit__banner {
+		width: 300px;
+		height: 8rem;
+	}
+
+	.gasfeeDeposit__container>.gasfeeDeposit__content>.wallet__content {
+		width: 300px;
+	}
+
+	.gasfeeDeposit__input-container {
+		grid-template-columns: repeat(1, 250px);
+	}
+
+	.gasfeeDeposit__form-input {
+		font-size: 12px;
+	}
+
+	#gasfee-eth-address {
+		font-size: 12px;
+		word-wrap: break-word;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span {
+		right: 16%;
+		padding: .3rem .5rem;
+		border-radius: .4rem;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span>i {
+		font-size: 12px;
+	}
+
+	.gasfeeDeposit__btn {
+		font-size: 12px;
+		width: 40%;
+	}
+
+	.table-responsive {
+		font-size: 12px;
+		width: 300px;
+	}
+
+	.createnft__history-container>.primaryText,
+	.withdrawal__history-container>.primaryText,
+	.walletDeposit__history-container>.primaryText,
+	.offers__history-container>.primaryText {
+		font-size: 1.3rem;
+	}
+
+	.offers__container>.eth__bal {
+		height: 5rem;
+	}
+
+	.createnft__container {
+		row-gap: 1rem;
+		padding: 10px;
+	}
+
+	.createnft__content-btns>small {
+		right: .5rem;
+		bottom: -1.5rem;
+	}
+
+	.createnft__form-div:nth-child(5)>small {
+		font-size: 12px;
+	}
+
+	.uploadreceipt___form-img-upload-box>div {
+		padding: .5rem;
+		width: 15rem;
+	}
+
+	.uploadreceipt___form-img-upload-box>div>p {
+		font-size: 12px;
+	}
+
+	.buy__container {
+		grid-template-columns: repeat(1, 304px);
+		padding: 20px;
+	}
+
+	.buy__owner-profile {
+		width: 2rem;
+		height: 1.5rem;
+	}
+
+	.buy__royalties-con-item {
+		font-size: 11px;
+	}
+
+	.buy__right-content-item .btn {
+		width: 40%;
+		box-shadow: 4px 4px 1px .2px var(--burnt-cyan);
+	}
+
+	.snft_table__header {
+		padding: 8px 10px;
+		gap: 20px;
+	}
+
+	.buy__right-content-item {
+		width: 15rem;
+	}
+
+	.buy__right-content-item>.item__img {
+		height: 13rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>hr,
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__qrcode-con {
+		width: 80%;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__qrcode-con>.walletDeposit__qrcode-content {
+		width: 120px;
+		height: 120px;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2) {
+		margin: 1rem 0 4rem 0;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2) small {
+		font-size: 11px;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container {
+		margin-bottom: 1rem;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con {
+		gap: 1rem;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con>.buy__right-con-item>.gasfeeDeposit__form>.gasfeeDeposit__input-container>.gasfeeDeposit__form-div>small {
+		font-size: 9px;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con>.buy__nft-name {
+		font-size: 1.5rem;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con>.eth__bal {
+		height: 4rem;
+	}
+
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con>.buy__right-con-item>.gasfeeDeposit__form>.gasfeeDeposit__input-container>.gasfeeDeposit__form-div {
+		margin: .5rem 0 3rem 0;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con>.buy__right-con-item>.gasfeeDeposit__form>.gasfeeDeposit__input-container>.gasfeeDeposit__form-div>input {
+		padding: 1rem;
+	}
+
+	.modal {
+		left: 8%;
+		padding: 1.8rem;
+		width: 19.8rem;
+	}
+
+	.modal-buttons>form>button,
+	.modal-buttons>button {
+		font-size: 10px;
+		padding: 7px;
+	}
+
+	.adminlogin__content div>small,
+	.login__content div>small {
+		font-size: 10px;
+	}
+
+	.adminlogin__btn,
+	.login__btn {
+		padding: 8px 15px;
+		margin-block: .5rem;
+		font-size: 12px;
+		box-shadow: 4px 4px 1px .2px rgba(217, 93, 5, 0.3)
+	}
+
+	.createadmin__content>div>.primaryText,
+	.register__content>div>.primaryText {
+		font-size: 1.1rem;
+	}
+
+	.createadmin__content>div>small,
+	.register__content>div>small {
+		font-size: 10px;
+	}
+
+	.createadmin__btn,
+	.register__btn {
+		margin-bottom: .5rem;
+		padding: 8px 12px;
+		font-size: 10px
+	}
+
+	.adminlogin__content p,
+	.createadmin__content p,
+	.error__content p,
+	.login__content p,
+	.register__content p {
+		font-size: 10px;
+	}
+
+	.show-scroll {
+		bottom: 3rem;
+	}
+
+	.footer__container {
+		gap: 1.5rem;
+	}
+
+}
+
+@media screen and (max-width: 325px) {
+	body {
+		padding: 10px;
+	}
+
+	.btn {
+		padding: 8px 10px;
+	}
+
+	.primaryText {
+		font-size: 1.5rem;
+	}
+
+	.nav__menu {
+		padding: .5rem;
+		border-radius: .4rem 1rem .4rem 1rem;
+		top: 4rem;
+	}
+
+	.nav__menu.show {
+		right: 1rem;
+	}
+
+	.nav__menu.show {
+		display: block;
+		right: 2rem;
+	}
+
+	.nav__list {
+		gap: .5rem;
+	}
+
+	.nav__item {
+		font-size: .5rem;
+	}
+
+	.nav__logo,
+	.nav__toggle {
+		font-size: 1rem;
+	}
+
+	.search__bar {
+		width: 50%;
+		padding: .3rem;
+	}
+
+	.search__bar .search__form-input {
+		font-size: 10px;
+	}
+
+	.search__btn {
+		padding: 3px 5px;
+		font-size: 10px;
+	}
+
+	.hero__wrapper,
+	.mycollection__wrapper {
+		margin-top: 4rem;
+		padding: .4rem;
+	}
+
+	.hero__container {
+		grid-template-columns: max-content;
+		column-gap: .3rem;
+	}
+
+	.mycollection__content .explore__item {
+		width: 12rem;
+	}
+
+	.hero__left {
+		margin-top: 1;
+		gap: 1rem;
+	}
+
+	.hero__title>h1 {
+		font-size: 1.7rem;
+		line-height: 2rem;
+	}
+
+	.orange__circle {
+		width: 20%;
+	}
+
+	.hero__des {
+		gap: 0.5rem;
+	}
+
+	.hero__des>span {
+		font-size: .6rem;
+	}
+
+	.hero__btn {
+		box-shadow: 5px 3px 1px .2px rgba(0, 255, 255, 0.4);
+		font-size: 10px;
+	}
+
+	.hero__swiper-card {
+		height: 12.5rem;
+	}
+
+	.hero__img-content {
+		gap: 1rem;
+	}
+
+	.hero__container>small {
+		font-size: 10px;
+	}
+
+	.bsl__wrapper {
+		padding: 1rem;
+	}
+
+	.bsl__title {
+		width: 200px;
+	}
+
+	.bsl__des {
+		font-size: 12px;
+	}
+
+	.bsl__btn {
+		font-size: 10px;
+		padding: 10px;
+		box-shadow: 4px 3px 1px .2px rgba(0, 255, 255, 0.4);
+	}
+
+	.bsl__img {
+		width: 10rem;
+		height: 10rem;
+	}
+
+	.bsl__swiper-container,
+	.hero__swiper-container {
+		max-width: 250px;
+	}
+
+	.bsl__img {
+		width: 15rem;
+		height: 11rem;
+	}
+
+	.ttp__wrapper,
+	.nl__wrapper {
+		padding: 1rem;
+	}
+
+	.ttp__des,
+	.nl__des {
+		gap: 2rem;
+	}
+
+	.ttp__des h1 {
+		font-size: 1.1rem;
+	}
+
+	.ttp__des a .ttp__btn {
+		padding: 5px;
+		font-size: 10px;
+	}
+
+	.nl__des .nl__btn {
+		font-size: 10px;
+	}
+
+	.ttp__content,
+	.nl__content {
+		display: grid;
+		grid-template-columns: repeat(1, 220px);
+		gap: 2rem;
+	}
+
+	.ttp__item,
+	.nl__item {
+		width: 14rem;
+	}
+
+	.discover__wrapper {
+		padding: 1rem;
+	}
+
+	.discover__container {
+		grid-template-columns: repeat(1, 300px);
+		padding: 10px;
+	}
+
+	.discover__filter {
+		width: 13rem;
+	}
+
+	.discover__filter ul li {
+		font-size: 8px;
+		letter-spacing: .2px;
+		padding: 5px 7px;
+	}
+
+	.discover__content {
+		grid-template-columns: repeat(1, 230px);
+	}
+
+	.discover__item .btn {
+		padding: 6px;
+		margin-left: 3rem;
+	}
+
+	.exp__wrapper {
+		padding: 1rem;
+	}
+
+	.exp__swiper-container {
+		max-width: 230px;
+		padding: .6rem;
+	}
+
+	.exp__swiper-card {
+		width: 23rem;
+	}
+
+	.exp__category-des {
+		font-size: 1.1rem;
+	}
+
+	.category__container {
+		grid-template-columns: repeat(1, 300px);
+	}
+
+	.category__item {
+		width: 13rem;
+		height: 13rem;
+	}
+
+	.art__wrapper {
+		padding: 1rem;
+	}
+
+	.art__container {
+		grid-template-columns: repeat(1, 300px);
+	}
+
+	.art__banner {
+		width: 70%;
+		height: 6rem;
+	}
+
+	.art__profile {
+		width: 3rem;
+		height: 3rem;
+		bottom: -1.5rem;
+		left: 1rem;
+	}
+
+	.art__des>h1,
+	.category__des>h1 {
+		font-size: 1rem;
+	}
+
+	.art__des>p {
+		font-size: 10px;
+	}
+
+	.art__item {
+		width: 13rem;
+	}
+
+	.explore__container {
+		grid-template-columns: repeat(1, 300px);
+	}
+
+	.explore__filter>h1 {
+		font-size: 1rem;
+		row-gap: 2rem;
+	}
+
+	.explore__item {
+		width: 13rem;
+	}
+
+	.dashboard__name {
+		font-size: .75rem;
+	}
+
+	.dashboard__btn {
+		right: 2rem;
+		top: 9.3rem;
+		font-size: 10px;
+		padding: 5px 8px;
+	}
+
+	.dashboard__walletConnect-con {
+		top: 4rem;
+		left: 1.1rem;
+		max-width: 110px;
+		padding: 8px;
+		font-size: 10px;
+	}
+
+	.dashboard__walletConnect-btn {
+		padding: 3px 8px;
+		font-size: 10px;
+	}
+
+	.dashboard__walletConnect-dropdown {
+		font-size: 10px;
+	}
+
+	.explore__container>.eth__bal {
+		margin-right: -8rem;
+		max-width: 110px;
+		height: 4rem;
+		padding: .8rem .4rem;
+
+	}
+
+	.eth__bal>h1 {
+		font-size: .75rem;
+	}
+
+	.profile__wrapper {
+		padding: 1rem;
+	}
+
+	.profile__container {
+		grid-template-columns: repeat(1, 200px);
+		row-gap: 4rem;
+	}
+
+	.profile__banner {
+		width: 250px;
+		height: 8rem;
+	}
+
+	.profile__profile {
+		width: 5.2rem;
+		height: 5.2rem;
+	}
+
+	.profile__input-container {
+		margin-bottom: 6rem;
+	}
+
+	.profile__form-input {
+		font-size: 12px;
+	}
+
+	.profile__btns-container {
+		gap: 2rem;
+		bottom: -8rem;
+	}
+
+	.profile__btns-container>button {
+		font-size: 9px;
+		padding: 10px;
+	}
+
+	.profile__btn {
+		font-size: 9px;
+	}
+
+	.wallet__wrapper {
+		padding: 1rem;
+	}
+
+	.wallet__container {
+		grid-template-columns: repeat(1, 400px);
+		row-gap: 2rem;
+	}
+
+	.wallet__container .primaryText {
+		font-size: 1.1rem;
+	}
+
+	.wallet__des-container {
+		flex-direction: column;
+		row-gap: 1rem;
+	}
+
+	.wallet__name {
+		font-size: .6rem;
+	}
+
+	.wallet__btns-container {
+		flex-direction: column;
+	}
+
+	.wallet__btns-container>a>.wallet__btn {
+		font-size: 15px;
+	}
+
+	.wallet__content {
+		width: 250px;
+		text-align: center;
+	}
+
+	.about__wrapper,
+	.contact__wrapper,
+	.withdrawal__wrapper,
+	.walletDeposit__wrapper {
+		padding: 1rem;
+	}
+
+	.contact__container {
+		grid-template-columns: repeat(1, 250px);
+		row-gap: 2rem;
+	}
+
+	.contact__banner,
+	.about__banner {
+		width: 230px;
+		height: 6rem;
+	}
+
+	.about__content {
+		width: 230px;
+	}
+
+	.withdrawal__banner,
+	.walletDeposit__banner {
+		width: 230px;
+		height: 6rem;
+	}
+
+	.withdrawal__content-btns,
+	.createnft__content-btns {
+		gap: .8rem;
+	}
+
+	.createnft__content-btns .createnft__contract-standard,
+	.createnft__content-btns .createnft__wallet-balance,
+	.withdrawal__content-btns .withdrawal__contract-standard,
+	.walletDeposit__content-btns .walletDeposit__wallet-balance,
+	.withdrawal__content-btns .withdrawal__wallet-balance {
+		max-width: 130px;
+	}
+
+	.createnft__contract-standard h2,
+	.createnft__wallet-balance h2,
+	.withdrawal__contract-standard h2,
+	.gasfeeDeposit__wallet-balance h2,
+	.walletDeposit__wallet-balance h2,
+	.withdrawal__wallet-balance h2 {
+		font-size: .7rem;
+	}
+
+	.createnft__contract-standard h1,
+	.createnft__wallet-balance h1,
+	.withdrawal__contract-standard h1,
+	.gasfeeDeposit__wallet-balance h1,
+	.walletDeposit__wallet-balance h1,
+	.withdrawal__wallet-balance h1 {
+		font-size: .9rem;
+	}
+
+	.createnft__content-btns div>svg,
+	.walletDeposit__content-btns div>svg,
+	.gasfeeDeposit__content-btns div>svg,
+	.withdrawal__content-btns div>svg {
+		margin-top: 5px;
+	}
+
+	.createnft__input-container,
+	.contact__input-container,
+	.walletDeposit__input-container,
+	.withdrawal__input-container {
+		grid-template-columns: repeat(1, 230px);
+	}
+
+	.createnft__form-input,
+	.walletDeposit__form-input,
+	.withdrawal__form-input {
+		font-size: 10px;
+	}
+
+	.walletDeposit__btn {
+		width: 20%;
+	}
+
+	.gasfeeDeposit__wrapper {
+		pad: 1rem;
+	}
+
+	.gasfeeDeposit__banner {
+		width: 250px;
+		height: 8rem;
+	}
+
+	.gasfeeDeposit__container>.gasfeeDeposit__content>.wallet__content {
+		width: 250px;
+	}
+
+	.gasfeeDeposit__input-container {
+		grid-template-columns: repeat(1, 200px);
+	}
+
+	.gasfeeDeposit__form-input {
+		font-size: 10px;
+	}
+
+	#gasfee-eth-address {
+		font-size: 10px;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span {
+		right: 8%;
+		top: 3.2rem;
+	}
+
+	.gasfeeDeposit__content>.wallet__content>.wallet__item>span>i {
+		font-size: 11px;
+	}
+
+	.gasfeeDeposit__btn {
+		font-size: 11px;
+		width: 50%;
+	}
+
+	.offers__container>.offers__name {
+		font-size: .7rem;
+	}
+
+	.offers__container>.eth__bal {
+		height: 4rem;
+	}
+
+
+	.createnft__history-container>.primaryText,
+	.withdrawal__history-container>.primaryText,
+	.walletDeposit__history-container>.primaryText,
+	.offers__history-container>.primaryText {
+		font-size: 1rem;
+	}
+
+	.table-responsive {
+		font-size: 10px;
+		width: 250px;
+	}
+
+	.createnft__wrapper {
+		padding: 1rem;
+	}
+
+	.createnft__content-btns>small {
+		right: 1.8rem;
+		bottom: -1.5rem;
+		font-size: 9px;
+	}
+
+	.createnft__form>div>.primaryText {
+		font-size: 1.2rem;
+	}
+
+	.createnft__form>div>.secondaryText {
+		font-size: 9px;
+	}
+
+	.createnft___form-img-upload-box {
+		padding: 45px 5px;
+		gap: 1rem;
+	}
+
+	.createnft___form-img-upload-box>div {
+		padding: 0;
+		width: 200px;
+	}
+
+	.createnft___form-img-upload-box>div>p {
+		font-size: 10px;
+	}
+
+	.createnft__form-img-upload-file-input {
+		padding: .6rem;
+		font-size: 10px;
+		width: 80%;
+	}
+
+	.createnft__form-div {
+		height: 1rem;
+	}
+
+	.createnft__form-div:nth-child(5) {
+		margin-bottom: 3rem;
+	}
+
+	.createnft__form-div:nth-child(6)>p {
+		font-size: 12px;
+	}
+
+
+	.createnft__form-input {
+		padding: 1rem;
+	}
+
+	.createnft__form-input-select {
+		height: 2.5rem;
+		padding-left: 1rem;
+		font-size: 10px;
+	}
+
+	.createnft__form-area {
+		resize: both;
+		height: 5rem
+	}
+
+	.createnft__btn {
+		font-size: 10px;
+		height: 2rem;
+		margin: 2rem 0 0 4rem;
+	}
+
+	.uploadreceipt__content {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.uploadreceipt__content>div>.primaryText {
+		font-size: 1rem;
+	}
+
+	.uploadreceipt___form-img-upload-box {
+		padding: 2rem;
+		font-size: 10px;
+		width: 90%;
+		margin-bottom: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.uploadreceipt__form-input {
+		padding: .5rem;
+		font-size: 10px;
+	}
+
+	.uploadreceipt___form-img-upload-box>div {
+		padding: .5rem;
+		width: 12rem;
+	}
+
+	.uploadreceipt___form-img-upload-box>div>p {
+		font-size: 10px;
+	}
+
+	.buy__wrapper {
+		padding: 1rem;
+	}
+
+	.buy__container {
+		grid-template-columns: repeat(1, 237px);
+		padding: 15px;
+	}
+
+	.accordion__btn {
+		justify-content: space-evenly;
+		padding: 6px 10px;
+		gap: 1.5rem;
+	}
+
+	.accordion__title {
+		font-size: 1rem;
+	}
+
+	.accordion__btn .icon {
+		font-size: 1rem;
+	}
+
+	.accordion__panel>.accordion__des-title {
+		font-size: 14px;
+	}
+
+	.accordion__des-title.royalties>span {
+		padding: 2px 4px;
+		font-size: 12px;
+	}
+
+	.artist__name {
+		font-size: 14px;
+	}
+
+	.artist__section>h1 {
+		font-size: 14px;
+	}
+
+	.artist__profile {
+		width: 5rem;
+		height: 5rem;
+	}
+
+	.buy__right {
+		margin-top: 1rem;
+	}
+
+	.buy__creator-and-owner-con {
+		gap: .5rem;
+		padding-bottom: .5rem;
+	}
+
+	.buy__owner-label {
+		font-size: 8px;
+	}
+
+	.owner__name {
+		font-size: 8px;
+	}
+
+	.buy__owner-profile {
+		width: 1.3rem;
+		height: 1.1rem;
+		border-bottom: 2px solid var(--burnt-orange);
+	}
+
+	.buy__right-con-item small {
+		font-size: 0.5rem;
+	}
+
+	.buy__right-con-item h3 {
+		font-size: .8rem;
+	}
+
+	.buy__right-con-item h2 {
+		font-size: 1rem;
+	}
+
+	.buy__right-con-item-btn {
+		font-size: 9px;
+		box-shadow: 3px 3px 1px .2px var(--burnt-cyan);
+	}
+
+	.purchase-section_activity_offer {
+		margin-bottom: 1rem;
+	}
+
+	.snft_table__header {
+		padding: 8px;
+		gap: 8px;
+	}
+
+	.snft_table__header p.meta_font {
+		font-size: 8px;
+	}
+
+	.buy__right-con2>h1 {
+		font-size: 1rem;
+	}
+
+	.buy__right-content-item .btn {
+		width: 40%;
+		box-shadow: 4px 4px 1px .2px var(--burnt-cyan);
+	}
+
+	.buy__right-content-item {
+		width: 12rem;
+	}
+
+	.buy__right-content-item>.item__img {
+		height: 8rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container {
+		grid-template-columns: repeat(1, 200px);
+		row-gap: 0;
+		margin-bottom: 2.5rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div {
+		height: 1rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(1)>input {
+		padding: .5rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div>input {
+		padding: 1rem;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2)>input {
+		margin-bottom: 5px;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__input-container>.walletDeposit__form-div:nth-child(2) small {
+		font-size: 10px;
+	}
+
+
+	.buy__right-con-item>.walletDeposit__form>hr,
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__qrcode-con {
+		width: 70%;
+	}
+
+	.buy__right-con-item>.walletDeposit__form>.walletDeposit__qrcode-con>.walletDeposit__qrcode-content {
+		width: 110px;
+		height: 110px;
+	}
+
+	#finalising-purchase-wrapper>.buy__container>.buy__right {
+		align-items: center;
+		width: 90%;
+	}
+
+	.buy__right-con-item>.walletDeposit__form {
+		align-items: center;
+		margin-left: -2.3rem;
+	}
+
+	section#finalising-offer-wrapper>.buy__container>.buy__right>.buy__right-con>.buy__nft-name {
+		font-size: 1.2rem;
+	}
+
+	.modal {
+		left: 10%;
+		padding: 1.5rem;
+		width: 16rem;
+	}
+
+	.adminlogin__content div>small,
+	.login__content div>small {
+		font-size: 10px;
+	}
+
+	.footer__container {
+		gap: .8rem;
+	}
+
+	.footer__title {
+		margin-top: 1rem;
+		font-size: 10px;
+	}
+
+	.footer__list {
+		grid-template-columns: repeat(2, 60px);
+		gap: 3px;
+	}
+
+	.footer__link a {
+		font-size: 8px;
+	}
+
+	.footer__social-link {
+		font-size: .6rem;
+		padding: .15rem;
+		box-shadow: 2px 2px 1px .2px rgba(0, 255, 255, 0.3);
+	}
+
+	.adminlogin__content,
+	.login__content {
+		padding: 10px;
+	}
+
+	.adminlogin__form,
+	.login__form {
+		width: 200px;
+	}
+
+	.adminlogin__form-div,
+	.login__form-div {
+		height: 2.3rem;
+		margin-bottom: .8rem;
+	}
+
+	.adminlogin__form-input,
+	.login__form-input {
+		padding: .8rem;
+		font-size: 10px;
+	}
+
+	.adminlogin__btn,
+	.login__btn {
+		padding: 8px 20px;
+		margin-block: .5rem;
+		font-size: 10px;
+	}
+
+	.adminlogin__content p,
+	.createadmin__content p,
+	.error__content p,
+	.login__content p,
+	.register__content p {
+		font-size: .7rem;
+	}
+}

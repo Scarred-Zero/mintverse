@@ -1,0 +1,29 @@
+<!-- {% set active = "admin" %} -->
+{% extends "main/partials/base.html" %}
+ {% block title %} {{ title }} {%
+  endblock %} {% block content %}
+  
+  <section class="art__wrapper">
+    <div class="paddings innerWidth flexCenter art__container">
+      <div class="art__banner">
+        <div class="art__profile">
+          <img src="" alt="" class="art__profile-img">
+
+        </div>
+      </div>
+      <div class="art__des">
+        <h1 class="primaryText"><a href="{{url_for('mintverse.category_page')}}">Explore</a> <i class="fa fa-angle-right" style="color: white;"></i> outsider Art</h1>
+        <p>The way we value internet-native items is changing with the development of blockchain technology.<strong style="color: cyan;"> Kittens</strong>, <strong style="color: cyan;">punks</strong>, and <strong style="color: cyan;">memes</strong> are now trading digital wallets for <strong style="color: cyan;">cryptocurrencies</strong>, and the <strong style="color: cyan;">online collectibles market</strong> is taking shape before our eyes.</p>
+      </div>
+  
+      <div class="art__content" id="outsider-art">
+  
+      </div>
+      <div class="art__des">
+        <h1 class="primaryText"><a href="{{url_for('mintverse.category_page')}}">Explore</a> <i class="fa fa-angle-right" style="color: white;"></i> outsider Art</h1>
+      </div>
+    </div>
+  </section>
+  
+  {% endblock %}
+    

@@ -1,0 +1,51 @@
+{% set active = "dashboard" %}
+{% extends "main/partials/base_2.html" %}
+ {% block title %} {{ title }} {%endblock %} 
+    {% block content %}
+        <section class="explore__wrapper">
+            <div class="paddings innerWidth flexCenter explore__container">
+                <h1 class="dashboard__name">Welcome to your dashboard, <strong style="color: cyan;">{{name}}!</strong></h1>
+
+                <div class="dashboard__walletConnect-con">
+                    <p class="burntOrangeText">Wallet Status</p>
+                    <p id="wallet-address"></p>
+                
+                    <!-- ✅ Wallet Selection Dropdown -->
+                    <select id="wallet-select" class="dashboard__walletConnect-dropdown">
+                        <option value="">--Select Option--</option>
+                        <option value="metamask">MetaMask</option>
+                        <!-- <option value="trustwallet">Trust Wallet</option>
+                        <option value="walletconnect">Other Wallets (Coinbase, Exodus, etc.)</option> -->
+                    </select>
+                
+                    <!-- ✅ Connect Wallet Button -->
+                    <button onclick="connectWallet(document.getElementById('wallet-select').value)" class="btn dashboard__walletConnect-btn">
+                        Connect Wallet
+                    </button>
+                </div>
+
+                <div class="eth__bal">
+                    <h1>Total ETH balance:<br><strong style="color: cyan; font-family: 'Briem Hand', sans-serif;">{{eth_count}} ETH</strong></h1>
+                </div>
+
+                <a href="{{url_for('user.offers_page')}}">
+                    <button class="btn dashboard__btn">
+                        View Offers
+                    </button>
+                </a>
+
+                <div class="explore__filter">
+                    <h1><a href="{{url_for('mintverse.home_page')}}">All Nfts</a> </h1>
+                    <h1><a href="{{url_for('user.mycollection_page')}}">My Collection</a> </h1>
+                </div>
+            
+                <div class="explore__content">
+            
+                </div>
+                <div class="explore__filter">
+                    <h1><a href="{{url_for('mintverse.home_page')}}">All Nfts</a> </h1>
+                    <h1><a href="{{url_for('user.mycollection_page')}}">My Collection</a> </h1>
+                </div>
+            </div>
+        </section>
+    {% endblock %}

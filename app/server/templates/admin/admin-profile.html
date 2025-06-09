@@ -1,0 +1,115 @@
+{% extends "admin/partials/_layout.html" %}
+{% block title %} {{ title }} {% endblock %}
+{% block content %} 
+    <div class="content">
+        <!-- Start Content-->
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="profile-bg-picture">
+                        <span class="picture-bg-overlay"></span>
+                        <!-- overlay -->
+                    </div>
+                    <!-- meta -->
+                    <div class="profile-user-box">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="profile-user-img"><img src="/static/admin/assets/images/admin_img_cropped.jpg" alt=""
+                                        class="avatar-lg rounded-circle"></div>
+                                <div class="">
+                                    <h4 class="mt-4 fs-17 ellipsis">{{ user.name }}</h4>
+                                    <p class="font-13"> Admin</p>
+                                    <p class="text-muted mb-0" style="text-transform: capitalize;"><small>Role: {{ user.role }}</small></p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="d-flex justify-content-end align-items-center gap-2">
+                                    <a href="{{ url_for('admin.edit_profile', usr_id=user.usr_id) }}">
+                                        <button type="button" class="btn btn-soft-primary tooltips" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Profile">
+                                            <i class="fa fa-pen align-text-bottom me-1 fs-16 lh-1"></i>
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/ meta -->
+                </div>
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card p-0">
+                        <div class="card-body p-0">
+                            <div class="profile-content">
+                                <ul class="nav nav-underline nav-justified gap-0">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" data-bs-toggle="tab"
+                                            data-bs-target="#aboutme" type="button" role="tab"
+                                            aria-controls="home" aria-selected="true" href="#aboutme">About</a>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content m-0 p-4">
+                                    <div class="tab-pane active" id="aboutme" role="tabpanel"
+                                        aria-labelledby="home-tab" tabindex="0">
+                                        <div class="profile-desk">
+                                            <h5 class="text-uppercase fs-17 text-dark">{{ user.name }}</h5>
+                                            <div class="designation mb-4">COMPANY OWNER</div>
+                                            <p class="text-muted fs-16">
+                                               -- Write a Bio --
+                                            </p>
+
+                                            <h5 class="mt-4 fs-17 text-dark">User Information</h5>
+                                            <table class="table table-condensed mb-0 border-top">
+                                                <tbody>
+                                                    <tr>
+                                                        <th scope="row">Id</th>
+                                                        <td class="ng-binding">
+                                                            {{ user.id }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Usr_id</th>
+                                                        <td class="ng-binding">
+                                                            {{ user.usr_id }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Email</th>
+                                                        <td class="ng-binding">
+                                                            {{ user.email }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Role</th>
+                                                        <td class="ng-binding">
+                                                            {{ user.role }}
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">Date Created</th>
+                                                        <td class="ng-binding">
+                                                            {{ user.date_created }}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end profile-desk -->
+                                    </div> <!-- about-me -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+        </div>
+        <!-- end row -->
+
+    </div>
+    <!-- container -->
+{% endblock %}

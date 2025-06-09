@@ -1,0 +1,265 @@
+{% extends "main/partials/base_2.html" %} {% block title %} {{ title }} {%
+endblock %} {% block content %} {% include "auth/partials/_alert.html" %}
+
+<section class="createnft__wrapper">
+  <div class="paddings innerWidth flexCenter createnft__container">
+    <div class="createnft__content">
+      <div class="createnft__content-btns">
+        <!-- Contract Standard -->
+        <div class="createnft__contract-standard">
+          <h2>Contract Standard</h2>
+          <div>
+            <svg width="14" height="16" viewBox="0 0 14 16">
+              <path
+                d="M5.71393 1.83854L6.13102 2.11429L5.71393 1.83855L1.93612 7.55288L1.60592 8.05234L2.15626 8.2882L6.39258 10.1037C6.78037 10.27 7.21943 10.27 7.60723 10.1038C7.60725 10.1038 7.60728 10.1038 7.6073 10.1037L11.8436 8.2882L12.394 8.05234L12.0638 7.55288L8.28597 1.83859C8.28596 1.83858 8.28596 1.83857 8.28595 1.83855C7.67649 0.916563 6.32342 0.916648 5.71393 1.83854ZM2.71422 8.7993L1.42014 8.2447C1.44974 7.96525 1.54522 7.69087 1.70725 7.44578L5.50537 1.70067L5.50538 1.70067C6.21369 0.629238 7.78619 0.629234 8.49451 1.70067L8.49452 1.70068L12.2927 7.44577C12.2927 7.44578 12.2927 7.44578 12.2927 7.44578C12.4547 7.69088 12.5502 7.96527 12.5798 8.24472L11.2857 8.7993L7.70573 10.3335L7.70572 10.3336C7.255 10.5267 6.74488 10.5267 6.29416 10.3336L6.29415 10.3336L2.71422 8.7993ZM1.76419 9.50307C1.56787 9.23911 1.45282 8.93387 1.41999 8.62136L2.11606 9.55727L5.76291 14.4606C6.37933 15.2894 7.62055 15.2894 8.23697 14.4606L11.8839 9.55727L12.5799 8.62143C12.5471 8.93392 12.432 9.23913 12.2357 9.50306L8.43758 14.6098C8.43758 14.6098 8.43758 14.6098 8.43757 14.6098C7.72117 15.573 6.27871 15.573 5.56231 14.6098L1.76419 9.50307L1.36627 9.79902L1.76419 9.50307Z"
+                fill="white"
+                stroke="white"
+              ></path>
+            </svg>
+            <h1>
+              <strong style="color: cyan; font-family: 'Briem Hand', sans-serif"
+                >ERC-721</strong
+              >
+            </h1>
+          </div>
+        </div>
+
+        <!-- Wallet Balance -->
+        <div class="createnft__wallet-balance">
+          <h2>Gas fee balance</h2>
+          <div>
+            <svg width="14" height="16" viewBox="0 0 14 16">
+              <path
+                d="M5.71393 1.83854L6.13102 2.11429L5.71393 1.83855L1.93612 7.55288L1.60592 8.05234L2.15626 8.2882L6.39258 10.1037C6.78037 10.27 7.21943 10.27 7.60723 10.1038C7.60725 10.1038 7.60728 10.1038 7.6073 10.1037L11.8436 8.2882L12.394 8.05234L12.0638 7.55288L8.28597 1.83859C8.28596 1.83858 8.28596 1.83857 8.28595 1.83855C7.67649 0.916563 6.32342 0.916648 5.71393 1.83854ZM2.71422 8.7993L1.42014 8.2447C1.44974 7.96525 1.54522 7.69087 1.70725 7.44578L5.50537 1.70067L5.50538 1.70067C6.21369 0.629238 7.78619 0.629234 8.49451 1.70067L8.49452 1.70068L12.2927 7.44577C12.2927 7.44578 12.2927 7.44578 12.2927 7.44578C12.4547 7.69088 12.5502 7.96527 12.5798 8.24472L11.2857 8.7993L7.70573 10.3335L7.70572 10.3336C7.255 10.5267 6.74488 10.5267 6.29416 10.3336L6.29415 10.3336L2.71422 8.7993ZM1.76419 9.50307C1.56787 9.23911 1.45282 8.93387 1.41999 8.62136L2.11606 9.55727L5.76291 14.4606C6.37933 15.2894 7.62055 15.2894 8.23697 14.4606L11.8839 9.55727L12.5799 8.62143C12.5471 8.93392 12.432 9.23913 12.2357 9.50306L8.43758 14.6098C8.43758 14.6098 8.43758 14.6098 8.43757 14.6098C7.72117 15.573 6.27871 15.573 5.56231 14.6098L1.76419 9.50307L1.36627 9.79902L1.76419 9.50307Z"
+                fill="white"
+                stroke="white"
+              ></path>
+            </svg>
+            <h1>
+              <strong style="color: cyan; font-family: 'Briem Hand', sans-serif"
+                >{{ eth_count }} ETH</strong
+              >
+            </h1>
+          </div>
+        </div>
+        <small
+          >Out of Gas Fees?
+          <a href="{{url_for('user.gasfee_deposit_page')}}">TOP UP</a></small
+        >
+      </div>
+
+      <!-- NFT Creation Form -->
+      <form
+        action="{{ url_for('user.create_nft_page') }}"
+        method="post"
+        enctype="multipart/form-data"
+        class="flexColCenter createnft__form"
+      >
+        {{ form.csrf_token }}
+        <div>
+          <p class="primaryText">Upload file</p>
+          <p class="secondaryText" style="margin-top: 5px">
+            JPG, PNG, AVIF, GIF, WEBP, GLB, MP4 or MP3. Max 100 MB.
+          </p>
+        </div>
+        <div class="createnft___form-img-upload-box">
+          <div>
+            <i class="fa fa-cloud-arrow-up"></i>
+            <p>Click the "Choose File" button to upload</p>
+            {{ form.nft_logo.label(class="createnft__form-tag")}} {{
+            form.nft_logo() }}
+            <p id="file-name" style="margin-top: 10px; font-weight: bold"></p>
+          </div>
+        </div>
+
+        <script>
+          function showFileName() {
+            const input = document.getElementById("nft_logo");
+            const fileNameDisplay = document.getElementById("file-name");
+
+            if (input.files.length > 0) {
+              fileNameDisplay.textContent = `Selected file: ${input.files[0].name}`;
+            } else {
+              fileNameDisplay.textContent = ""; // Clear text if no file is selected
+            }
+          }
+        </script>
+
+        <div class="createnft__input-container grid">
+          <div class="createnft__form-div">
+            {{ form.category.label(class="createnft__form-tag") }} {{
+            form.category() }}
+          </div>
+
+          <div class="createnft__form-div">
+            {{ form.item_name.label(class="createnft__form-tag") }} {{
+            form.item_name() }}
+          </div>
+
+          <div class="createnft__form-div">
+            {{ form.collection_name.label(class="createnft__form-tag") }} {{
+            form.collection_name() }}
+          </div>
+
+          <div class="createnft__form-div">
+            {{ form.creator.label(class="createnft__form-tag") }} {{
+            form.creator() }}
+          </div>
+
+          <div class="createnft__form-div">
+            {{ form.list_price.label(class="createnft__form-tag") }} {{
+            form.list_price() }}
+            <small style="color: gray">
+              "Listing prices will be reviewed by the admin."
+            </small>
+          </div>
+
+          <div class="createnft__form-div">
+            {{ form.royalties.label(class="createnft__form-tag") }} {{
+            form.royalties() }}
+            <p
+              style="margin-top: 0.7rem; color: cyan; font-weight: 600"
+              id="minting-fee"
+            ></p>
+          </div>
+
+          <div class="createnft__form-div">
+            {{ form.item_des.label(class="createnft__form-tag") }} {{
+            form.item_des(rows=10, cols=30) }}
+          </div>
+
+          {{ form.submit() }}
+        </div>
+      </form>
+    </div>
+
+    <div class="createnft__history-container">
+      <h3 class="primaryText">My NFT Collections</h3>
+      <hr />
+      {% if nft_hst %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Ref Number</th>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Royalties</th>
+              <th>Status</th>
+              <th>Buyer</th>
+              <th>Timestamp</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for hst in nft_hst %}
+            <tr>
+              <td>{{ hst.id }}</td>
+              <td>
+                {% if hst.ref_number %} {{ hst.ref_number }} {% else %}
+                <span class="badge badge-warning">Pending</span>
+                {% endif %}
+              </td>
+              <td>{{ hst.nft_name }}</td>
+              <td style="max-width: 7rem">
+                <a href="{{hst.nft_image}}" target="_blank">
+                  <img
+                    src="{{ hst.nft_image }}"
+                    alt="{{ hst.nft_name }}"
+                    width="40"
+                  />
+                </a>
+              </td>
+              <td>{{ hst.category }}</td>
+              <td>{{ hst.price }} ETH</td>
+              <td>{{ hst.royalties }}</td>
+              <td>
+                <span
+                  class="badge {% if hst.status.value == 'Pending' %}badge-warning {% elif hst.status.value == 'Available' %}badge-success {% elif hst.status.value == 'Sold' %}badge-danger{% endif %}"
+                >
+                  {{ hst.status.value }}
+                </span>
+              </td>
+
+              <td>
+                {% if hst.buyer %} {{ hst.buyer }} {% else %}
+                <span class="badge badge-info">Not Sold Yet</span>
+                {% endif %}
+              </td>
+              <td>{{ hst.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</td>
+              <td>
+                <form
+                  action="{{ url_for('user.delete_nft_record', nft_id=hst.id) }}"
+                  method="POST"
+                >
+                  {{ form.hidden_tag() }}
+                  <!-- ✅ Include CSRF token -->
+                  <button
+                    type="submit"
+                    class="btn btn-danger"
+                    onclick="return confirm(`Click 'OK' if you are sure you want to delete this NFT record?`);"
+                  >
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Ref Number</th>
+              <th>Name</th>
+              <th>Image</th>
+              <th>Price</th>
+              <th>Royalties</th>
+              <th>Status</th>
+              <th>Buyer</th>
+              <th>Timestamp</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <p style="margin-top: 10px">No NFT Collection available yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  async function updateMintingFee() {
+    try {
+      const response = await fetch(
+        "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD"
+      );
+      if (!response.ok) throw new Error("Failed to fetch ETH price");
+
+      const data = await response.json();
+      const ethPrice = data.USD;
+      const mintingFee = (400 / ethPrice).toFixed(4); // ✅ Convert USD to ETH dynamically
+
+      document.querySelector(
+        "#minting-fee"
+      ).innerText = `Minting Fee: ${mintingFee} ETH(Updates every 10 mins)`;
+    } catch (error) {
+      console.error("Error fetching minting fee:", error);
+      document.querySelector("#minting-fee").innerText = "Error fetching fee";
+    }
+  }
+
+  // ✅ Call the function immediately on page load
+  updateMintingFee();
+  // ✅ Continue updating every 10 minutes (600000 milliseconds)
+  setInterval(updateMintingFee, 600000);
+</script>
+{% endblock %}
