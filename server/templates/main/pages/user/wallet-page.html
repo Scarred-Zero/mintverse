@@ -1,0 +1,46 @@
+{% set active = "wallet" %}
+{% extends "main/partials/base_2.html" %} {% block title %} {{ title }}
+{%endblock %} {% block content %}
+    <section class="wallet__wrapper">
+        <div class="paddings innerWidth flexCenter wallet__container">
+
+            <div class="wallet__des-container">
+                <h2 class="wallet__name">
+                    Welcome to your MintVerse Wallet,
+                    <strong style="color: cyan">{{name}}!</strong>
+                </h2>
+                <h1 class="primaryText">Deposit to your wallet</h1>
+            </div>
+
+            <div class="wallet__btns-container">
+                <a href="{{url_for('user.wallet_deposit_page')}}">
+                    <button class="wallet__btn btn">DEPOSIT TO MAIN WALLET</button>
+                </a>
+                <a href="{{url_for('user.gasfee_deposit_page')}}">
+                    <button class="wallet__btn btn">DEPOSIT TO GAS FEE</button>
+                </a>
+            </div>
+
+            <div class="wallet__content">
+                <h4 class="primaryText">INSTRUCTION FOR YOUR DEPOSITS</h4>
+
+                <div class="wallet__item">
+                    <h4>1. <strong class="burntOrangeText">Depositing Funds for Purchases:</strong></h5>
+                    <p>To make purchases, please deposit ETH into your Main Account.</p>
+                </div>
+                <div class="wallet__item">
+                    <h4>2. <strong class="burntOrangeText">Sales Proceeds:</strong></h5> 
+                    <p>The ETH from your sales will automatically reflect in your Main Account.</p>
+                </div>
+                <div class="wallet__item">
+                    <h4>3. <strong class="burntOrangeText">ETH Available for Withdrawal:</strong></h5>
+                    <p>The ETH in your Main Account is the amount available for withdrawal.</p>
+                </div>
+                <div class="wallet__item">
+                    <h4>4. <strong class="burntOrangeText">Depositing funds for charges:</strong></h5>
+                    <p>To pay for your charges, Deposit ETH to your Gas Fee.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

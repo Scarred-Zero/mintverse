@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0">
+    <meta name="description" content="NFT Site - MintVerse" />
+    <meta name="keywords" content="Mint, MintVerse, Mint Verse, mintverse">
+    <title> {% block title %} MintVerse {% endblock %} </title>
+
+    <!-- For Sharing -->
+    <meta property="og:title" content="MintVerse - NFT Website">
+    <meta property="og:url" content="https://mintverse.art">
+    <!-- <meta property="og:image" content="%PUBLIC_URL%/shareImg.png"> -->
+
+    <!-- App icon -->
+    <link rel="icon" sizes="16x16" type="image/avif" href="/static/assets/images/app_logo.avif" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Googleapis Font -->
+    <link href="https://fonts.googleapis.com/css?family=Sour Gummy|Briem Hand|Poetsen One|Poppins|Raleway|Josefin Sans"
+        rel="stylesheet">
+    <!--Box Fonts-->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/static/assets/css/styles.css">
+    <!-- Plugins -->
+    <link rel="stylesheet" href="/static/assets/css/plugins.css">
+</head>
+{% include "auth/partials/_alert.html" %}
+
+<body id="top-header">
+    <header class="header">
+        <nav class="nav container">
+            <a href="{{ url_for('mintverse.home_page') }}" class="glitch__art nav__logo"
+                style="font-family: 'Poetsen One', sans-serif;">
+                MINTVERSE
+            </a>
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item {% if active == 'marketplace' %} nav__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.explore_page')}}" class="nav__link">
+                            Marketplace <i class="fa fa-angle-down" style="margin-left: 5px;"></i>
+                        </a>
+                    </li>
+                    <li class="nav__item {% if active == 'create' %} nav__item-active {% endif %}">
+                        <a href="{{url_for('user.create_nft_page')}}" class="nav__link">
+                            Create <i class="fa fa-angle-down" style="margin-left: 5px;"></i>
+                        </a>
+                    </li>
+                    <li class="nav__item {% if active == 'termsandconditions' %} nav__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.termsandcond_page')}}" class="nav__link">
+                            Terms &amp; Conditions
+                        </a>
+                    </li>
+                    <li class="nav__item {% if active == 'faq' %} nav__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.faq_page')}}" class="nav__link">
+                            FAQ
+                        </a>
+                    </li>
+                    <li class="nav__item {% if active == 'about' %} nav__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.about_page')}}" class="nav__link">
+                            About Us
+                        </a>
+                    </li>
+                    <li class="nav__item {% if active == 'contact' %} nav__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.contact_page')}}" class="nav__link">
+                            Contact Us
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="search__bar">
+                <form action="{{ url_for('mintverse.search') }}" method="POST" class="search__form">
+                    {{ search_form.csrf_token }}
+                    {{ search_form.searched() }}
+                    <button class='btn search__btn'>
+                        <i class="fa fa-magnifying-glass"></i>
+                    </button>
+                </form>
+            </div>
+            <!-- Toggle Button -->
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="fa fa-bars-progress"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="content-page">
+        {% block content %} {% endblock %}
+    </div>
+
+    <!-- Footer Start -->
+    <footer class="footer">
+        <div class="footer__container">
+            <a href="{{url_for('mintverse.home_page')}}" style="text-decoration: none;">
+                <h1 class="footer__title">MintVerse</h1>
+            </a>
+
+            <div class="flexColCenter">
+                <ul class="footer__list">
+                    <li class="footer__link {% if active == 'marketplace' %} footer__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.explore_page')}}" class="">Marketplace</a>
+                    </li>
+                    <li class="footer__link {% if active == 'create' %} footer__item-active {% endif %}">
+                        <a href="{{url_for('user.create_nft_page')}}" class="">Create</a>
+                    </li>
+                    <li class="footer__link {% if active == 'termsandconditions' %} footer__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.termsandcond_page')}}" class="">Ts &amp; Cs</a>
+                    </li>
+                    <li class="footer__link {% if active == 'faq' %} footer__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.faq_page')}}" class="">FAQ</a>
+                    </li>
+                    </li>
+                    <li class="footer__link {% if active == 'about' %} footer__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.about_page')}}" class="">About Us</a>
+                    </li>
+                    </li>
+                    <li class="footer__link {% if active == 'contact' %} footer__item-active {% endif %}">
+                        <a href="{{url_for('mintverse.contact_page')}}" class="">Contact Us</a>
+                    </li>
+                </ul>
+
+                <div class="footer__social">
+                    <a href="" target='_blank' class="footer__social-link" rel="noreferrer">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    <a href="" target='_blank' class="footer__social-link" rel="noreferrer">
+                        <i class="fa-brands fa-telegram"></i>
+                    </a>
+                    <a href="" target='_blank' class="footer__social-link" rel="noreferrer">
+                        <i class="fab fa-discord"></i>
+                    </a>
+                </div>
+            </div>
+
+            <span class="footer__copy secondaryText">
+                <script>document.write(new Date().getFullYear())</script> © MintVerse. All rights reserved.
+            </span>
+        </div>
+    </footer>
+    <!-- end Footer -->
+
+    <a href='{{ url_for(request.endpoint, **request.view_args) }}#top-header' class='scrollup'>
+        <i class="fa fa-arrow-up scrollup__icon"></i>
+    </a>
+
+</body>
+
+<!-- Swiper JS -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/static/assets/js/app.js"></script>
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/6843e8cae7006f1912ed47ee/1it4kannq';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<!--End of Tawk.to Script-->
+
+</html>

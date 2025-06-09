@@ -1,0 +1,166 @@
+{% set active = "wallet" %} {% extends "main/partials/base_2.html" %} {% block
+title %} {{ title }} {%endblock %} {% block content %} {% include
+"auth/partials/_alert.html" %}
+<section class="walletDeposit__wrapper">
+  <div class="paddings innerWidth flexCenter walletDeposit__container">
+    <div class="walletDeposit__banner">
+      <h1 class="primaryText">Wallet Deposit</h1>
+    </div>
+    <div class="walletDeposit__content">
+      <div class="walletDeposit__content-btns">
+        <div class="walletDeposit__wallet-balance">
+          <h2>Wallet balance</h2>
+          <div>
+            <svg width="14" height="16" viewBox="0 0 14 16">
+              <path
+                d="M5.71393 1.83854L6.13102 2.11429L5.71393 1.83855L1.93612 7.55288L1.60592 8.05234L2.15626 8.2882L6.39258 10.1037C6.78037 10.27 7.21943 10.27 7.60723 10.1038C7.60725 10.1038 7.60728 10.1038 7.6073 10.1037L11.8436 8.2882L12.394 8.05234L12.0638 7.55288L8.28597 1.83859C8.28596 1.83858 8.28596 1.83857 8.28595 1.83855C7.67649 0.916563 6.32342 0.916648 5.71393 1.83854ZM2.71422 8.7993L1.42014 8.2447C1.44974 7.96525 1.54522 7.69087 1.70725 7.44578L5.50537 1.70067L5.50538 1.70067C6.21369 0.629238 7.78619 0.629234 8.49451 1.70067L8.49452 1.70068L12.2927 7.44577C12.2927 7.44578 12.2927 7.44578 12.2927 7.44578C12.4547 7.69088 12.5502 7.96527 12.5798 8.24472L11.2857 8.7993L7.70573 10.3335L7.70572 10.3336C7.255 10.5267 6.74488 10.5267 6.29416 10.3336L6.29415 10.3336L2.71422 8.7993ZM1.76419 9.50307C1.56787 9.23911 1.45282 8.93387 1.41999 8.62136L2.11606 9.55727L5.76291 14.4606C6.37933 15.2894 7.62055 15.2894 8.23697 14.4606L11.8839 9.55727L12.5799 8.62143C12.5471 8.93392 12.432 9.23913 12.2357 9.50306L8.43758 14.6098C8.43758 14.6098 8.43758 14.6098 8.43757 14.6098C7.72117 15.573 6.27871 15.573 5.56231 14.6098L1.76419 9.50307L1.36627 9.79902L1.76419 9.50307Z"
+                fill="white"
+                stroke="white"
+              ></path>
+            </svg>
+            <h1>
+              <strong style="color: cyan; font-family: 'Briem Hand', sans-serif"
+                >{{eth_count}} ETH
+              </strong>
+            </h1>
+          </div>
+        </div>
+      </div>
+      <form
+        action="{{ url_for('user.wallet_deposit_page') }}"
+        method="post"
+        enctype="multipart/form-data"
+        class="flexColCenter walletDeposit__form"
+      >
+        {{ form.csrf_token }}
+        <div class="walletDeposit__input-container grid">
+          <div class="walletDeposit__form-div">
+            {{ form.eth_address.label(class="walletDeposit__form-tag") }}
+            <span class="walletDeposit__ethAddress-container">
+              {{ form.eth_address(id="eth-address",
+              class="walletDeposit__form-input") }}
+              <span id="copy-btn" onclick="copyToClipboard('eth-address')">
+                <i class="fa fa-copy"></i>
+              </span>
+            </span>
+            <small>
+              Make sure you select the Ethereum Network when about to deposit,
+              to prevent loss of funds.
+            </small>
+          </div>
+
+          <div class="walletDeposit__form-div">
+            {{ form.wltdps_amount.label(class="walletDeposit__form-tag") }} {{
+            form.wltdps_amount() }}
+          </div>
+        </div>
+
+        <p><strong style="color: cyan;">OR</strong></p>
+        <hr>
+
+        <!-- ✅ QR Code Section -->
+        <div class="walletDeposit__qrcode-con">
+          <div class="walletDeposit__qrcode-content">
+            <p>Scan QR Code</p>
+            <img
+              src="/static/assets/images/wallet_qrcode-img.jpg"
+              alt="QR Code"
+              class="walletDeposit__qrcode-img"
+              />
+          </div>
+          <small>Make sure to input the exact amount you sent using your external wallet, in the "Deposit Amount" field, if you scanned the QR code or copied the Eth address.</small>
+        </div>
+
+        <div class="uploadreceipt__content">
+          <div>
+            <p class="primaryText">Upload Receipt/Screenshot</p>
+            <p class="secondaryText" style="margin: 5px 0 15px 0">
+              JPG, PNG, JPEG, WEBP. Max 100 MB.
+            </p>
+          </div>
+
+          <div class="uploadreceipt___form-img-upload-box">
+            <div>
+              <i class="fa fa-cloud-arrow-up"></i>
+              <p>Click the "Choose File" button to upload</p>
+              {{ form.receipt_img.label(class="uploadreceipt__form-tag") }}
+              {{ form.receipt_img(id="receipt_img") }}
+              <p id="file-name" style="margin-top: 10px; font-weight: bold"></p>
+            </div>
+          </div>
+        </div>
+        {{ form.submit() }}
+      </form>
+    </div>
+    <div class="walletDeposit__history-container">
+      <h3 class="primaryText">Wallet Deposit History</h3>
+      <hr />
+      {% if wltdps_hst %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Amount</th>
+              <th>Ref Number</th>
+              <th>Method</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for hst in wltdps_hst %}
+            <tr>
+              <td>{{ hst.id }}</td>
+              <td>{{ hst.wltdps_amount }} ETH</td>
+              <td>{{ hst.ref_number }}</td>
+              <td>{{ hst.wltdps_mth }}</td>
+              <td>{{ hst.type }}</td>
+              <td>
+                <span class="badge {% if hst.status == 'Pending' %}badge-warning {% elif hst.status == 'Approved' %}badge-success {% else %}badge-danger{% endif %}">
+                  {{ hst.status }}
+                </span>
+              </td>
+              <td>{{ hst.timestamp }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Amount</th>
+              <th>Ref Number</th>
+              <th>Method</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Timestamp</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <p style="margin-top: 10px">No Wallet Deposit History available yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<script>
+  function showFileName() {
+    const input = document.getElementById("receipt_img");
+    const fileNameDisplay = document.getElementById("file-name");
+
+    if (input.files.length > 0) {
+      fileNameDisplay.textContent = `Selected file: ${input.files[0].name}`;
+    } else {
+      fileNameDisplay.textContent = ""; // Clear text if no file is selected
+    }
+  }
+</script>
+
+{% endblock %}
