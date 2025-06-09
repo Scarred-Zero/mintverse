@@ -45,13 +45,13 @@ def login_page():
             return redirect(url_for("auth.login_page"))
 
         # ✅ Exclude admins from email verification check
-        # if not user.is_email_verified and user.role != "admin":
-        #     flash(
-        #         "You must verify your email before logging in. Check your inbox for a verification link.",
-        #         "warning",
-        #     )
-        #     send_verification_email(user)
-        #     return redirect(url_for("auth.login_page"))
+        if not user.is_email_verified and user.role != "admin":
+            flash(
+                "You must verify your email before logging in. Check your inbox for a verification link.",
+                "warning",
+            )
+            send_verification_email(user)
+            return redirect(url_for("auth.login_page"))
 
         # ✅ Login User (Admins bypass verification)
         login_user(user, remember=True)
