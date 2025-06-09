@@ -1,8 +1,7 @@
-import uuid  # ✅ Import UUID for generating unique reference numbers
+import uuid
 from sqlalchemy import func
 from ..config.database import db
 from ..models.enums import NFTStatus
-from flask_login import current_user  # ✅ Import current_user to track logged-in user
 
 
 class NFT(db.Model):
@@ -12,7 +11,7 @@ class NFT(db.Model):
     ref_number = db.Column(
         db.String(36), unique=True, nullable=False, default=lambda: str(uuid.uuid4())
     )
-    nft_name = db.Column(db.String(100), nullable=False)
+    nft_name = db.Column(db.String(100), unique=True, nullable=False)
     nft_image = db.Column(db.String(255), nullable=False)
     category = db.Column(db.String(50), nullable=False)
     collection_name = db.Column(db.String(100), nullable=True)

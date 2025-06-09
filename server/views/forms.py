@@ -22,6 +22,24 @@ from flask_wtf.file import FileField, FileAllowed
 from ..models.enums import NFTStatus
 
 
+class AddToOrSubtractFromBalancesForm(FlaskForm):
+    amount = DecimalField(
+        "Amount to Transfer",
+        validators=[
+            InputRequired(),
+            NumberRange(min=0.0001, message="Amount must be positive"),
+        ],
+        render_kw={
+            "placeholder": "Enter Amount",
+            "class": "form-control",
+        },
+    )
+    submit = SubmitField(
+        "Proceed", render_kw={"class": "btn btn-soft-primary ml-2"}
+    )
+
+
+
 class AdminAddNftForm(FlaskForm):
     # NFT Category
     category = SelectField(
@@ -406,7 +424,7 @@ class WalletDepositForm(FlaskForm):
 
 class GasFeeDepositForm(FlaskForm):
     # Ethereum Amount Field
-    eth_amount = DecimalField(
+    gsfdps_amount = DecimalField(
         "Deposit Amount",
         validators=[
             InputRequired(),

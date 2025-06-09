@@ -49,9 +49,9 @@ block title %} {{ title }} {% endblock %} {% block content %}
             <td>{{ transaction.owner_name }}</td>
             <td>
               <span
-                class="badge {% if transaction.status.value == 'Pending' %}badge-warning{% elif transaction.status.value == 'Sold' %}badge-success{% else %}badge-danger{% endif %}"
+                class="badge {% if transaction.status.capitalize() == 'Pending' %}badge-warning{% elif transaction.status.capitalize() == 'Sold' %}badge-success{% else %}badge-danger{% endif %}"
               >
-                {{ transaction.status.value }}
+                {{ transaction.status.capitalize() }}
               </span>
             </td>
             <td>{{ transaction.buyer_name }}</td>
@@ -69,7 +69,7 @@ block title %} {{ title }} {% endblock %} {% block content %}
             </td>
             <td>{{ transaction.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</td>
             <td>
-              {% if transaction.status.value == "Pending" %}
+              {% if transaction.status.capitalize() == "Pending" %}
               <a
                 href="{{ url_for('admin.approve_transaction', transaction_id=transaction.id) }}"
                 class="btn btn-success"

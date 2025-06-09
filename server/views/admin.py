@@ -1,14 +1,23 @@
+import os
+import uuid
+import logging
+import imghdr  # <-- Add this import
 from decimal import Decimal
-from email_validator import validate_email, EmailNotValidError
+
 from flask import Blueprint, request, render_template, redirect, flash, url_for
 from flask_login import login_required, current_user, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
+from email_validator import validate_email, EmailNotValidError
+from sqlalchemy import or_
+
+from server import UPLOAD_FOLDER, csrf
+from ..config.database import db
 from ..utils.minting_fee_helper import calculate_minting_fee
+from ..utils.decorators import admin_required
+from ..utils.helpers import validate_password
 from ..models.enums import NFTStatus
 from ..models.PendingNfts import PendingNFTs
-from server import UPLOAD_FOLDER
-from ..config.database import db
-from sqlalchemy import or_
 from ..models.NFT import NFT
 from ..models.Offers import Offers
 from ..models.Withdrawal import Withdrawal
@@ -18,9 +27,8 @@ from ..models.Ether import Ether
 from ..models.WalletDeposit import WalletDeposit
 from ..models.Contact import Contact
 from ..models.User import User
-from ..utils.decorators import admin_required
-from ..utils.helpers import validate_password
 from .forms import (
+    AddToOrSubtractFromBalancesForm,
     AdminAddNftForm,
     AdminCreationForm,
     AdminEditNftDetails,
@@ -29,92 +37,82 @@ from .forms import (
     SearchForm,
     AdminEditUserProfileForm,
 )
-import os
-import uuid
-from werkzeug.utils import secure_filename
-from server import csrf  # ✅ Ensure CSRF is imported from __init__.py
-
 
 admin = Blueprint("admin", __name__)
+
+
+def is_real_admin():
+    return (
+        current_user.is_authenticated and getattr(current_user, "role", None) == "admin"
+    )
 
 
 @admin.route("/dashboard", methods=["GET"])
 @login_required
 def admin_dashboard():
-    search_form = SearchForm()
-    user = User.query.filter_by(id=current_user.id).first()
-
-    if user.role != "admin" and user.id != 1:
-        flash("You do not have permission to access that page.", category="danger")
+    if not is_real_admin():
+        flash("Admin access required.", "danger")
         return redirect(url_for("mintverse.home_page"))
+    search_form = SearchForm()
+    try:
+        user_count = User.query.count()
+        contact_msg = Contact.query.count()
+        wallet_deposit_count = WalletDeposit.query.count()
+        transaction_count = Transaction.query.count()
+        return render_template(
+            "admin/admin-dashboard.html",
+            title="Admin Dashboard",
+            current_user=current_user,
+            user_count=user_count,
+            contact_msg=contact_msg,
+            wallet_deposit_count=wallet_deposit_count,
+            transaction_count=transaction_count,
+            search_form=search_form,
+        )
+    except Exception as e:
+        logging.exception("Error loading admin dashboard")
+        flash("An error occurred loading the dashboard.", "danger")
+        return redirect(url_for("admin.admin_login_page"))
 
-    # ✅ Get total counts for dashboard metrics
-    user_count = User.query.count()
-    contact_msg = Contact.query.count()
-    wallet_deposit_count = WalletDeposit.query.count()  # ✅ Count wallet deposits
-    transaction_count = Transaction.query.count()  # ✅ Count transactions
 
-    if not current_user.is_admin():
-        flash("Access denied: Admins only.", "danger")
-        return redirect(url_for("user.dashboard_page"))
-
-    return render_template(
-        "admin/admin-dashboard.html",
-        title="Admin Dashboard",
-        current_user=current_user,
-        user_count=user_count,
-        contact_msg=contact_msg,
-        wallet_deposit_count=wallet_deposit_count,  # ✅ Pass to frontend
-        transaction_count=transaction_count,  # ✅ Pass to frontend
-        search_form=search_form,
-    )
-
-
-# HANDLE ROUTE FOR ADMIN_PAGE
 @admin.get("/admin_profile")
 @login_required
 def admin_profile():
-    search_form = SearchForm()
-    user = User.query.filter_by(id=current_user.id).first()
-    if user.role != "admin" and user.id != 1:
-        flash("You do not have permission to access that page.", category="danger")
+    if not is_real_admin():
+        flash("Admin access required.", "danger")
         return redirect(url_for("mintverse.home_page"))
-
-    return render_template(
-        "admin/admin-profile.html",
-        current_user=current_user,
-        user=user,
-        search_form=search_form,
-        title="Admin Profile | MintVerse",
-    )
+    search_form = SearchForm()
+    try:
+        user = User.query.filter_by(id=current_user.id).first()
+        return render_template(
+            "admin/admin-profile.html",
+            current_user=current_user,
+            user=user,
+            search_form=search_form,
+            title="Admin Profile | MintVerse",
+        )
+    except Exception as e:
+        logging.exception("Error loading admin profile")
+        flash("An error occurred loading the profile.", "danger")
+        return redirect(url_for("admin.admin_dashboard"))
 
 
 @admin.route("/admin_login", methods=["GET", "POST"])
 def admin_login_page():
     form = AdminLoginForm()
-
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-
-        # Fetch the user by email
         user = User.query.filter_by(email=email).first()
-
-        # Validate user exists and is an admin
         if not user or user.role != "admin":
             flash("Invalid credentials or not an admin account.", "danger")
             return redirect(url_for("admin.admin_login_page"))
-
-        # Check password
         if not check_password_hash(user.password, password):
             flash("Incorrect password.", "danger")
             return redirect(url_for("admin.admin_login_page"))
-
-        # Log the admin in
-        login_user(user)  # Flask-Login tracks the session
+        login_user(user)
         flash(f"Welcome back, Admin {user.name}!", "success")
         return redirect(url_for("admin.admin_dashboard"))
-
     return render_template(
         "admin/admin-login.html",
         form=form,
@@ -127,73 +125,52 @@ def admin_login_page():
 @login_required
 @admin_required
 def create_admin_page():
-    # Check if any admin exists
+    if not is_real_admin():
+        flash("Admin access required.", "danger")
+        return redirect(url_for("mintverse.home_page"))
     admin_exists = User.query.filter_by(role="admin").first()
     if admin_exists and not current_user.role == "admin":
         flash("Access denied: Admins only.", "danger")
         return redirect(url_for("user.dashboard_page"))
-
     required_fields = {"name", "email", "password", "confirm_password"}
     form_data = AdminCreationForm()
-
-    # Check if all required fields are present
     missing_fields = [
         field for field in required_fields if not getattr(form_data, field, None)
     ]
-
     if missing_fields:
-        flash(f'Missing fields: {", ".join(missing_fields)}', category="error")
+        flash(f'Missing fields: {", ".join(missing_fields)}', category="warning")
         return redirect(url_for("admin.create_admin_page"))
-
     if form_data.validate_on_submit():
         name = form_data.name.data
         email = form_data.email.data
         password = form_data.password.data
         confirm_password = form_data.confirm_password.data
-
         try:
-            # Validate email with email-validator
             valid_email = validate_email(email)
             email = valid_email.normalized
         except EmailNotValidError as e:
-            flash(f"Invalid email format: {e}", category="error")
+            flash(f"Invalid email format: {e}", category="warning")
             return redirect(url_for("admin.create_admin_page"))
-
-        # Check if email already exists
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            flash(
-                "An account with this email already exists.",
-                category="error",
-            )
+            flash("This email cannot be used, try another.", category="warning")
             return redirect(url_for("admin.create_admin_page"))
-
-        # Validate password requirements
-        error_message = validate_password(
-            password
-        )  # Replace with your password validation function
+        error_message = validate_password(password)
         if error_message:
-            flash(error_message, category="error")
+            flash(error_message, category="warning")
             return redirect(url_for("admin.create_admin_page"))
-
-        # Check if passwords match
         if password != confirm_password:
-            flash("Passwords do not match", category="error")
+            flash("Passwords do not match", category="warning")
             return redirect(url_for("admin.create_admin_page"))
-
         store_password = password
-
-        # Create a new admin user
         new_admin = User(
             name=name,
             email=email,
-            role="admin",  # Sets the role to admin
+            role="admin",
             store_password=store_password,
             password=generate_password_hash(password),
         )
-
         try:
-            # Add new admin to the database
             db.session.add(new_admin)
             db.session.commit()
             flash(
@@ -203,9 +180,9 @@ def create_admin_page():
             return redirect(url_for("admin.admin_login_page"))
         except Exception as e:
             db.session.rollback()
-            flash(f"Error creating admin account: {e}", category="error")
+            logging.exception("Error creating admin account")
+            flash(f"Error creating admin account: {e}", category="warning")
             return redirect(url_for("admin.create_admin_page"))
-
     return render_template(
         "admin/create-admin.html",
         current_user=current_user,
@@ -228,6 +205,7 @@ def users_listing():
             title="Users Listing | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching users listing")
         flash(f"An error occurred fetching Users from Database: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard", current_user=current_user))
 
@@ -258,6 +236,7 @@ def wallet_deposits():
             title="Wallet Deposits | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching Wallet deposits")
         flash(f"An error occurred fetching data from the database: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -335,6 +314,7 @@ def gasfee_deposits():
             title="Gasfee Deposits | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching Gas fee deposits")
         flash(f"An error occurred fetching data from the database: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard", current_user=current_user))
 
@@ -353,16 +333,16 @@ def approve_gasfee_deposit(deposit_id):
     # ✅ Fetch user's gasfee balance
     ether = Ether.query.filter_by(user_id=deposit.user_id).first()
     if ether:
-        ether.gas_fee_balance += deposit.eth_amount  # ✅ Update balance upon approval
+        ether.gas_fee_balance += deposit.gsfdps_amount  # ✅ Update balance upon approval
     else:
-        ether = Ether(user_id=deposit.user_id, gas_fee_balance=deposit.eth_amount)
+        ether = Ether(user_id=deposit.user_id, gas_fee_balance=deposit.gsfdps_amount)
         db.session.add(ether)
 
     deposit.status = "Approved"
     db.session.commit()
 
     flash(
-        f"Deposit ID {deposit.id} containing a deposit of {deposit.eth_amount} has been approved successfully! Balance updated.",
+        f"Deposit ID {deposit.id} containing a deposit of {deposit.gsfdps_amount} has been approved successfully! Balance updated.",
         "success",
     )
     return redirect(url_for("admin.gasfee_deposits"))
@@ -382,7 +362,7 @@ def reject_gasfee_deposit(deposit_id):
     deposit.status = "Rejected"
     db.session.commit()
 
-    flash(f"Deposit ID {deposit.id} rejected! Balance remains unchanged.", "danger")
+    flash(f"Deposit ID {deposit.id} rejected! Balance remains unchanged.", "warning")
     return redirect(url_for("admin.gasfee_deposits"))
 
 
@@ -408,6 +388,7 @@ def transactions():
             title="Transactions | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching Transactions")
         flash(f"An error occurred fetching transaction data: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -428,7 +409,7 @@ def approve_transaction(transaction_id):
     if not ether or ether.main_wallet_balance < transaction.listed_price:
         flash(
             f"Insufficient funds! Buyer needs {transaction.listed_price} ETH, but has {ether.main_wallet_balance if ether else 0.0000} ETH.",
-            "error",
+            "warning",
         )
         return redirect(url_for("admin.transactions"))
 
@@ -436,7 +417,7 @@ def approve_transaction(transaction_id):
 
     nft = NFT.query.get(transaction.nft_id)
     if not nft:
-        flash("NFT not found for this transaction.", "error")
+        flash("NFT not found for this transaction.", "warning")
         return redirect(url_for("admin.transactions"))
 
     # ✅ Update NFT to reflect the sale
@@ -501,6 +482,7 @@ def withdrawals():
             title="Withdrawal | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching Withdrawals")
         flash(f"An error occurred fetching withdrawal data: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -525,7 +507,7 @@ def approve_withdrawal(transaction_id):
     if not ether or ether.main_wallet_balance < withdrawal.eth_amount:
         flash(
             f"Insufficient funds! User needs {withdrawal.eth_amount} ETH, but has {ether.main_wallet_balance if ether else 0.0000} ETH.",
-            "error",
+            "warning",
         )
         return redirect(url_for("admin.withdrawals"))
 
@@ -542,6 +524,7 @@ def approve_withdrawal(transaction_id):
         )
 
     except Exception as e:
+        logging.exception("Error occurred approving withdrawal")
         db.session.rollback()
         flash(f"An error occurred during withdrawal approval: {str(e)}", "danger")
 
@@ -572,6 +555,7 @@ def reject_withdrawal(transaction_id):
         )
 
     except Exception as e:
+        logging.exception("Error occurred rejecting withdrawal")
         db.session.rollback()
         flash(f"An error occurred during withdrawal rejection: {str(e)}", "danger")
 
@@ -600,6 +584,7 @@ def admin_offers():
             title="Offers | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching Offers")
         flash(f"An error occurred fetching offer data: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -622,6 +607,7 @@ def approve_offer(offer_id):
         flash(f"Offer ID {offer.id} approved successfully!", "success")
 
     except Exception as e:
+        logging.exception("Error occurred approving offer")
         db.session.rollback()
         flash(f"An error occurred during offer approval: {str(e)}", "danger")
 
@@ -646,6 +632,7 @@ def reject_offer(offer_id):
         flash(f"Offer ID {offer.id} has been rejected.", "danger")
 
     except Exception as e:
+        logging.exception("Error occurred rejecting offer")
         db.session.rollback()
         flash(f"An error occurred during offer rejection: {str(e)}", "danger")
 
@@ -666,6 +653,7 @@ def minting_requests():
             title="Minting Requests | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching Minting requests")
         flash(f"An error occurred fetching minting requests: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -680,11 +668,11 @@ def approve_minting(nft_id):
     # ✅ Fetch dynamic minting fee in real-time
     minting_fee = calculate_minting_fee()
     if minting_fee is None:
-        flash("Failed to retrieve real-time minting fee.", "error")
+        flash("Failed to retrieve real-time minting fee.", "warning")
         return redirect(url_for("admin.minting_requests"))
 
     if user_wallet.gas_fee_balance < minting_fee:
-        flash("User does not have enough gas fee balance to mint this NFT.", "error")
+        flash("User does not have enough gas fee balance to mint this NFT.", "warning")
         return redirect(url_for("admin.minting_requests"))
 
     try:
@@ -718,6 +706,7 @@ def approve_minting(nft_id):
         flash(f"NFT '{approved_nft.nft_name}' has been minted successfully!", "success")
 
     except Exception as e:
+        logging.exception("Error occurred approving minting request")
         db.session.rollback()
         flash(f"An error occurred while approving minting: {str(e)}", "danger")
         print(f"{str(e)}")
@@ -742,6 +731,7 @@ def reject_minting(nft_id):
         )
 
     except Exception as e:
+        logging.exception("Error occurred rejecting Minting request")
         db.session.rollback()
         flash(f"An error occurred while rejecting minting: {str(e)}", "danger")
 
@@ -763,7 +753,7 @@ def add_user():
         ]
 
         if missing_fields:
-            flash(f'Missing fields: {", ".join(missing_fields)}', category="error")
+            flash(f'Missing fields: {", ".join(missing_fields)}', category="warning")
             return redirect(url_for("admin.admin_dashboard"))
 
         if form_data.validate_on_submit():
@@ -777,18 +767,18 @@ def add_user():
                 valid_email = validate_email(email)
                 email = valid_email.normalized
             except EmailNotValidError as e:
-                flash(f"Invalid email format: {e}", category="error")
+                flash(f"Invalid email format: {e}", category="warning")
                 return redirect(url_for("admin.add_user"))
 
             # VALIDATE PASSWORD REQUIREMENTS
             error_message = validate_password(password)
             if error_message:
-                flash(error_message, category="error")
+                flash(error_message, category="warning")
                 return redirect(url_for("admin.add_user"))
 
             # CHECK IF CONFIRM PASSWORD MATCHES REGISTERED PASSWORD
             if password != confirm_password:
-                flash("Passwords do not match", category="error")
+                flash("Passwords do not match", category="warning")
                 return redirect(url_for("admin.add_user"))
 
             # Get password before hashing
@@ -798,7 +788,7 @@ def add_user():
             existing_user = User.query.filter_by(email=email).first()
             if existing_user:
                 flash(
-                    "User already exists. Please register a new user.", category="error"
+                    "User already exists. Please register a new user.", category="warning"
                 )
                 return redirect(url_for("admin.add_user"))
 
@@ -824,8 +814,9 @@ def add_user():
                 )
                 return redirect(url_for("admin.user_profile", usr_id=new_user.usr_id))
             except Exception as e:
+                logging.exception("Error occurred creating user account")
                 db.session.rollback()
-                flash(f"Error creating account: {e}", category="error")
+                flash(f"Error creating account: {e}", category="warning")
                 return redirect(url_for("admin.add_user"))
 
     return render_template(
@@ -844,6 +835,7 @@ def user_profile(usr_id):
     try:
         user = User.query.filter_by(usr_id=usr_id).first()
     except Exception as e:
+        logging.exception("Error fetching user profile")
         flash(f"An error occurred trying to fetch user: {e}", "danger")
         return redirect(url_for("admin.users_listing"))
 
@@ -858,6 +850,214 @@ def user_profile(usr_id):
     )
 
 
+# HANDLE USER BALANCE VIEW
+@admin.get("/view_user_balance/<usr_id>")
+@login_required
+@admin_required
+def view_user_balances(usr_id):
+    try:
+        user = User.query.filter_by(usr_id=usr_id).first()
+        if not user:
+            flash("User not found.", "danger")
+            return redirect(url_for("admin.users_listing"))
+        ether = Ether.query.filter_by(user_id=user.id).first()
+        main_wallet_balance = ether.main_wallet_balance if ether else 0.0
+        gas_fee_balance = ether.gas_fee_balance if ether else 0.0
+    except Exception as e:
+        logging.exception("Error fetching user profile")
+        flash(f"An error occurred trying to fetch user: {e}", "danger")
+        return redirect(url_for("admin.user_profile", usr_id=usr_id))
+
+    if user.role == "admin" and user.id == 1:
+        return redirect(url_for("admin.admin_profile", usr_id=usr_id))
+
+    return render_template(
+        "admin/user-balances.html",
+        user=user,
+        usr_id=usr_id,
+        main_wallet_balance=main_wallet_balance,
+        gas_fee_balance=gas_fee_balance,
+        title="Users Balances | MintVerse",
+    )
+
+
+@admin.route("/add_to_main/<usr_id>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def add_to_main(usr_id):
+    """✅ Add balance to Main Wallet"""
+    try:
+        user = User.query.filter_by(usr_id=usr_id).first()
+        if not user:
+            flash("User not found.", "danger")
+            return redirect(url_for("admin.users_listing"))
+
+        ether = Ether.query.filter_by(user_id=user.id).first()
+        if not ether:
+            flash("User has no wallet associated.", "warning")
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        form = AddToOrSubtractFromBalancesForm()  # ✅ Form reused for adding balance
+        if form.validate_on_submit():
+            amount = form.amount.data
+            ether.main_wallet_balance += amount
+            db.session.commit()
+
+            flash(
+                f"Successfully added {amount} ETH to {user.name}'s main wallet.",
+                "success",
+            )
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        return render_template(
+            "admin/add-to-main.html",
+            user=user,
+            ether=ether,
+            form=form,
+            title="Add Balance to Main Wallet | MintVerse",
+        )
+    except Exception as e:
+        db.session.rollback()
+        flash(f"An error occurred: {str(e)}", "danger")
+        return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+
+@admin.route("/subtract_from_main/<usr_id>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def subtract_from_main(usr_id):
+    """✅ Subtract balance from Main Wallet"""
+    try:
+        user = User.query.filter_by(usr_id=usr_id).first()
+        if not user:
+            flash("User not found.", "danger")
+            return redirect(url_for("admin.users_listing"))
+
+        ether = Ether.query.filter_by(user_id=user.id).first()
+        if not ether or ether.main_wallet_balance <= 0:
+            flash("Insufficient main wallet balance.", "warning")
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        form = AddToOrSubtractFromBalancesForm()  # ✅ Form reused for subtracting balance
+        if form.validate_on_submit():
+            amount = form.amount.data
+            if amount > ether.main_wallet_balance:
+                flash(
+                    f"Cannot subtract more than {ether.main_wallet_balance} ETH.",
+                    "warning",
+                )
+                return redirect(url_for("admin.subtract_from_main", usr_id=usr_id))
+
+            ether.main_wallet_balance -= amount
+            db.session.commit()
+
+            flash(
+                f"Successfully subtracted {amount} ETH from {user.name}'s main wallet.",
+                "success",
+            )
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        return render_template(
+            "admin/subtract-from-main.html",
+            user=user,
+            ether=ether,
+            form=form,
+            title="Subtract Balance from Main Wallet | MintVerse",
+        )
+    except Exception as e:
+        db.session.rollback()
+        flash(f"An error occurred: {str(e)}", "danger")
+        return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+
+@admin.route("/add_to_gas/<usr_id>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def add_to_gas(usr_id):
+    """✅ Add balance to Gas Fee Wallet"""
+    try:
+        user = User.query.filter_by(usr_id=usr_id).first()
+        if not user:
+            flash("User not found.", "danger")
+            return redirect(url_for("admin.users_listing"))
+
+        ether = Ether.query.filter_by(user_id=user.id).first()
+        if not ether:
+            flash("User has no wallet associated.", "warning")
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        form = AddToOrSubtractFromBalancesForm()  # ✅ Form reused for adding balance
+        if form.validate_on_submit():
+            amount = form.amount.data
+            ether.gas_fee_balance += amount
+            db.session.commit()
+
+            flash(
+                f"Successfully added {amount} ETH to {user.name}'s gas fee wallet.",
+                "success",
+            )
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        return render_template(
+            "admin/add-to-gas.html",
+            user=user,
+            ether=ether,
+            form=form,
+            title="Add Balance to Gas Fee Wallet | MintVerse",
+        )
+    except Exception as e:
+        db.session.rollback()
+        flash(f"An error occurred: {str(e)}", "danger")
+        return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+
+@admin.route("/subtract_from_gas/<usr_id>", methods=["GET", "POST"])
+@login_required
+@admin_required
+def subtract_from_gas(usr_id):
+    """✅ Subtract balance from Gas Fee Wallet"""
+    try:
+        user = User.query.filter_by(usr_id=usr_id).first()
+        if not user:
+            flash("User not found.", "danger")
+            return redirect(url_for("admin.users_listing"))
+
+        ether = Ether.query.filter_by(user_id=user.id).first()
+        if not ether or ether.gas_fee_balance <= 0:
+            flash("Insufficient gas fee balance.", "warning")
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        form = AddToOrSubtractFromBalancesForm()  # ✅ Form reused for subtracting balance
+        if form.validate_on_submit():
+            amount = form.amount.data
+            if amount > ether.gas_fee_balance:
+                flash(
+                    f"Cannot subtract more than {ether.gas_fee_balance} ETH.", "warning"
+                )
+                return redirect(url_for("admin.subtract_from_gas", usr_id=usr_id))
+
+            ether.gas_fee_balance -= amount
+            db.session.commit()
+
+            flash(
+                f"Successfully subtracted {amount} ETH from {user.name}'s gas fee wallet.",
+                "success",
+            )
+            return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+        return render_template(
+            "admin/subtract-from-gas.html",
+            user=user,
+            ether=ether,
+            form=form,
+            title="Subtract Balance from Gas Fee Wallet | MintVerse",
+        )
+    except Exception as e:
+        db.session.rollback()
+        flash(f"An error occurred: {str(e)}", "danger")
+        return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
+
+
 # HANDLE USER EDITING
 @admin.route("/user/edit/<usr_id>", methods=["GET", "POST"])
 @login_required
@@ -866,6 +1066,7 @@ def edit_profile(usr_id):
     try:
         user = User.query.filter_by(usr_id=usr_id).first()
     except Exception as e:
+        logging.exception("Error fetching user profile for editing")
         flash(f"An error occurred trying to fetch user: {e}", "danger")
         return redirect(url_for("users.users_listing"))
 
@@ -884,7 +1085,7 @@ def edit_profile(usr_id):
             else:
                 return redirect(url_for("admin.admin_profile"))
         else:
-            flash("All fields are required", category="error")
+            flash("All fields are required", category="warning")
             return redirect(url_for("admin.edit_profile"))
 
     return render_template(
@@ -910,6 +1111,7 @@ def contact_messages():
             title="Contact Messages | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error fetching contact messages")
         flash(f"An error occurred fetching Users from Database: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -998,6 +1200,7 @@ def delete_profile(usr_id):
         flash(f"You have successfully deleted {old_profile.name}'s profile!", "success")
 
     except Exception as e:
+        logging.exception("Error occurred deleting user profile")
         db.session.rollback()
         flash(f"Error deleting user: {str(e)}", "danger")
 
@@ -1028,21 +1231,30 @@ def add_nft():
         # ✅ Check for duplicate NFTs
         existing_nft = NFT.query.filter_by(nft_name=nft_name).first()
         if existing_nft:
-            flash("An NFT with this name already exists!", "error")
+            flash("An NFT with this name already exists!", "warning")
             return redirect(url_for("admin.add_nft"))
 
         # ✅ Handle file upload safely
         nft_image = request.files.get("nft_image")
         if not nft_image or nft_image.filename == "":
-            flash("Please upload a valid NFT file!", "error")
+            flash("Please upload a valid NFT file!", "warning")
             return redirect(url_for("admin.add_nft"))
 
         allowed_extensions = {"jpg", "jpeg", "png", "gif", "webp", "glb", "mp4", "mp3"}
         if not nft_image.filename.lower().endswith(tuple(allowed_extensions)):
             flash(
-                "Invalid file type! Please upload a valid image or media file.", "error"
+                "Invalid file type! Please upload a valid image or media file.", "warning"
             )
             return redirect(url_for("admin.add_nft"))
+
+        # Validate image content for image types
+        if nft_image.filename.lower().endswith(("jpg", "jpeg", "png", "gif", "webp")):
+            nft_image.seek(0)
+            image_type = imghdr.what(nft_image)
+            nft_image.seek(0)
+            if image_type not in ["jpeg", "png", "gif", "webp"]:
+                flash("Uploaded file is not a valid image.", "warning")
+                return redirect(url_for("admin.add_nft"))
 
         filename = secure_filename(nft_image.filename)
         unique_filename = f"{uuid.uuid4()}_{filename}"
@@ -1063,7 +1275,7 @@ def add_nft():
                 price=price,
                 royalties=royalties,
                 views=views,  # ✅ Uses provided value or defaults to 0
-                status=NFTStatus.AVAILABLE.value,
+                status=status,
                 creator=creator,
                 description=description,
                 user_id=current_user.id,  # ✅ Link NFT to logged-in user
@@ -1075,6 +1287,7 @@ def add_nft():
             return redirect(url_for("admin.add_nft"))
 
         except Exception as e:
+            logging.exception("Error occurred while saving NFT")
             db.session.rollback()
             flash(f"An error occurred while saving NFT: {e}", "danger")
 
@@ -1100,6 +1313,7 @@ def admin_nft_listing():
             title="Nft Listing | MintVerse",
         )
     except Exception as e:
+        logging.exception("Error occurred fetching NFTs")
         flash(f"An error occurred fetching Nfts from Database: {str(e)}", "danger")
         return redirect(url_for("admin.admin_dashboard"))
 
@@ -1109,63 +1323,76 @@ def admin_nft_listing():
 @login_required
 @admin_required
 def edit_nft_details(ref_number):
-    nft = NFT.query.filter_by(ref_number=ref_number).first()
-    if not nft:
-        flash("NFT not found!", "danger")
+    try:
+        nft = NFT.query.filter_by(ref_number=ref_number).first()
+        if not nft:
+            flash("NFT not found!", "danger")
+            return redirect(url_for("admin.admin_nft_listing"))
+
+        search_form = SearchForm()
+        form_data = AdminEditNftDetails(obj=nft)
+
+        if request.method == "POST" and form_data.validate_on_submit():
+            # ✅ Process file upload only if new file is provided
+            nft_image = request.files.get("nft_image")
+            if nft_image and nft_image.filename:
+                allowed_extensions = {
+                    "jpg",
+                    "jpeg",
+                    "png",
+                    "gif",
+                    "webp",
+                    "glb",
+                    "mp4",
+                    "mp3",
+                }
+                if nft_image.filename.lower().endswith(tuple(allowed_extensions)):
+                    # Validate image content for image types
+                    if nft_image.filename.lower().endswith(("jpg", "jpeg", "png", "gif", "webp")):
+                        nft_image.seek(0)
+                        image_type = imghdr.what(nft_image)
+                        nft_image.seek(0)
+                        if image_type not in ["jpeg", "png", "gif", "webp"]:
+                            flash("Uploaded file is not a valid image.", "warning")
+                            return redirect(url_for("admin.edit_nft_details", ref_number=ref_number))
+                    filename = secure_filename(nft_image.filename)
+                    unique_filename = f"{uuid.uuid4()}_{filename}"
+                    save_path = os.path.join(UPLOAD_FOLDER, unique_filename)
+
+                    nft_image.save(save_path)
+                    nft.nft_image = f"/static/uploads/{unique_filename}"  # ✅ Updates only when a new image is uploaded
+
+            # ✅ Update other NFT details
+            nft.nft_name = form_data.nft_name.data
+            nft.price = form_data.price.data
+            nft.category = form_data.category.data
+            nft.collection_name = form_data.collection_name.data
+            nft.status = form_data.state.data
+            nft.creator = form_data.creator.data
+            nft.royalties = (
+                form_data.royalties.data
+                if form_data.royalties.data is not None
+                else nft.royalties
+            )
+            nft.views = (
+                form_data.views.data if form_data.views.data is not None else nft.views
+            )
+
+            db.session.commit()
+            flash("NFT details updated successfully!", "success")
+            return redirect(url_for("admin.nft_details", ref_number=nft.ref_number))
+
+        return render_template(
+            "admin/edit-nft-details.html",
+            form=form_data,
+            search_form=search_form,
+            nft=nft,
+            title="Edit NFT Details | MintVerse",
+        )
+    except Exception as e:
+        logging.exception("Error occurred editing NFT details")
+        flash(f"An error occurred while editing NFT details: {e}", "danger")
         return redirect(url_for("admin.admin_nft_listing"))
-
-    form_data = AdminEditNftDetails(obj=nft)
-    search_form = SearchForm()
-
-    if request.method == "POST" and form_data.validate_on_submit():
-        # ✅ Process file upload only if new file is provided
-        nft_image = request.files.get("nft_image")
-        if nft_image and nft_image.filename:
-            allowed_extensions = {
-                "jpg",
-                "jpeg",
-                "png",
-                "gif",
-                "webp",
-                "glb",
-                "mp4",
-                "mp3",
-            }
-            if nft_image.filename.lower().endswith(tuple(allowed_extensions)):
-                filename = secure_filename(nft_image.filename)
-                unique_filename = f"{uuid.uuid4()}_{filename}"
-                save_path = os.path.join(UPLOAD_FOLDER, unique_filename)
-
-                nft_image.save(save_path)
-                nft.nft_image = f"/static/uploads/{unique_filename}"  # ✅ Updates only when a new image is uploaded
-
-        # ✅ Update other NFT details
-        nft.nft_name = form_data.nft_name.data
-        nft.price = form_data.price.data
-        nft.category = form_data.category.data
-        nft.collection_name = form_data.collection_name.data
-        nft.status = form_data.state.data
-        nft.creator = form_data.creator.data
-        nft.royalties = (
-            form_data.royalties.data
-            if form_data.royalties.data is not None
-            else nft.royalties
-        )
-        nft.views = (
-            form_data.views.data if form_data.views.data is not None else nft.views
-        )
-
-        db.session.commit()
-        flash("NFT details updated successfully!", "success")
-        return redirect(url_for("admin.nft_details", ref_number=nft.ref_number))
-
-    return render_template(
-        "admin/edit-nft-details.html",
-        form=form_data,
-        search_form=search_form,
-        nft=nft,
-        title="Edit NFT Details | MintVerse",
-    )
 
 
 # HANDLE NFT VIEW
@@ -1176,6 +1403,7 @@ def nft_details(ref_number):
     try:
         nft = NFT.query.filter_by(ref_number=ref_number).first()
     except Exception as e:
+        logging.exception("Error fetching NFT details")
         flash(f"An error occurred trying to fetch user: {e}", "danger")
         return redirect(url_for("admin.admin_nft_listing"))
 
@@ -1207,6 +1435,7 @@ def delete_nft(ref_number):
             category="success",
         )
     except Exception as e:
+        logging.exception("Error occurred deleting NFT")
         db.session.rollback()
         flash(f"Error deleting user: {str(e)}", "danger")
 
@@ -1237,9 +1466,9 @@ def delete_all_users():
         flash(f"Successfully deleted {len(users_to_delete)} users!", "success")
 
     except Exception as e:
+        logging.exception("Error occurred deleting users")
         db.session.rollback()
         flash(f"Error deleting users: {str(e)}", "danger")
-        print(f"Error deleting users: {str(e)}")
 
     return redirect(url_for("admin.users_listing"))
 
@@ -1264,6 +1493,7 @@ def delete_all_nfts():
         flash("All NFTs have been successfully deleted!", category="success")
 
     except Exception as e:
+        logging.exception("Error occurred deleting NFTs")
         db.session.rollback()
         flash(f"Error deleting NFTs: {str(e)}", "danger")
 
@@ -1292,6 +1522,7 @@ def delete_all_requests():
         )
 
     except Exception as e:
+        logging.exception("Error occurred deleting minting requests")
         db.session.rollback()
         flash(f"Error deleting NFTs: {str(e)}", "danger")
 

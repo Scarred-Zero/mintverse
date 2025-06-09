@@ -10,7 +10,7 @@ from flask_migrate import Migrate
 from .models.User import User
 from .config.variables import (
     SECRET_KEY,
-    SQLALCHEMY_DATABASE_URI,
+    MYSQL_DATABASE_URI,
     MAIL_PASSWORD,
     MAIL_SERVER,
     MAIL_PORT,
@@ -38,9 +38,10 @@ def create_app():
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
     app.config["SECRET_KEY"] = SECRET_KEY
     app.config["SESSION_TYPE"] = "filesystem"  # Store session data persistently
+    app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024  # 2MB limit
 
     # DATABASE CONFIGS
-    app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
+    app.config["SQLALCHEMY_DATABASE_URI"] = MYSQL_DATABASE_URI
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
     app.config["SQLALCHEMY_POOL_PRE_PING"] = True
@@ -65,8 +66,8 @@ def create_app():
     from .views.user import user
     from .views.category import category
 
-    app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(mintverse)
+    app.register_blueprint(auth, url_prefix="/auth")
     app.register_blueprint(admin, url_prefix="/admin")
     app.register_blueprint(user, url_prefix="/user")
     app.register_blueprint(category, url_prefix="/category")

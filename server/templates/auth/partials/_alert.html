@@ -40,7 +40,7 @@
 {% if alerts|length %}
   <div class="alert-container">
     {% for category, message in alerts %}
-      {% if category == 'error' %}
+      {% if category == 'warning' %}
         <div class="alert alert-dismissible fade show alert-warning" role="alert">
           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           {{ message }}

@@ -25,13 +25,13 @@ def buy_page(ref_number):
     try:
         uuid.UUID(ref_number, version=4)  # ✅ Validate reference number format
     except ValueError:
-        flash("Invalid NFT reference number format.", "error")
+        flash("Invalid NFT reference number format.", "warning")
         return redirect(url_for("user.dashboard_page"))
 
     nft = NFT.query.filter_by(ref_number=ref_number).first()
 
     if not nft:
-        flash("NFT not found.", "error")
+        flash("NFT not found.", "warning")
         return redirect(url_for("user.dashboard_page"))
 
     # ✅ Log NFT view (tracking purposes)
