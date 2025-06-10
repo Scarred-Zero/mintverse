@@ -291,60 +291,60 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // NL-ITEM INITIALIZATION DYNAMICALLY
-document.addEventListener('DOMContentLoaded', () => {
-  // SELECT THE ELEMENT WHERE DATA WILL BE APPENDED
-  const nlContent = document.querySelector('.nl__content');
+// document.addEventListener('DOMContentLoaded', () => {
+//   // SELECT THE ELEMENT WHERE DATA WILL BE APPENDED
+//   const nlContent = document.querySelector('.nl__content');
 
-  // DISPLAY A TEMPORARY LOADING MESSAGE WHILE DATA IS BEING FETCHED
-  nlContent.innerHTML = '<p>Loading...</p>';
+//   // DISPLAY A TEMPORARY LOADING MESSAGE WHILE DATA IS BEING FETCHED
+//   nlContent.innerHTML = '<p>Loading...</p>';
 
-  // USE THE FETCH API TO RETRIEVE DATA FROM THE SPECIFIED JSON FILE
-  fetch('nl/api/nfts/')
-    .then((response) => {
-      if (!response.ok) throw new Error('Failed to fetch NFTs');
-      return response.json();
-    })
-    .then((nfts) => {
-      nlContent.innerHTML = '';
-      if (nfts.length === 0) {
-        nlContent.innerHTML = '<p>No NFTs available at the moment.</p>';
-        return;
-      }
+//   // USE THE FETCH API TO RETRIEVE DATA FROM THE SPECIFIED JSON FILE
+//   fetch('nl/api/nfts/')
+//     .then((response) => {
+//       if (!response.ok) throw new Error('Failed to fetch NFTs');
+//       return response.json();
+//     })
+//     .then((nfts) => {
+//       nlContent.innerHTML = '';
+//       if (nfts.length === 0) {
+//         nlContent.innerHTML = '<p>No NFTs available at the moment.</p>';
+//         return;
+//       }
 
-      nfts.forEach((nft) => {
-        const image = nft.nft_image || '/static/assets/images/default_img.avif';
-        const name = nft.nft_name || 'Unnamed NFT';
-        const category = nft.category || 'Unknown Category';
-        const price = nft.price ? `${nft.price}` : 'N/A';
-        const status = nft.status.charAt(0).toUpperCase() + nft.status.slice(1);
+//       nfts.forEach((nft) => {
+//         const image = nft.nft_image || '/static/assets/images/default_img.avif';
+//         const name = nft.nft_name || 'Unnamed NFT';
+//         const category = nft.category || 'Unknown Category';
+//         const price = nft.price ? `${nft.price}` : 'N/A';
+//         const status = nft.status.charAt(0).toUpperCase() + nft.status.slice(1);
 
-        // CREATE A NEW DIV ELEMENT TO REPRESENT AN ITEM
-        const nlItem = document.createElement('a');
-        nlItem.className = 'nl__item'; // ASSIGN CLASS NAME FOR STYLING
-        nlItem.href = `nft/buy/nft_${nft.ref_number}`;
+//         // CREATE A NEW DIV ELEMENT TO REPRESENT AN ITEM
+//         const nlItem = document.createElement('a');
+//         nlItem.className = 'nl__item'; // ASSIGN CLASS NAME FOR STYLING
+//         nlItem.href = `nft/buy/nft_${nft.ref_number}`;
 
-        // POPULATE THE ITEM ELEMENT WITH HTML CONTENT
-        nlItem.innerHTML = `
-          <img src="${image}" alt="${name}" class="nl__img" aria-label="Image of ${name}" />
-          <p class="nl__category-des">${category}</p>
-          <h3 class="nl__name">${name}</h3>
-          <button class="btn flexColCenter" aria-label="View price and availability for ${name}">
-              Price: ${price} ETH
-              <small>${status}</small>
-          </button>
-        `;
+//         // POPULATE THE ITEM ELEMENT WITH HTML CONTENT
+//         nlItem.innerHTML = `
+//           <img src="${image}" alt="${name}" class="nl__img" aria-label="Image of ${name}" />
+//           <p class="nl__category-des">${category}</p>
+//           <h3 class="nl__name">${name}</h3>
+//           <button class="btn flexColCenter" aria-label="View price and availability for ${name}">
+//               Price: ${price} ETH
+//               <small>${status}</small>
+//           </button>
+//         `;
 
-        // APPEND THE CREATED ITEM TO THE CONTENT CONTAINER
-        nlContent.appendChild(nlItem);
-      });
-    })
-    .catch((error) => {
-      // HANDLE FETCH ERRORS (E.G., NETWORK ISSUES OR FILE NOT FOUND)
-      console.error('Error fetching data:', error); // LOG ERROR TO THE CONSOLE
-      nlContent.innerHTML =
-        '<p>Error loading items. Please try again later.</p>'; // DISPLAY AN ERROR MESSAGE IN THE UI
-    });
-});
+//         // APPEND THE CREATED ITEM TO THE CONTENT CONTAINER
+//         nlContent.appendChild(nlItem);
+//       });
+//     })
+//     .catch((error) => {
+//       // HANDLE FETCH ERRORS (E.G., NETWORK ISSUES OR FILE NOT FOUND)
+//       console.error('Error fetching data:', error); // LOG ERROR TO THE CONSOLE
+//       nlContent.innerHTML =
+//         '<p>Error loading items. Please try again later.</p>'; // DISPLAY AN ERROR MESSAGE IN THE UI
+//     });
+// });
 
 // DISCOVER INITIALIZATION DYNAMICALLY
 document.addEventListener('DOMContentLoaded', () => {
