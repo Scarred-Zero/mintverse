@@ -23,6 +23,8 @@ from ..views.forms import SearchForm, ContactForm
 from server import mail
 from ..utils.helpers import send_predefined_email
 import logging
+import random
+from sqlalchemy import desc
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -167,9 +169,6 @@ def get_nfts():
 
 
 # HERO API ENDPOINT (VIEW)
-from sqlalchemy import desc
-
-
 @mintverse.get("/hero/api/nfts/")
 def get_hero_nfts():
     """✅ Fetch recent NFTs and older ones from each category"""
@@ -244,17 +243,39 @@ def get_bsl_nfts():
 # TTP API ENDPOINT (VIEW)
 @mintverse.get("/ttp/api/nfts/")
 def get_ttp_nfts():
-    categories = ["digital-art", "3d-art", "generative-art", "comic-art"]
+    all_categories = [
+        "3d-art",
+        "abstract-art",
+        "category-art",
+        "digital-art",
+        "fantasy-art",
+        "generative-art",
+        "gif-art",
+        "installation-art",
+        "pop-art",
+        "minimalism",
+        "painting",
+        "photography",
+        "photorealism",
+        "printmaking",
+        "sculpture",
+        "surrealism",
+        "drawing",
+        "comic-art",
+        "outsider-art",
+    ]
+
+    # ✅ Randomly select four different categories
+    selected_categories = random.sample(all_categories, 4)
 
     selected_nfts = []
-    for category in categories:
-        nft = NFT.query.filter(
+    for category in selected_categories:
+        nfts = NFT.query.filter(
             and_(
                 NFT.category == category, NFT.status == NFTStatus.AVAILABLE.value
             )  # ✅ Correct Enum reference
         ).first()  # ✅ Get first NFT in each category
-        if nft:  # Ensure the category has at least one NFT
-            selected_nfts.append(nft)
+        selected_nfts.extend(nfts)
 
     # ✅ Handle empty results case
     if not selected_nfts:
@@ -266,10 +287,6 @@ def get_ttp_nfts():
 
 
 # NL API ENDPOINT (VIEW)
-import random
-from sqlalchemy import desc
-
-
 @mintverse.get("/nl/api/nfts/")
 def get_nl_nfts():
     """✅ Fetch new listings dynamically from four rotating categories"""
