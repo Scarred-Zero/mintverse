@@ -1,0 +1,62 @@
+{% extends "admin/partials/_layout.html" %} {% block title %} {{ title }} {%
+endblock %} {% block content %}
+<div class="content">
+  <!-- Start Content-->
+  <div class="container-fluid">
+    <div>
+      <ol class="breadcrumb m-0">
+        <li class="breadcrumb-item inactive">
+          <a href="{{ url_for('admin.admin_dashboard') }}">ADMIN DASHBOARD</a>
+        </li>
+        <li class="breadcrumb-item">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="breadcrumb-item inactive">
+          <a href="{{ url_for('admin.users_listing') }}">USERS LISTING</a>
+        </li>
+        <li class="breadcrumb-item">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="breadcrumb-item inactive"><a href="{{ url_for('admin.user_profile', usr_id=user.usr_id) }}">USER PROFILE</a></li>
+        <li class="breadcrumb-item">
+          <i class="fa fa-angle-right"></i>
+        </li>
+        <li class="breadcrumb-item active">USERS BALANCES</li>
+      </ol>
+    </div>
+    <div class="page-title-box">
+      <h3>{{ user.name.capitalize() }}'s Balances</h3>
+    </div>
+    <hr />
+    <br />
+    <h3>Main wallet Balance: <span style="padding: 5px; background-color: rgba(0, 0, 0, 0.5); color: cyan; border-radius: 0.75rem;">{{ main_wallet_balance }} ETH</span></h3>
+    <small>Click buttons to manipulate Main Wallet balance</small>
+    <br>
+    <a href="{{ url_for('admin.add_to_main', usr_id=user.usr_id) }}">
+      <button class="btn btn-success">
+        Add<i class="fa fa-money-bill-transfer ml-2"></i>
+      </button>
+    </a>
+    <a href="{{ url_for('admin.subtract_from_main', usr_id=user.usr_id) }}">
+      <button class="btn btn-success">
+        Subtract<i class="fa fa-money-bill-transfer ml-2"></i>
+      </button>
+    </a>
+    <br />
+    <br />
+    <h3>Gas Fee Balance: <span style="padding: 5px; background-color: rgba(0, 0, 0, 0.5); color: cyan; border-radius: 0.75rem;">{{ gas_fee_balance }} ETH</span></h3>
+    <small>Click buttons to manipulate Gas Fee balance</small>
+    <br>
+    <a href="{{ url_for('admin.add_to_gas', usr_id=user.usr_id) }}">
+      <button class="btn btn-success">
+        Add<i class="fa fa-money-bill-transfer ml-2"></i>
+      </button>
+    </a>
+    <a href="{{ url_for('admin.subtract_from_gas', usr_id=user.usr_id) }}">
+      <button class="btn btn-success">
+        Subtract<i class="fa fa-money-bill-transfer ml-2"></i>
+      </button>
+    </a>
+  </div>
+</div>
+{% endblock %}

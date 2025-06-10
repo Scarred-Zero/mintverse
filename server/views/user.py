@@ -1,22 +1,18 @@
-from flask import (
-    Blueprint,
-    jsonify,
-    render_template,
-    flash,
-    redirect,
-    render_template,
-    request,
-    url_for,
-)
+from flask import Blueprint, jsonify, render_template, flash, redirect, request, url_for
 from flask_login import login_required, current_user
+from decimal import Decimal
+import os
+import uuid
+import logging
+import imghdr
+from werkzeug.utils import secure_filename
+from email_validator import validate_email, EmailNotValidError
+
+from server import UPLOAD_FOLDER, csrf
+from ..config.database import db
 from ..utils.minting_fee_helper import calculate_minting_fee
 from ..models.enums import NFTStatus
 from ..models.PendingNfts import PendingNFTs
-from sqlalchemy import text
-from ..config.database import db
-from server import UPLOAD_FOLDER
-from ..models.GasFeeDeposit import GasFeeDeposit
-from ..models.Ether import Ether
 from ..models.NFT import NFT
 from ..models.NFTViews import NFTViews
 from ..models.Offers import Offers
@@ -24,6 +20,8 @@ from ..models.User import User
 from ..models.Withdrawal import Withdrawal
 from ..models.WalletDeposit import WalletDeposit
 from ..models.Transaction import Transaction
+from ..models.GasFeeDeposit import GasFeeDeposit
+from ..models.Ether import Ether
 from .forms import (
     FinalisingPurchaseForm,
     OfferForm,
@@ -33,32 +31,24 @@ from .forms import (
     GasFeeDepositForm,
     CreateNftForm,
 )
-from email_validator import validate_email, EmailNotValidError
-import os
-import uuid
-from werkzeug.utils import secure_filename
-from decimal import Decimal
-from server import csrf  # ✅ Ensure CSRF is imported from __init__.py
-
 
 user = Blueprint("user", __name__)
 
 
 # BUY PAGE ROUTE (VIEW)
-@csrf.exempt
 @user.route("/nft/buy/nft_<ref_number>", methods=["GET", "POST"])
 @login_required
 def buy_page(ref_number):
     try:
         uuid.UUID(ref_number, version=4)  # ✅ Validate reference number format
     except ValueError:
-        flash("Invalid NFT reference number format.", "error")
+        flash("Invalid NFT reference number format.", "warning")
         return redirect(url_for("user.dashboard_page"))
 
     nft = NFT.query.filter_by(ref_number=ref_number).first()
 
     if not nft:
-        flash("NFT not found.", "error")
+        flash("NFT not found.", "warning")
         return redirect(url_for("user.dashboard_page"))
 
     # ✅ Log NFT view (tracking purposes)
@@ -70,7 +60,7 @@ def buy_page(ref_number):
     if request.method == "POST":
         # ✅ Check if the current user has already bought this NFT
         if nft.buyer_id == current_user.id:  # ✅ Ensure buyer ID matches user ID
-            flash(f"You have already purchased '{nft.nft_name}'.", "error")
+            flash(f"You have already purchased '{nft.nft_name}'.", "warning")
             return redirect(
                 url_for("user.buy_page", ref_number=ref_number)
             )  # ✅ Redirect to admin.buy_page
@@ -78,7 +68,7 @@ def buy_page(ref_number):
         if user_balance < nft.price:
             flash(
                 f"Insufficient funds! NFT costs {nft.price} ETH, but you have {user_balance} ETH.",
-                "error",
+                "warning",
             )
             return redirect(url_for("user.buy_page", ref_number=ref_number))
 
@@ -102,20 +92,20 @@ def finalising_purchase(ref_number):
     try:
         uuid.UUID(ref_number, version=4)  # Validate reference number format
     except ValueError:
-        flash("Invalid NFT reference number format.", "error")
+        flash("Invalid NFT reference number format.", "warning")
         return redirect(url_for("user.dashboard_page"))
 
     # ✅ Fetch NFT securely
     nft = NFT.query.filter_by(ref_number=ref_number).first()
 
     if not nft:
-        flash("NFT not found.", "error")
+        flash("NFT not found.", "warning")
         return redirect(url_for("user.buy_page", ref_number=ref_number))
 
     # ✅ Fetch NFT owner's details
     owner = User.query.filter_by(name=nft.creator).first()
     if not owner:
-        flash("NFT creator not found.", "error")
+        flash("NFT creator not found.", "warning")
         return redirect(url_for("user.buy_page", ref_number=ref_number))
 
     # ✅ Fetch user's wallet balance
@@ -133,7 +123,7 @@ def finalising_purchase(ref_number):
         if user_balance < nft.price:
             flash(
                 f"Insufficient funds! NFT costs {nft.price} ETH, but you have {user_balance} ETH.",
-                "error",
+                "warning",
             )
             return redirect(url_for("user.buy_page", ref_number=ref_number))
 
@@ -147,8 +137,14 @@ def finalising_purchase(ref_number):
 
         if not receipt_img or not allowed_file(receipt_img.filename):
             flash(
-                "Invalid file type! Only PNG, JPG, JPEG, and WEBP are allowed.", "error"
+                "Invalid file type! Only PNG, JPG, JPEG, and WEBP are allowed.",
+                "warning",
             )
+            return redirect(url_for("user.finalising_purchase", ref_number=ref_number))
+
+        # Additional check
+        if imghdr.what(receipt_img) not in ["png", "jpeg", "jpg", "webp"]:
+            flash("Uploaded file is not a valid image.", "warning")
             return redirect(url_for("user.finalising_purchase", ref_number=ref_number))
 
         filename = secure_filename(receipt_img.filename)
@@ -211,6 +207,15 @@ def dashboard_page():
         flash("User not found.", "danger")
         return redirect(url_for("mintverse.home_page"))
 
+    if user.role != "user" and user.role != "admin":
+        # ✅ Ensure only regular users can access this page
+        flash("Access denied. This page is for regular users only.", "danger")
+        return redirect(url_for("mintverse.home_page"))
+
+    if user.role == "admin":
+        # ✅ Redirect admin users to the admin dashboard
+        return redirect(url_for("admin.admin_dashboard"))
+
     # Get the user's wallet balance from Ether model
     ether = Ether.query.filter_by(user_id=current_user.id).first()
     eth_count = ether.main_wallet_balance if ether else 0.0000
@@ -258,7 +263,7 @@ def finalise_offer_page(ref_number):
     try:
         uuid.UUID(ref_number, version=4)  # Ensure it's a valid UUID
     except ValueError:
-        flash("Invalid NFT reference number format.", "error")
+        flash("Invalid NFT reference number format.", "warning")
         return redirect(url_for("user.dashboard_page"))
 
     # ✅ Fetch NFT securely from the database
@@ -266,7 +271,7 @@ def finalise_offer_page(ref_number):
 
     # ✅ Handle NFT not found
     if not nft:
-        flash("NFT not found.", "error")
+        flash("NFT not found.", "warning")
         return redirect(url_for("user.dashboard_page"))
 
     # ✅ Fetch the logged-in user's ETH balance
@@ -299,14 +304,14 @@ def finalise_offer_page(ref_number):
         if not (min_allowed_price <= offered_price <= max_allowed_price):
             flash(
                 f"Invalid offer! Your offer must be between {min_allowed_price:.4f} ETH and {max_allowed_price:.4f} ETH.",
-                "error",
+                "warning",
             )
             return redirect(url_for("user.finalise_offer_page", ref_number=ref_number))
         # ✅ Ensure the user has sufficient ETH balance
         if eth_count < offered_price:
             flash(
                 f"Insufficient funds! You have {eth_count} ETH but tried to offer {offered_price} ETH.",
-                "error",
+                "warning",
             )
             return redirect(url_for("user.buy_page", ref_number=ref_number))
 
@@ -394,8 +399,14 @@ def wallet_deposit_page():
 
         if not receipt_img or not allowed_file(receipt_img.filename):
             flash(
-                "Invalid file type! Only PNG, JPG, JPEG, and WEBP are allowed.", "error"
+                "Invalid file type! Only PNG, JPG, JPEG, and WEBP are allowed.",
+                "warning",
             )
+            return redirect(url_for("user.wallet_deposit_page"))
+
+        # Additional check
+        if imghdr.what(receipt_img) not in ["png", "jpeg", "jpg", "webp"]:
+            flash("Uploaded file is not a valid image.", "warning")
             return redirect(url_for("user.wallet_deposit_page"))
 
         filename = secure_filename(receipt_img.filename)
@@ -463,11 +474,11 @@ def gasfee_deposit_page():
     form = GasFeeDepositForm()
 
     if request.method == "POST" and form.validate_on_submit():
-        eth_amount = form.eth_amount.data
+        gsfdps_amount = form.gsfdps_amount.data
         receipt_img = request.files.get("receipt_img")
 
         # ✅ Validate minimum deposit amount
-        if eth_amount < 0.001:
+        if gsfdps_amount < 0.001:
             flash("Invalid deposit amount. Minimum deposit is 0.001 ETH.", "danger")
             return redirect(url_for("user.gasfee_deposit_page"))
 
@@ -482,8 +493,16 @@ def gasfee_deposit_page():
 
         if not receipt_img or not allowed_file(receipt_img.filename):
             flash(
-                "Invalid file type! Only PNG, JPG, JPEG, and WEBP are allowed.", "error"
+                "Invalid file type! Only PNG, JPG, JPEG, and WEBP are allowed.",
+                "warning",
             )
+            return redirect(
+                url_for("user.gasfee_deposit_page")
+            )  # ✅ Fix redirect mismatch
+
+        # Additional check
+        if imghdr.what(receipt_img) not in ["png", "jpeg", "jpg", "webp"]:
+            flash("Uploaded file is not a valid image.", "warning")
             return redirect(
                 url_for("user.gasfee_deposit_page")
             )  # ✅ Fix redirect mismatch
@@ -501,7 +520,7 @@ def gasfee_deposit_page():
 
             # ✅ Create Gas Fee Deposit Entry with unique reference
             gas_fee_deposit = GasFeeDeposit(
-                eth_amount=eth_amount,
+                gsfdps_amount=gsfdps_amount,
                 user_id=current_user.id,
                 receipt_img=unique_filename,
                 status="Pending",
@@ -510,7 +529,7 @@ def gasfee_deposit_page():
             db.session.commit()
 
             flash(
-                f"Gas fee deposit of {eth_amount} ETH submitted successfully! Kindly wait for approval.",
+                f"Gas fee deposit of {gsfdps_amount} ETH submitted successfully! Kindly wait for approval.",
                 "success",
             )
 
@@ -529,12 +548,16 @@ def gasfee_deposit_page():
     ether = Ether.query.filter_by(user_id=current_user.id).first()
     gasfee_count = ether.gas_fee_balance if ether else 0.0000
 
+    # ✅ Fetch deposit history
+    gsfdps_hst = GasFeeDeposit.query.filter_by(user_id=current_user.id).all()
+
     return render_template(
         "main/pages/user/gasfee-deposit-page.html",
         title="Gas Fee Deposit | MintVerse",
         form=form,
         gasfee_wallet_address=gasfee_wallet_address,
         gasfee_count=gasfee_count,
+        gsfdps_hst=gsfdps_hst,  # ✅ Pass deposit history to the template
         current_user=current_user,
     )
 
@@ -550,7 +573,7 @@ def withdrawal_page():
 
         # ✅ Ensure a valid method is selected
         if not withdrawal_mth:
-            flash("Please select a valid withdrawal method.", "error")
+            flash("Please select a valid withdrawal method.", "warning")
             return redirect(url_for("user.withdrawal_page"))
 
         # ✅ Fetch withdrawal details
@@ -564,7 +587,7 @@ def withdrawal_page():
         if user_balance < eth_amount:
             flash(
                 f"Insufficient balance! You need {eth_amount} ETH, but have {user_balance} ETH.",
-                "error",
+                "warning",
             )
             return redirect(url_for("user.withdrawal_page"))
 
@@ -639,14 +662,14 @@ def profile_page():
             valid_email = validate_email(email)
             email = valid_email.normalized
         except EmailNotValidError as e:
-            flash(f"Invalid email format: {e}", category="error")
+            flash(f"Invalid email format: {e}", category="warning")
             return redirect(url_for("user.profile_page"))
 
         # Check for duplicate email (ignore if unchanged)
         if email != user.email:
             existing_user = User.query.filter_by(email=email).first()
             if existing_user:
-                flash("This email is already in use by another user.", "error")
+                flash("This email cannot be used.", "warning")
                 return redirect(url_for("user.profile_page"))
 
         # Update user details
@@ -667,7 +690,8 @@ def profile_page():
             flash("Your profile has been updated successfully!", "success")
         except Exception as e:
             db.session.rollback()
-            flash(f"An error occurred while updating your profile: {e}", "danger")
+            logging.exception("An error occurred while updating your profile")
+            flash("An error occurred. Please try again later.", "danger")
 
         return redirect(url_for("user.profile_page"))
 
@@ -689,25 +713,34 @@ def create_nft_page():
     # ✅ Fetch current minting fee dynamically
     minting_fee = calculate_minting_fee()
     if minting_fee is None:
-        flash("Could not retrieve live minting fee. Try again later.", "error")
+        flash("Could not retrieve live minting fee. Try again later.", "warning")
         return redirect(url_for("user.create_nft_page"))
 
     if request.method == "POST" and form.validate_on_submit():
+        # Check if NFT name already exists in PendingNFTs or NFT table
+        nft_name = form.item_name.data.strip()
+        existing_pending = PendingNFTs.query.filter_by(nft_name=nft_name).first()
+        existing_nft = NFT.query.filter_by(nft_name=nft_name).first()
+        if existing_pending or existing_nft:
+            flash(
+                "An NFT with this name already exists. Please choose a different name.",
+                "warning",
+            )
+            return redirect(url_for("user.create_nft_page"))
+
         ether = Ether.query.filter_by(user_id=current_user.id).first()
         gas_fee_balance = ether.gas_fee_balance if ether else Decimal("0.0000")
 
         if gas_fee_balance < minting_fee:
             flash(
                 f"Insufficient gas fee balance! Minting requires {minting_fee} ETH, but you have {gas_fee_balance} ETH.",
-                "error",
+                "warning",
             )
             return redirect(url_for("user.create_nft_page"))
 
         # ✅ Deduct minting fee dynamically
         ether.gas_fee_balance -= minting_fee
         db.session.commit()
-
-        # ✅ NFT creation logic remains unchanged...
 
         # Extract form data
         nft_name = form.item_name.data
@@ -721,7 +754,7 @@ def create_nft_page():
         # Handle file upload
         nft_logo = request.files.get("nft_logo")
         if not nft_logo or nft_logo.filename == "":
-            flash("Please upload a valid NFT file!", "error")
+            flash("Please upload a valid NFT file!", "warning")
             return redirect(url_for("user.create_nft_page"))
 
         filename = secure_filename(nft_logo.filename)
@@ -804,7 +837,7 @@ def delete_nft_record(nft_id):
     nft = PendingNFTs.query.filter_by(id=nft_id, user_id=current_user.id).first()
 
     if not nft:
-        flash("NFT not found.", "error")
+        flash("NFT not found.", "warning")
         return redirect(url_for("user.create_nft_page"))
 
     try:
@@ -862,7 +895,7 @@ def get_my_listed_collection():
     except Exception as e:
         db.session.rollback()
         print(f"Error fetching listed NFTs: {e}")  # ✅ Logs errors properly
-        return jsonify({"error": "Failed to fetch listed NFTs"}), 500
+        return jsonify({"warning": "Failed to fetch listed NFTs"}), 500
 
 
 @user.get("/mycollection/bought/api/nfts/")
@@ -897,7 +930,7 @@ def get_my_bought_collection():
     except Exception as e:
         db.session.rollback()
         print(f"Error fetching bought NFTs: {e}")
-        return jsonify({"error": "Failed to fetch bought NFTs"}), 500
+        return jsonify({"warning": "Failed to fetch bought NFTs"}), 500
 
 
 @user.get("/nft/details/nft_<ref_number>")
@@ -932,5 +965,5 @@ def nft_details(ref_number):
 
     except Exception as e:
         print(f"Error fetching NFT details: {str(e)}")
-        flash("Error loading NFT details. Please try again.", "error")
+        flash("Error loading NFT details. Please try again.", "warning")
         return redirect(url_for("user.mycollection_page"))

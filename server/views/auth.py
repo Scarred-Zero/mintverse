@@ -41,14 +41,14 @@ def login_page():
         user = User.query.filter_by(email=email).first()
 
         if not user or not check_password_hash(user.password, password):
-            flash("Invalid email or password. Please try again.", "error")
+            flash("Invalid email or password. Please try again.", "warning")
             return redirect(url_for("auth.login_page"))
 
         # ✅ Exclude admins from email verification check
         if not user.is_email_verified and user.role != "admin":
             flash(
                 "You must verify your email before logging in. Check your inbox for a verification link.",
-                "error",
+                "warning",
             )
             send_verification_email(user)
             return redirect(url_for("auth.login_page"))
@@ -95,33 +95,33 @@ def register_page():
             elif len(name_parts) == 2:
                 name = " ".join(name_parts)  # ✅ Two words, ensure only one space
             elif len(name_parts) > 2:
-                flash("Please enter a valid name (either first name or first & last name only).", "error")
+                flash("Please enter a valid name (either first name or first & last name only).", "warning")
                 return redirect(url_for("auth.register_page"))
 
             # ✅ Ensure name contains only alphabetic characters
             if not all(part.isalpha() for part in name_parts):
-                flash("Names can only contain letters. No numbers or symbols allowed.", "error")
+                flash("Names can only contain letters. No numbers or symbols allowed.", "warning")
                 return redirect(url_for("auth.register_page"))
 
         except Exception as e:
-            flash(f"An error occurred while processing the name: {str(e)}", "error")
+            flash(f"An error occurred while processing the name: {str(e)}", "warning")
             return redirect(url_for("auth.register_page"))
 
         # ✅ Validate Email Format
         try:
             email = validate_email(email).normalized
         except EmailNotValidError as e:
-            flash(f"Invalid email format: {e}", "error")
+            flash(f"Invalid email format: {e}", "warning")
             return redirect(url_for("auth.register_page"))
 
         # ✅ Check if Email Already Registered
         if User.query.filter_by(email=email).first():
-            flash("User already exists. Please login instead.", "error")
+            flash("User already exists. Please login instead.", "warning")
             return redirect(url_for("auth.register_page"))
 
         # ✅ Validate Password Requirements
         if (error_msg := validate_password(password)) or password != confirm_password:
-            flash(error_msg or "Passwords do not match", "error")
+            flash(error_msg or "Passwords do not match", "warning")
             return redirect(url_for("auth.register_page"))
 
         # Get password before hashing
@@ -146,13 +146,13 @@ def register_page():
             flash(f"Hey {name}, your account was created successfully!", "success")
 
             # ✅ Send Email Verification
-            flash("Check your email for a verification link.", "error")
+            flash("Check the 'Spam folder' or 'Inbox' in your email for a verification link.", "warning")
             send_verification_email(new_user)
             return redirect(url_for("auth.login_page"))
 
         except Exception as e:
             db.session.rollback()
-            flash(f"Error creating account: {e}", "error")
+            flash(f"Error creating account: {e}", "warning")
             return redirect(url_for("auth.register_page"))
 
     return render_template(
@@ -196,7 +196,7 @@ def request_password_reset():
         try:
             email = validate_email(email).normalized
         except EmailNotValidError as e:
-            flash(f"Invalid email format: {e}", "error")
+            flash(f"Invalid email format: {e}", "warning")
             return redirect(url_for("auth.request_password_reset"))
 
         try:
@@ -218,13 +218,13 @@ def request_password_reset():
                     mail.send(msg)
                     flash("Password reset email sent! Check your inbox.", "success")
                 except Exception as mail_error:
-                    flash(f"Error sending email: {mail_error}", "error")
+                    flash(f"Error sending email: {mail_error}", "warning")
 
             else:
                 flash("No account found with that email.", "danger")
 
         except Exception as db_error:
-            flash(f"Database error: {db_error}", "error")
+            flash(f"Database error: {db_error}", "warning")
 
     return render_template("auth/pages/request-password-reset.html", form=form)
 
@@ -249,7 +249,7 @@ def reset_password(token):
                 if (
                     error_msg := validate_password(password)
                 ) or password != confirm_password:
-                    flash(error_msg or "Passwords do not match", "error")
+                    flash(error_msg or "Passwords do not match", "warning")
                     return redirect(url_for("auth.reset_password", token=token))
 
                 user.reset_password(password)
@@ -257,9 +257,9 @@ def reset_password(token):
                 return redirect(url_for("auth.login_page"))
 
             except Exception as password_error:
-                flash(f"Error updating password: {password_error}", "error")
+                flash(f"Error updating password: {password_error}", "warning")
 
     except Exception as db_error:
-        flash(f"Database error: {db_error}", "error")
+        flash(f"Database error: {db_error}", "warning")
 
     return render_template("auth/pages/reset-password.html", form=form)

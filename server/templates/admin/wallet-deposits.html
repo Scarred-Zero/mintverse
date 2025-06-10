@@ -29,9 +29,9 @@ title %} {{ title }} {% endblock %} {% block content %}
             <th>User</th>
             <th>ETH Address</th>
             <th>Amount</th>
+            <th>Receipt</th>
             <th>Status</th>
             <th>Timestamp</th>
-            <th>Receipt</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -45,14 +45,6 @@ title %} {{ title }} {% endblock %} {% block content %}
             </td>
             <td>{{ deposit.wltdps_amount }} ETH</td>
             <td>
-              <span
-                class="badge {% if deposit.status == 'Pending' %}badge-warning{% elif deposit.status == 'Approved' %}badge-success{% else %}badge-danger{% endif %}"
-              >
-                {{ deposit.status }}
-              </span>
-            </td>
-            <td>{{ deposit.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</td>
-            <td>
               <a
                 href="/static/uploads/{{ deposit.receipt_img }}"
                 target="_blank"
@@ -64,6 +56,14 @@ title %} {{ title }} {% endblock %} {% block content %}
                 />
               </a>
             </td>
+            <td>
+              <span
+                class="badge {% if deposit.status == 'Pending' %}badge-warning{% elif deposit.status == 'Approved' %}badge-success{% else %}badge-danger{% endif %}"
+              >
+                {{ deposit.status }}
+              </span>
+            </td>
+            <td>{{ deposit.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</td>
             <td>
               {% if deposit.status == "Pending" %}
               <a

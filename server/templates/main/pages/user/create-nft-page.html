@@ -178,9 +178,9 @@ endblock %} {% block content %} {% include "auth/partials/_alert.html" %}
               <td>{{ hst.royalties }}</td>
               <td>
                 <span
-                  class="badge {% if hst.status.value == 'Pending' %}badge-warning {% elif hst.status.value == 'Available' %}badge-success {% elif hst.status.value == 'Sold' %}badge-danger{% endif %}"
+                  class="badge {% if hst.status.capitalize() == 'Pending' %}badge-warning {% elif hst.status.capitalize() == 'Available' %}badge-success {% elif hst.status.capitalize() == 'Sold' %}badge-danger{% endif %}"
                 >
-                  {{ hst.status.value }}
+                  {{ hst.status.capitalize() }}
                 </span>
               </td>
 
