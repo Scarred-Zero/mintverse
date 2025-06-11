@@ -1,355 +1,290 @@
 <!-- {% set active = "admin" %} -->
 {% extends "main/partials/base.html" %}
-  {% block title %} {{ title }} 
-  {% endblock %} {% block content %}
+{% block title %} {{ title }}
+{% endblock %} {% block content %}
 
-    <section class="hero__wrapper" id="hero-wrapper">
-      <div class="paddings innerWidth flexCenter hero__container">
-        <div class="flexColCenter hero__left">
-          <div class="hero__title">
-            <div class="orange__circle"></div>
-            <h1>
-              One-stop <br />
-              platform <br />
-              for all things NFTs
-            </h1>
-          </div>
+<section class="hero__wrapper" id="hero-wrapper">
+  <div class="paddings innerWidth flexCenter hero__container">
+    <div class="flexColCenter hero__left">
+      <div class="hero__title">
+        <div class="orange__circle"></div>
+        <h1>
+          One-stop <br />
+          platform <br />
+          for all things NFTs
+        </h1>
+      </div>
 
-          <div class="flexColCenter hero__des">
-            <span style="color: #adabab">
-                Explore Thousands Of Digital Art And Collectibles.
-            </span>
-            {% if not current_user.is_authenticated %}
-                <a href="{{ url_for('auth.login_page') }}">
-                    <button class="btn hero__btn btn--flex">
-                        Sign In <i style="margin-left: 5px" class="fa fa-sign-in"></i>
-                    </button>
-                </a>
-            {% elif current_user.role == "admin" %}
-                <a href="{{ url_for('admin.admin_dashboard') }}">
-                    <button class="btn hero__btn btn--flex">
-                        View Admin Dashboard <i style="margin-left: 5px" class="fa fa-user"></i>
-                    </button>
-                </a>
-            {% else %}
-                <a href="{{ url_for('user.dashboard_page') }}">
-                    <button class="btn hero__btn btn--flex">
-                        View Your Dashboard <i style="margin-left: 5px" class="fa fa-user"></i>
-                    </button>
-                </a>
-            {% endif %}
+      <div class="flexColCenter hero__des">
+        <span style="color: #adabab">
+          Explore Thousands Of Digital Art And Collectibles.
+        </span>
+        {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('auth.login_page') }}">
+          <button class="btn hero__btn btn--flex">
+            Sign In <i style="margin-left: 5px" class="fa fa-sign-in"></i>
+          </button>
+        </a>
+        {% elif current_user.role == "admin" %}
+        <a href="{{ url_for('admin.admin_dashboard') }}">
+          <button class="btn hero__btn btn--flex">
+            View Admin Dashboard <i style="margin-left: 5px" class="fa fa-user"></i>
+          </button>
+        </a>
+        {% else %}
+        <a href="{{ url_for('user.dashboard_page') }}">
+          <button class="btn hero__btn btn--flex">
+            View Your Dashboard <i style="margin-left: 5px" class="fa fa-user"></i>
+          </button>
+        </a>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="flexCenter hero__right"></div>
+
+    <small>Trusted by Over <b class="burntCyanText">1,000,000 Marketers</b> & the
+      World's Leading Companies</small>
+
+    <div class="company__carousel">
+      <div class="company__carousel-track">
+        <div class="company__carousel-slide">
+          <img src="/static/assets/images/companies/logo-3.svg" alt="Image 1" />
         </div>
+        <div class="company__carousel-slide">
+          <img src="/static/assets/images/companies/logo-4.svg" alt="Image 2" />
         </div>
-
-        <div class="flexCenter hero__right"></div>
-
-        <small
-          >Trusted by Over <b class="burntCyanText">1,000,000 Marketers</b> & the
-          World's Leading Companies</small
-        >
-
-        <div class="company__carousel">
-          <div class="company__carousel-track">
-            <div class="company__carousel-slide">
-              <img src="/static/assets/images/companies/logo-3.svg" alt="Image 1" />
-            </div>
-            <div class="company__carousel-slide">
-              <img src="/static/assets/images/companies/logo-4.svg" alt="Image 2" />
-            </div>
-            <div class="company__carousel-slide">
-              <img src="/static/assets/images/companies/logo-5.svg" alt="Image 3" />
-            </div>
-            <div class="company__carousel-slide">
-              <img src="/static/assets/images/companies/logo-6.svg" alt="Image 4" />
-            </div>
-            <div class="company__carousel-slide">
-              <img src="/static/assets/images/companies/logo-8.svg" alt="Image 5" />
-            </div>
-            <div class="company__carousel-slide">
-              <img src="/static/assets/images/companies/logo-9.svg" alt="Image 6" />
-            </div>
-            <div class="company__carousel-slide">
-              <img
-                src="/static/assets/images/companies/logo-10.svg"
-                alt="Image 7"
-              />
-            </div>
-          </div>
+        <div class="company__carousel-slide">
+          <img src="/static/assets/images/companies/logo-5.svg" alt="Image 3" />
+        </div>
+        <div class="company__carousel-slide">
+          <img src="/static/assets/images/companies/logo-6.svg" alt="Image 4" />
+        </div>
+        <div class="company__carousel-slide">
+          <img src="/static/assets/images/companies/logo-8.svg" alt="Image 5" />
+        </div>
+        <div class="company__carousel-slide">
+          <img src="/static/assets/images/companies/logo-9.svg" alt="Image 6" />
+        </div>
+        <div class="company__carousel-slide">
+          <img src="/static/assets/images/companies/logo-10.svg" alt="Image 7" />
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="bsl__wrapper" id="bsl-wrapper">
-      <div class="paddings innerWidth flexCenter bsl__container">
-        <div class="flexColCenter bsl__left">
-          <div class="bsl__title">
-            <h1>
-              Buy, Sell <br />
-              and Lend<br />
-              Your NFTs
-            </h1>
-          </div>
-
-          <div class="flexColCenter bsl__des">
-            <span style="color: #adabab">
-              Best places to liquify your illiquidity.
-            </span>
-            <a href="{{url_for('mintverse.explore_page')}}">
-              <button class="btn btn--flex bsl__btn">Explore</button>
-            </a>
-          </div>
-        </div>
-
-        <div class="bsl__right">
-          <div class="swiper bsl__swiper-container">
-            <div class="swiper-wrapper bsl__swiper-wrapper"></div>
-            <div class="swiper-button-prev bsl-swiper-button-prev"></div>
-            <div class="swiper-button-next bsl-swiper-button-next"></div>
-          </div>
-        </div>
+<section class="bsl__wrapper" id="bsl-wrapper">
+  <div class="paddings innerWidth flexCenter bsl__container">
+    <div class="flexColCenter bsl__left">
+      <div class="bsl__title">
+        <h1>
+          Buy, Sell <br />
+          and Lend<br />
+          Your NFTs
+        </h1>
       </div>
-    </section>
 
-    <section class="ttp__wrapper" id="ttp-wrapper">
-      <div class="paddings innerWidth flexCenter ttp__container">
-        <div class="ttp__des">
-          <h1 class="primaryText">Today's Top Picks</h1>
-          <a href="{{url_for('mintverse.explore_page')}}">
-            <button class="ttp__btn btn btn--flex">
-              Explore All <i class="fa fa-arrow-right" style="margin-left: 5px"></i>
-            </button>
-          </a>
-        </div>
-
-        <div class="ttp__content"></div>
+      <div class="flexColCenter bsl__des">
+        <span style="color: #adabab">
+          Best places to liquify your illiquidity.
+        </span>
+        <a href="{{url_for('mintverse.explore_page')}}">
+          <button class="btn btn--flex bsl__btn">Explore</button>
+        </a>
       </div>
-    </section>
+    </div>
 
-    <section class="nl__wrapper" id="nl-wrapper">
-      <div class="paddings innerWidth flexCenter nl__container">
-        <div class="nl__des">
-          <h1 class="primaryText">New Listings</h1>
-          <a href="{{url_for('mintverse.explore_page')}}">
-            <button class="btn btn--flex nl__btn">
-              Explore All <i class="fa fa-arrow-right" style="margin-left: 5px"></i>
-            </button>
-          </a>
-        </div>
-
-        <div class="nl__content"></div>
+    <div class="bsl__right">
+      <div class="swiper bsl__swiper-container">
+        <div class="swiper-wrapper bsl__swiper-wrapper"></div>
+        <div class="swiper-button-prev bsl-swiper-button-prev"></div>
+        <div class="swiper-button-next bsl-swiper-button-next"></div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <section class="discover__wrapper" id="discover-wrapper">
-      <div class="paddings innerWidth flexCenter discover__container">
-        <div class="discover__des">
-          <h1 class="primaryText">Discover</h1>
-        </div>
-        <div class="discover__filter">
-          <ul id="filter-list">
-            <li class="active" data-filter="All">All</li>
-            <li data-filter="3d-art">3D Art</li>
-            <li data-filter="abstract-art">Abstract Art</li>
-            <li data-filter="category-art">Category Art</li>
-            <li data-filter="digital-art">Digital Art</li>
-            <li data-filter="fantasy-art">Fantasy Art</li>
-            <li data-filter="generative-art">Generative Art</li>
-            <li data-filter="gif-art">GIF Art</li>
-            <li data-filter="installation-art">Installation Art</li>
-            <li data-filter="pop-art">Pop Art</li>
-            <li data-filter="minimalism">Minimalism</li>
-            <li data-filter="painting">Painting</li>
-            <li data-filter="photography">Photography</li>
-            <li data-filter="photorealism">Photorealism</li>
-            <li data-filter="printmaking">Printmaking</li>
-            <li data-filter="sculpture">Sculpture</li>
-            <li data-filter="surrealism">Surrealism</li>
-          </ul>
-        </div>
+<section class="ttp__wrapper" id="ttp-wrapper">
+  <div class="paddings innerWidth flexCenter ttp__container">
+    <div class="ttp__des">
+      <h1 class="primaryText">Today's Top Picks</h1>
+      <a href="{{url_for('mintverse.explore_page')}}">
+        <button class="ttp__btn btn btn--flex">
+          Explore All <i class="fa fa-arrow-right" style="margin-left: 5px"></i>
+        </button>
+      </a>
+    </div>
 
-        <div class="discover__content"></div>
+    <div class="ttp__content"></div>
+  </div>
+</section>
 
-        <div class="discover__filter">
-          <ul id="filter-list">
-            <li class="active" data-filter="All">All</li>
-            <li data-filter="3d-art">3D Art</li>
-            <li data-filter="abstract-art">Abstract Art</li>
-            <li data-filter="category-art">Category Art</li>
-            <li data-filter="digital-art">Digital Art</li>
-            <li data-filter="fantasy-art">Fantasy Art</li>
-            <li data-filter="generative-art">Generative Art</li>
-            <li data-filter="gif-art">GIF Art</li>
-            <li data-filter="installation-art">Installation Art</li>
-            <li data-filter="pop-art">Pop Art</li>
-            <li data-filter="minimalism">Minimalism</li>
-            <li data-filter="painting">Painting</li>
-            <li data-filter="photography">Photography</li>
-            <li data-filter="photorealism">Photorealism</li>
-            <li data-filter="printmaking">Printmaking</li>
-            <li data-filter="sculpture">Sculpture</li>
-            <li data-filter="surrealism">Surrealism</li>
-            <!-- <li data-filter="drawing">Drawing</li>
+<section class="discover__wrapper" id="discover-wrapper">
+  <div class="paddings innerWidth flexCenter discover__container">
+    <div class="discover__des">
+      <h1 class="primaryText">Discover</h1>
+    </div>
+    <div class="discover__filter">
+      <ul id="filter-list">
+        <li class="active" data-filter="All">All</li>
+        <li data-filter="3d-art">3D Art</li>
+        <li data-filter="abstract-art">Abstract Art</li>
+        <li data-filter="category-art">Category Art</li>
+        <li data-filter="digital-art">Digital Art</li>
+        <li data-filter="fantasy-art">Fantasy Art</li>
+        <li data-filter="generative-art">Generative Art</li>
+        <li data-filter="gif-art">GIF Art</li>
+        <li data-filter="installation-art">Installation Art</li>
+        <li data-filter="pop-art">Pop Art</li>
+        <li data-filter="minimalism">Minimalism</li>
+        <li data-filter="painting">Painting</li>
+        <li data-filter="photography">Photography</li>
+        <li data-filter="photorealism">Photorealism</li>
+        <li data-filter="printmaking">Printmaking</li>
+        <li data-filter="sculpture">Sculpture</li>
+        <li data-filter="surrealism">Surrealism</li>
+      </ul>
+    </div>
+
+    <div class="discover__content"></div>
+
+    <div class="discover__filter">
+      <ul id="filter-list">
+        <li class="active" data-filter="All">All</li>
+        <li data-filter="3d-art">3D Art</li>
+        <li data-filter="abstract-art">Abstract Art</li>
+        <li data-filter="category-art">Category Art</li>
+        <li data-filter="digital-art">Digital Art</li>
+        <li data-filter="fantasy-art">Fantasy Art</li>
+        <li data-filter="generative-art">Generative Art</li>
+        <li data-filter="gif-art">GIF Art</li>
+        <li data-filter="installation-art">Installation Art</li>
+        <li data-filter="pop-art">Pop Art</li>
+        <li data-filter="minimalism">Minimalism</li>
+        <li data-filter="painting">Painting</li>
+        <li data-filter="photography">Photography</li>
+        <li data-filter="photorealism">Photorealism</li>
+        <li data-filter="printmaking">Printmaking</li>
+        <li data-filter="sculpture">Sculpture</li>
+        <li data-filter="surrealism">Surrealism</li>
+        <!-- <li data-filter="drawing">Drawing</li>
             <li data-filter="comic-art">comic Art</li>
             <li data-filter="outsider-art">Outsider Art</li> -->
-          </ul>
-        </div>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="exp__wrapper" id="exp-wrapper">
+  <div class="paddings innerWidth flexCenter exp__container">
+    <div class="discover__des">
+      <h1 class="primaryText">Explore Categories...</h1>
+    </div>
+
+    <div class="swiper exp__swiper-container">
+      <div class="swiper-wrapper exp__swiper-wrapper"></div>
+      <div class="swiper-button-prev exp-swiper-button-prev"></div>
+      <div class="swiper-button-next exp-swiper-button-next"></div>
+    </div>
+  </div>
+</section>
+
+<section class="best__wrapper" id="best-wrapper">
+  <div class="best__carousel">
+    <div class="best__carousel-track">
+      <div class="best__carousel-slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path
+            d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
+            fill="#BEFF04"></path>
+          <path
+            d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
+            fill="#BEFF04"></path>
+        </svg>
       </div>
-    </section> 
-
-    <section class="exp__wrapper" id="exp-wrapper">
-      <div class="paddings innerWidth flexCenter exp__container">
-        <div class="discover__des">
-          <h1 class="primaryText">Explore Categories...</h1>
-        </div>
-
-        <div class="swiper exp__swiper-container">
-          <div class="swiper-wrapper exp__swiper-wrapper"></div>
-          <div class="swiper-button-prev exp-swiper-button-prev"></div>
-          <div class="swiper-button-next exp-swiper-button-next"></div>
-        </div>
+      <div class="best__carousel-slide">
+        We are the best NFT marketplace in the world
       </div>
-    </section>
-
-    <section class="best__wrapper" id="best-wrapper">
-      <div class="best__carousel">
-        <div class="best__carousel-track">
-          <div class="best__carousel-slide">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-            >
-              <path
-                d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
-                fill="#BEFF04"
-              ></path>
-              <path
-                d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
-                fill="#BEFF04"
-              ></path>
-            </svg>
-          </div>
-          <div class="best__carousel-slide">
-            We are the best NFT marketplace in the world
-          </div>
-          <div class="best__carousel-slide">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-            >
-              <path
-                d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
-                fill="#BEFF04"
-              ></path>
-              <path
-                d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
-                fill="#BEFF04"
-              ></path>
-            </svg>
-          </div>
-          <div class="best__carousel-slide">We have a large collection</div>
-          <div class="best__carousel-slide">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-            >
-              <path
-                d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
-                fill="#BEFF04"
-              ></path>
-              <path
-                d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
-                fill="#BEFF04"
-              ></path>
-            </svg>
-          </div>
-          <div class="best__carousel-slide">
-            Discover the largest NFT marketplace
-          </div>
-          <div class="best__carousel-slide">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-            >
-              <path
-                d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
-                fill="#BEFF04"
-              ></path>
-              <path
-                d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
-                fill="#BEFF04"
-              ></path>
-            </svg>
-          </div>
-          <div class="best__carousel-slide">The best NFT platform of the year</div>
-          <div class="best__carousel-slide">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 32 32"
-              fill="none"
-            >
-              <path
-                d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
-                fill="#BEFF04"
-              ></path>
-              <path
-                d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
-                fill="#BEFF04"
-              ></path>
-            </svg>
-          </div>
-          <div class="best__carousel-slide">
-            Explore thousands of digital art and collectibles
-          </div>
-        </div>
+      <div class="best__carousel-slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path
+            d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
+            fill="#BEFF04"></path>
+          <path
+            d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
+            fill="#BEFF04"></path>
+        </svg>
       </div>
-    </section>
+      <div class="best__carousel-slide">We have a large collection</div>
+      <div class="best__carousel-slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path
+            d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
+            fill="#BEFF04"></path>
+          <path
+            d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
+            fill="#BEFF04"></path>
+        </svg>
+      </div>
+      <div class="best__carousel-slide">
+        Discover the largest NFT marketplace
+      </div>
+      <div class="best__carousel-slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path
+            d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
+            fill="#BEFF04"></path>
+          <path
+            d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
+            fill="#BEFF04"></path>
+        </svg>
+      </div>
+      <div class="best__carousel-slide">The best NFT platform of the year</div>
+      <div class="best__carousel-slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path
+            d="M23.9849 18.3362C15.4039 18.3362 13.4312 16.3635 13.4312 7.78247C13.4312 7.62344 13.368 7.47093 13.2555 7.35848C13.1431 7.24603 12.9906 7.18286 12.8316 7.18286C12.6725 7.18286 12.52 7.24603 12.4076 7.35848C12.2951 7.47093 12.2319 7.62344 12.2319 7.78247C12.2319 16.3635 10.2593 18.3362 1.67823 18.3362C1.59928 18.3359 1.52105 18.3511 1.44802 18.3811C1.37499 18.4111 1.3086 18.4552 1.25266 18.5109C1.19672 18.5666 1.15234 18.6329 1.12205 18.7058C1.09176 18.7787 1.07617 18.8568 1.07617 18.9358C1.07617 19.0147 1.09176 19.0929 1.12205 19.1658C1.15234 19.2387 1.19672 19.3049 1.25266 19.3606C1.3086 19.4164 1.37499 19.4605 1.44802 19.4905C1.52105 19.5204 1.59928 19.5357 1.67823 19.5354C10.2593 19.5354 12.2319 21.509 12.2319 30.0901C12.2319 30.2491 12.2951 30.4016 12.4076 30.5141C12.52 30.6265 12.6725 30.6897 12.8316 30.6897C12.9906 30.6897 13.1431 30.6265 13.2555 30.5141C13.368 30.4016 13.4312 30.2491 13.4312 30.0901C13.4312 21.5091 15.4038 19.5354 23.9849 19.5354C24.0638 19.5357 24.1421 19.5204 24.2151 19.4905C24.2881 19.4605 24.3545 19.4164 24.4104 19.3606C24.4664 19.3049 24.5108 19.2387 24.5411 19.1658C24.5713 19.0929 24.5869 19.0147 24.5869 18.9358C24.5869 18.8568 24.5713 18.7787 24.5411 18.7058C24.5108 18.6329 24.4664 18.5666 24.4104 18.5109C24.3545 18.4552 24.2881 18.4111 24.2151 18.3811C24.1421 18.3511 24.0638 18.3359 23.9849 18.3362Z"
+            fill="#BEFF04"></path>
+          <path
+            d="M24.4756 14.0813C24.3166 14.0813 24.1641 14.0181 24.0516 13.9056C23.9392 13.7932 23.876 13.6407 23.876 13.4817C23.876 9.1184 22.9932 8.23559 18.6299 8.23559C18.4709 8.23559 18.3183 8.17242 18.2059 8.05997C18.0934 7.94752 18.0303 7.79501 18.0303 7.63598C18.0303 7.47696 18.0934 7.32444 18.2059 7.212C18.3183 7.09955 18.4709 7.03637 18.6299 7.03637C22.9932 7.03637 23.876 6.15356 23.876 1.79028C23.876 1.63126 23.9391 1.47874 24.0516 1.3663C24.164 1.25385 24.3166 1.19067 24.4756 1.19067C24.6346 1.19067 24.7871 1.25385 24.8996 1.3663C25.012 1.47874 25.0752 1.63126 25.0752 1.79028C25.0752 6.15356 25.958 7.03637 30.3213 7.03637C30.4803 7.03637 30.6328 7.09955 30.7453 7.212C30.8577 7.32444 30.9209 7.47696 30.9209 7.63598C30.9209 7.79501 30.8577 7.94752 30.7453 8.05997C30.6328 8.17242 30.4803 8.23559 30.3213 8.23559C25.958 8.23559 25.0752 9.1184 25.0752 13.4817C25.0752 13.6407 25.012 13.7932 24.8995 13.9056C24.7871 14.0181 24.6346 14.0813 24.4756 14.0813ZM22.6162 7.63598C23.4549 7.98935 24.1222 8.65666 24.4756 9.49536C24.829 8.65664 25.4963 7.98934 26.335 7.63598C25.4963 7.28263 24.829 6.61533 24.4756 5.77661C24.1222 6.61532 23.4549 7.28262 22.6162 7.63598Z"
+            fill="#BEFF04"></path>
+        </svg>
+      </div>
+      <div class="best__carousel-slide">
+        Explore thousands of digital art and collectibles
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="trading__widget-wrapper" id="trading-wrapper">
-      <div class="tradingview-widget-container">
-        <iframe
-          scrolling="no"
-          allowtransparency="true"
-          frameborder="0"
-          src="https://www.tradingview-widget.com/embed-widget/timeline/#%7B%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22regular%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A550%2C%22colorTheme%22%3A%22dark%22%2C%22utm_source%22%3A%22mintifyart.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22timeline%22%2C%22page-uri%22%3A%22mintifyart.com%2Findex.php%22%7D"
-          title="timeline TradingView widget"
-          lang="en"
-          style="
+<section class="trading__widget-wrapper" id="trading-wrapper">
+  <div class="tradingview-widget-container">
+    <iframe scrolling="no" allowtransparency="true" frameborder="0"
+      src="https://www.tradingview-widget.com/embed-widget/timeline/#%7B%22isTransparent%22%3Afalse%2C%22displayMode%22%3A%22regular%22%2C%22width%22%3A%22100%25%22%2C%22height%22%3A550%2C%22colorTheme%22%3A%22dark%22%2C%22utm_source%22%3A%22mintifyart.com%22%2C%22utm_medium%22%3A%22widget%22%2C%22utm_campaign%22%3A%22timeline%22%2C%22page-uri%22%3A%22mintifyart.com%2Findex.php%22%7D"
+      title="timeline TradingView widget" lang="en" style="
             user-select: none;
             box-sizing: border-box;
             display: block;
             height: 100%;
             width: 100%;
-          "
-        ></iframe>
-      </div>
-    </section>
+          "></iframe>
+  </div>
+</section>
 
-    <section class="jn__wrapper" id="jn-wrapper">
-      <div class="paddings innerWidth flexCenter jn__container">
-        <div class="flexColCenter jn__content">
-          <span class="primaryText">Join Thousands of People Using MintVerse</span>
-          <span class="secondaryText" style="font-size: large;">
-            Start exploring events and trading digital collectibles right away
-          </span>
-          <button class="btn btn--flex jn__btn">
-            <a href="{{url_for('auth.login_page')}}">Join Now <i style="margin-left: 5px;" class="fa fa-angle-right"></i></a>
-          </button>
-        </div>
-      </div>
-    </section>
+<section class="jn__wrapper" id="jn-wrapper">
+  <div class="paddings innerWidth flexCenter jn__container">
+    <div class="flexColCenter jn__content">
+      <span class="primaryText">Join Thousands of People Using MintVerse</span>
+      <span class="secondaryText" style="font-size: large;">
+        Start exploring events and trading digital collectibles right away
+      </span>
+      <button class="btn btn--flex jn__btn">
+        <a href="{{url_for('auth.login_page')}}">Join Now <i style="margin-left: 5px;"
+            class="fa fa-angle-right"></i></a>
+      </button>
+    </div>
+  </div>
+</section>
 
-  {% endblock %}
+{% endblock %}

@@ -1,7 +1,6 @@
 import os
 import uuid
 import logging
-import imghdr  # <-- Add this import
 from decimal import Decimal
 
 from flask import Blueprint, request, render_template, redirect, flash, url_for
@@ -37,6 +36,7 @@ from .forms import (
     SearchForm,
     AdminEditUserProfileForm,
 )
+from PIL import Image
 
 admin = Blueprint("admin", __name__)
 
@@ -45,6 +45,22 @@ def is_real_admin():
     return (
         current_user.is_authenticated and getattr(current_user, "role", None) == "admin"
     )
+
+
+def get_image_type(file_storage):
+    """
+    Returns the image type (e.g., 'jpeg', 'png', etc.) if valid, else None.
+    """
+    try:
+        file_storage.seek(0)
+        img = Image.open(file_storage)
+        img.verify()  # Will raise if not an image
+        image_type = img.format.lower()
+    except Exception:
+        image_type = None
+    finally:
+        file_storage.seek(0)
+    return image_type
 
 
 @admin.route("/dashboard", methods=["GET"])
@@ -333,7 +349,9 @@ def approve_gasfee_deposit(deposit_id):
     # ✅ Fetch user's gasfee balance
     ether = Ether.query.filter_by(user_id=deposit.user_id).first()
     if ether:
-        ether.gas_fee_balance += deposit.gsfdps_amount  # ✅ Update balance upon approval
+        ether.gas_fee_balance += (
+            deposit.gsfdps_amount
+        )  # ✅ Update balance upon approval
     else:
         ether = Ether(user_id=deposit.user_id, gas_fee_balance=deposit.gsfdps_amount)
         db.session.add(ether)
@@ -788,7 +806,8 @@ def add_user():
             existing_user = User.query.filter_by(email=email).first()
             if existing_user:
                 flash(
-                    "User already exists. Please register a new user.", category="warning"
+                    "User already exists. Please register a new user.",
+                    category="warning",
                 )
                 return redirect(url_for("admin.add_user"))
 
@@ -938,7 +957,9 @@ def subtract_from_main(usr_id):
             flash("Insufficient main wallet balance.", "warning")
             return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
 
-        form = AddToOrSubtractFromBalancesForm()  # ✅ Form reused for subtracting balance
+        form = (
+            AddToOrSubtractFromBalancesForm()
+        )  # ✅ Form reused for subtracting balance
         if form.validate_on_submit():
             amount = form.amount.data
             if amount > ether.main_wallet_balance:
@@ -1027,7 +1048,9 @@ def subtract_from_gas(usr_id):
             flash("Insufficient gas fee balance.", "warning")
             return redirect(url_for("admin.view_user_balances", usr_id=usr_id))
 
-        form = AddToOrSubtractFromBalancesForm()  # ✅ Form reused for subtracting balance
+        form = (
+            AddToOrSubtractFromBalancesForm()
+        )  # ✅ Form reused for subtracting balance
         if form.validate_on_submit():
             amount = form.amount.data
             if amount > ether.gas_fee_balance:
@@ -1243,15 +1266,14 @@ def add_nft():
         allowed_extensions = {"jpg", "jpeg", "png", "gif", "webp", "glb", "mp4", "mp3"}
         if not nft_image.filename.lower().endswith(tuple(allowed_extensions)):
             flash(
-                "Invalid file type! Please upload a valid image or media file.", "warning"
+                "Invalid file type! Please upload a valid image or media file.",
+                "warning",
             )
             return redirect(url_for("admin.add_nft"))
 
         # Validate image content for image types
         if nft_image.filename.lower().endswith(("jpg", "jpeg", "png", "gif", "webp")):
-            nft_image.seek(0)
-            image_type = imghdr.what(nft_image)
-            nft_image.seek(0)
+            image_type = get_image_type(nft_image)
             if image_type not in ["jpeg", "png", "gif", "webp"]:
                 flash("Uploaded file is not a valid image.", "warning")
                 return redirect(url_for("admin.add_nft"))
@@ -1348,13 +1370,15 @@ def edit_nft_details(ref_number):
                 }
                 if nft_image.filename.lower().endswith(tuple(allowed_extensions)):
                     # Validate image content for image types
-                    if nft_image.filename.lower().endswith(("jpg", "jpeg", "png", "gif", "webp")):
-                        nft_image.seek(0)
-                        image_type = imghdr.what(nft_image)
-                        nft_image.seek(0)
+                    if nft_image.filename.lower().endswith(
+                        ("jpg", "jpeg", "png", "gif", "webp")
+                    ):
+                        image_type = get_image_type(nft_image)
                         if image_type not in ["jpeg", "png", "gif", "webp"]:
                             flash("Uploaded file is not a valid image.", "warning")
-                            return redirect(url_for("admin.edit_nft_details", ref_number=ref_number))
+                            return redirect(
+                                url_for("admin.edit_nft_details", ref_number=ref_number)
+                            )
                     filename = secure_filename(nft_image.filename)
                     unique_filename = f"{uuid.uuid4()}_{filename}"
                     save_path = os.path.join(UPLOAD_FOLDER, unique_filename)

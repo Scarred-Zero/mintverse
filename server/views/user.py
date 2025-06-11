@@ -4,7 +4,6 @@ from decimal import Decimal
 import os
 import uuid
 import logging
-import imghdr
 from werkzeug.utils import secure_filename
 from email_validator import validate_email, EmailNotValidError
 
@@ -31,50 +30,49 @@ from .forms import (
     GasFeeDepositForm,
     CreateNftForm,
 )
+from .admin import get_image_type
 
 user = Blueprint("user", __name__)
 
 
 # BUY PAGE ROUTE (VIEW)
+@csrf.exempt
 @user.route("/nft/buy/nft_<ref_number>", methods=["GET", "POST"])
 @login_required
 def buy_page(ref_number):
     try:
         uuid.UUID(ref_number, version=4)  # ✅ Validate reference number format
-    except ValueError:
-        flash("Invalid NFT reference number format.", "warning")
+
+        nft = NFT.query.filter_by(ref_number=ref_number).first()
+
+        if not nft:
+            flash("NFT not found.", "warning")
+            return redirect(url_for("user.dashboard_page"))
+
+        # ✅ Log NFT view (tracking purposes)
+        NFTViews.log_view(nft.id, current_user.id)
+
+        ether = Ether.query.filter_by(user_id=current_user.id).first()
+        user_balance = ether.main_wallet_balance if ether else 0.0000
+
+        if request.method == "POST":
+            # ✅ Check if the current user has already bought this NFT
+            if nft.buyer_id == current_user.id:  # ✅ Ensure buyer ID matches user ID
+                flash(f"You have already purchased '{nft.nft_name}'.", "warning")
+                return redirect(url_for("user.buy_page", ref_number=ref_number))
+
+            if user_balance < nft.price:
+                flash(
+                    f"Insufficient funds! NFT costs {nft.price} ETH, but you have {user_balance} ETH.",
+                    "warning",
+                )
+                return redirect(url_for("user.buy_page", ref_number=ref_number))
+
+            return redirect(url_for("user.finalising_purchase", ref_number=ref_number))
+    except Exception as e:
+        print(f"Error occurred! {e}")
+        flash(f"Error occurred {e}", "warning")
         return redirect(url_for("user.dashboard_page"))
-
-    nft = NFT.query.filter_by(ref_number=ref_number).first()
-
-    if not nft:
-        flash("NFT not found.", "warning")
-        return redirect(url_for("user.dashboard_page"))
-
-    # ✅ Log NFT view (tracking purposes)
-    NFTViews.log_view(nft.id, current_user.id)
-
-    ether = Ether.query.filter_by(user_id=current_user.id).first()
-    user_balance = ether.main_wallet_balance if ether else 0.0000
-
-    if request.method == "POST":
-        # ✅ Check if the current user has already bought this NFT
-        if nft.buyer_id == current_user.id:  # ✅ Ensure buyer ID matches user ID
-            flash(f"You have already purchased '{nft.nft_name}'.", "warning")
-            return redirect(
-                url_for("user.buy_page", ref_number=ref_number)
-            )  # ✅ Redirect to admin.buy_page
-
-        if user_balance < nft.price:
-            flash(
-                f"Insufficient funds! NFT costs {nft.price} ETH, but you have {user_balance} ETH.",
-                "warning",
-            )
-            return redirect(url_for("user.buy_page", ref_number=ref_number))
-
-        return redirect(
-            url_for("user.finalising_purchase", ref_number=ref_number)
-        )  # ✅ Proceed to finalizing purchase
 
     return render_template(
         "main/pages/buy-page.html",
@@ -143,9 +141,10 @@ def finalising_purchase(ref_number):
             return redirect(url_for("user.finalising_purchase", ref_number=ref_number))
 
         # Additional check
-        if imghdr.what(receipt_img) not in ["png", "jpeg", "jpg", "webp"]:
+        image_type = get_image_type(receipt_img)
+        if image_type not in ["png", "jpeg", "jpg", "webp"]:
             flash("Uploaded file is not a valid image.", "warning")
-            return redirect(url_for("user.finalising_purchase", ref_number=ref_number))
+            return redirect(url_for("user.finalising_purchase"), ref_number=ref_number)
 
         filename = secure_filename(receipt_img.filename)
         unique_filename = f"{uuid.uuid4()}_{filename}"
@@ -404,8 +403,8 @@ def wallet_deposit_page():
             )
             return redirect(url_for("user.wallet_deposit_page"))
 
-        # Additional check
-        if imghdr.what(receipt_img) not in ["png", "jpeg", "jpg", "webp"]:
+        image_type = get_image_type(receipt_img)
+        if image_type not in ["png", "jpeg", "jpg", "webp"]:
             flash("Uploaded file is not a valid image.", "warning")
             return redirect(url_for("user.wallet_deposit_page"))
 
@@ -501,11 +500,10 @@ def gasfee_deposit_page():
             )  # ✅ Fix redirect mismatch
 
         # Additional check
-        if imghdr.what(receipt_img) not in ["png", "jpeg", "jpg", "webp"]:
+        image_type = get_image_type(receipt_img)
+        if image_type not in ["png", "jpeg", "jpg", "webp"]:
             flash("Uploaded file is not a valid image.", "warning")
-            return redirect(
-                url_for("user.gasfee_deposit_page")
-            )  # ✅ Fix redirect mismatch
+            return redirect(url_for("user.gasfee_deposit_page"))
 
         filename = secure_filename(receipt_img.filename)
         unique_filename = f"{uuid.uuid4()}_{filename}"
