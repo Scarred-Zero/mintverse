@@ -39,7 +39,6 @@ class AddToOrSubtractFromBalancesForm(FlaskForm):
     )
 
 
-
 class AdminAddNftForm(FlaskForm):
     # NFT Category
     category = SelectField(
@@ -1052,6 +1051,28 @@ class AdminEditNftDetails(FlaskForm):
 class DeleteNftForm(FlaskForm):
     csrf_token = HiddenField()  # ✅ Add CSRF token field
     submit = SubmitField("Delete", render_kw={"class": "btn btn-danger"})
+
+
+class ConfirmVerificationCodeForm(FlaskForm):
+    email = StringField(
+        "Email",
+        validators=[Email(), Length(max=100)],
+        render_kw={
+            "placeholder": "Enter your email (if required)",
+            "class": "login__form-input",
+            "type": "email",
+        },
+    )
+    verification_code = StringField(
+        "Verification Code",
+        validators=[InputRequired(), Length(min=6, max=6)],
+        render_kw={
+            "placeholder": "Enter the verification code",
+            "class": "login__form-input",
+            "type": "text",
+        },
+    )
+    submit = SubmitField("Confirm", render_kw={"class": "btn login__btn"})
 
 
 class PasswordResetRequestForm(FlaskForm):
