@@ -82,7 +82,6 @@ def send_verification_email(user):
     </html>
     """
 
-
     smtp_server = MAIL_SERVER
     smtp_port = int(MAIL_PORT)
     smtp_user = MAIL_USERNAME
