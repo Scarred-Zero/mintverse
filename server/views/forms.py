@@ -19,7 +19,7 @@ from wtforms.validators import (
     NumberRange,
 )
 from flask_wtf.file import FileField, FileAllowed
-from ..models.enums import NFTStatus
+from ..models import NFTStatus
 
 
 class AddToOrSubtractFromBalancesForm(FlaskForm):

@@ -7,8 +7,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 # ✅ Database & Models
 from ..config.database import db
-from ..models.User import User
-from ..models.Ether import Ether
+from ..models import User
+from ..models import Ether
 
 # ✅ Utilities & Helpers
 from ..utils.mail_handler import generate_verification_token, send_verification_code, send_verification_email, verify_token

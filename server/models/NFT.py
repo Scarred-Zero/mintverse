@@ -1,7 +1,7 @@
 import uuid
 from sqlalchemy import func
 from ..config.database import db
-from ..models.enums import NFTStatus
+from ..models import NFTStatus
 from flask_login import current_user
 
 

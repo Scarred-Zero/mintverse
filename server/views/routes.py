@@ -14,11 +14,11 @@ from flask_mail import Message
 from email_validator import validate_email, EmailNotValidError
 from sqlalchemy import or_, and_
 from ..config.database import db
-from ..models.Contact import Contact
-from ..models.enums import NFTStatus
-from ..models.Ether import Ether
-from ..models.NFT import NFT
-from ..models.NFTViews import NFTViews
+from ..models import Contact
+from ..models import NFTStatus
+from ..models import Ether
+from ..models import NFT
+from ..models import NFTViews
 from ..views.forms import SearchForm, ContactForm
 from server import mail
 from ..utils.helpers import send_predefined_email
