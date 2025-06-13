@@ -15,17 +15,17 @@ from ..config.database import db
 from ..utils.minting_fee_helper import calculate_minting_fee
 from ..utils.decorators import admin_required
 from ..utils.helpers import validate_password
-from ..models.enums import NFTStatus
-from ..models.PendingNfts import PendingNFTs
-from ..models.NFT import NFT
-from ..models.Offers import Offers
-from ..models.Withdrawal import Withdrawal
-from ..models.Transaction import Transaction
-from ..models.GasFeeDeposit import GasFeeDeposit
-from ..models.Ether import Ether
-from ..models.WalletDeposit import WalletDeposit
-from ..models.Contact import Contact
-from ..models.User import User
+from ..models import NFTStatus
+from ..models import PendingNFTs
+from ..models import NFT
+from ..models import Offers
+from ..models import Withdrawal
+from ..models import Transaction
+from ..models import GasFeeDeposit
+from ..models import Ether
+from ..models import WalletDeposit
+from ..models import Contact
+from ..models import User
 from .forms import (
     AddToOrSubtractFromBalancesForm,
     AdminAddNftForm,

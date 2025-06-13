@@ -104,16 +104,16 @@
             <td>{{ nft.description }}</td>
             <td>
               <span
-                class="badge {% if nft.status.value == 'Pending' %}badge-warning
-                {% elif nft.status.value == 'Available' %}badge-success
+                class="badge {% if nft.status.value.capitalize() == 'Pending' %}badge-warning
+                {% elif nft.status.value.capitalize() == 'Available' %}badge-success
                 {% else %}badge-danger
                 {% endif %}"
-                >{{ nft.status.value }}</span
+                >{{ nft.status.value.capitalize() }}</span
               >
             </td>
             <td>{{ nft.timestamp.strftime('%d-%m-%Y %H:%M:%S') }}</td>
             <td>
-              {% if nft.status.value == "Pending" %}
+              {% if nft.status.value.capitalize() == "Pending" %}
               <a
                 href="{{ url_for('admin.approve_minting', nft_id=nft.id) }}"
                 class="btn btn-success"

@@ -1,23 +1,26 @@
+import random
+import string
 from datetime import datetime
-from flask import Blueprint, request, render_template, redirect, flash, url_for, current_app
+from flask import Blueprint, request, render_template, redirect, flash, url_for, current_app, session
 from flask_login import current_user, login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # ✅ Database & Models
 from ..config.database import db
-from ..models.User import User
-from ..models.Ether import Ether
+from ..models import User
+from ..models import Ether
 
 # ✅ Utilities & Helpers
-from ..utils.mail_handler import generate_verification_token, send_verification_email, verify_token
+from ..utils.mail_handler import generate_verification_token, send_verification_code, send_verification_email, verify_token
 from ..utils.helpers import validate_password
 from email_validator import validate_email, EmailNotValidError
 
 # ✅ Forms
-from .forms import LoginForm, PasswordResetForm, PasswordResetRequestForm, RegistrationForm, SearchForm  # ChangePasswordForm
+from .forms import ConfirmVerificationCodeForm, LoginForm, PasswordResetForm, PasswordResetRequestForm, RegistrationForm, SearchForm  # ChangePasswordForm
 
 from flask_mail import Message
 from server import mail
+
 
 # ✅ Create Authentication Blueprint
 auth = Blueprint("auth", __name__)
@@ -47,11 +50,12 @@ def login_page():
         # ✅ Exclude admins from email verification check
         if not user.is_email_verified and user.role != "admin":
             flash(
-                "You must verify your email before logging in. Check your inbox for a verification link.",
+                "You must verify your email before logging in. Check your 'Spam Folder' or 'Inbox' for a verification code.",
                 "warning",
             )
-            send_verification_email(user)
-            return redirect(url_for("auth.login_page"))
+            send_verification_code(user)  # ✅ Resend new verification code
+            return redirect(url_for("auth.confirm_verification_code"))
+            
 
         # ✅ Login User (Admins bypass verification)
         login_user(user, remember=True)
@@ -116,7 +120,10 @@ def register_page():
 
         # ✅ Check if Email Already Registered
         if User.query.filter_by(email=email).first():
-            flash("User already exists. Please login instead.", "warning")
+            flash(
+                "If this email is not registered, you will not receive a code. Please check your inbox or spam folder.",
+                "warning",
+            )
             return redirect(url_for("auth.register_page"))
 
         # ✅ Validate Password Requirements
@@ -135,6 +142,8 @@ def register_page():
                 role="user",
                 store_password=store_password,
                 password=generate_password_hash(password),
+                verification_code=verification_code,  # ✅ Store verification code
+                is_email_verified=False,
             )
             db.session.add(new_user)
             db.session.flush()
@@ -144,11 +153,11 @@ def register_page():
             db.session.commit()
 
             flash(f"Hey {name}, your account was created successfully!", "success")
-
-            # ✅ Send Email Verification
-            flash("Check the 'Spam folder' or 'Inbox' in your email for a verification link.", "warning")
-            send_verification_email(new_user)
-            return redirect(url_for("auth.login_page"))
+            flash("Check the 'Spam folder' or 'Inbox' in your email for a verification code.", "warning")
+            # ✅ Store verification session for redirection
+            session["verification_email"] = email
+            send_verification_code(new_user)
+            return redirect(url_for("auth.confirm_verification_code"))
 
         except Exception as e:
             db.session.rollback()
@@ -163,18 +172,44 @@ def register_page():
     )
 
 
-# ✅ Email Verification Route
-@auth.route("/verify_email/<token>")
-def verify_email(token):
-    email = verify_token(token)
-    if not email or not (user := User.query.filter_by(email=email).first()):
-        flash("Invalid or expired token.", "danger")
+@auth.route("/confirm-verification-code", methods=["GET", "POST"])
+def confirm_verification_code():
+    """✅ Confirms the user's email verification code, resending if expired"""
+    form = ConfirmVerificationCodeForm()
+
+    email = session.get("verification_email")
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        flash("Invalid verification request.", "danger")
         return redirect(url_for("auth.login_page"))
 
-    user.is_email_verified = True
-    db.session.commit()
-    flash("Your email has been verified!", "success")
-    return redirect(url_for("auth.login_page"))
+    if user.is_email_verified:
+        flash("Your account is already verified!", "success")
+        return redirect(url_for("auth.login_page"))
+
+    if request.method == "POST" and form.validate_on_submit():
+        entered_code = form.verification_code.data.strip()
+
+        # ✅ Check if the entered code matches and hasn't expired
+        if user.validate_verification_code(entered_code):
+            user.verify_email()
+            flash("Your account has been verified successfully!", "success")
+            return redirect(url_for("auth.login_page"))
+
+        if not user.can_resend_code():
+            flash("Please wait before requesting another code.", "warning")
+        else:
+            send_verification_code(user)
+            user.update_last_code_sent()
+            flash("A new verification code has been sent.", "info")
+            return redirect(url_for("auth.confirm_verification_code"))
+
+    return render_template(
+        "auth/pages/confirm-verification-code.html",
+        form=form,
+        title="Confirm Verification Code | MintVerse",
+    )
 
 
 # ✅ Handle User Logout

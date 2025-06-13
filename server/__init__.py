@@ -7,7 +7,6 @@ from web3 import Web3
 from .utils.creating_admin import create_admin_on_startup
 from .config.database import db
 from flask_migrate import Migrate
-from .models.User import User
 from .config.variables import (
     SECRET_KEY,
     MYSQL_DATABASE_URI,
@@ -89,7 +88,7 @@ def create_app():
 
     @login_manager.user_loader
     def load_user(usr_id):
-        return User.query.get(usr_id)
+        return models.User.query.get(usr_id)
 
     @login_manager.unauthorized_handler
     def handle_needs_login():

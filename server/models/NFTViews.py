@@ -1,6 +1,6 @@
 from sqlalchemy import func
 from ..config.database import db
-from ..models.NFT import NFT
+from ..models import NFT
 
 class NFTViews(db.Model):
     __tablename__ = "nft_views"
