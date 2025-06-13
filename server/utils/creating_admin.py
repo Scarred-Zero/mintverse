@@ -1,6 +1,6 @@
 # import os
 from werkzeug.security import generate_password_hash
-from ..models.User import User  # ✅ Import your User model
+from ..models import User  # ✅ Import your User model
 from ..config.database import db  # ✅ Import your database instance
 from ..config.variables import ADMIN_NAME, ADMIN_EMAIL, ADMIN_PASSWORD
 

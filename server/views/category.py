@@ -9,10 +9,10 @@ from flask import (
 )
 from flask_login import current_user, login_required
 from ..config.database import db
-from ..models.Transaction import Transaction
-from ..models.Ether import Ether
-from ..models.NFT import NFT
-from ..models.NFTViews import NFTViews 
+from ..models import Transaction
+from ..models import Ether
+from ..models import NFT
+from ..models import NFTViews 
 
 
 category = Blueprint("category", __name__)
